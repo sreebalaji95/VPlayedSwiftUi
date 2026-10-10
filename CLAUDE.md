@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) at an early scaffold stage: `MyApp.swift` (`@main`) → `ContentView.swift`. There are no dependencies, packages, or test targets yet.
 
+## Commits
+
+Do not add a `Co-Authored-By: Claude …` trailer or any other Claude attribution to commit messages.
+
 ## Build
 
 Single target and scheme, both named `VPlayed`. Build per platform:
