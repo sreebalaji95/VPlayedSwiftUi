@@ -1,0 +1,248 @@
+{
+ "statusCode": 200,
+ "message": "Home banners fetched successfully.",
+ "status": "success",
+ "response": {
+  "data": [
+   {
+    "_id": "6ac49c05dcd757c38880f285",
+    "is_active": true,
+    "rank": "0|xzzzyg:",
+    "created_at": "2026-10-06T06:58:13.173Z",
+    "updated_at": "2026-10-06T06:58:13.173Z",
+    "__v": 0,
+    "master_details": {
+     "_id": "6a2cec2e0db67c100e8db016",
+     "title": "Captain America: Brave New World",
+     "age_limit": 1,
+     "slug": "captain-america:-brave-new-world",
+     "sho_type": 2,
+     "title_image": "gudsho-upload-title-images/13-06-2026/1781329364273-web-blob.avif",
+     "title_images": {
+      "default": {
+       "web": "gudsho-upload-title-images/13-06-2026/1781329362075-web-blob.png",
+       "mobile": "gudsho-upload-title-images/13-06-2026/1781329362075-web-blob.png"
+      },
+      "webp": {
+       "web": "gudsho-upload-title-images/13-06-2026/1781329363979-web-blob.webp",
+       "mobile": "gudsho-upload-title-images/13-06-2026/1781329363987-mobile-blob.webp",
+       "Key": "gudsho-upload-title-images/13-06-2026/1781329363979-web-blob.webp"
+      }
+     },
+     "new_thumbnail_images": {
+      "default": {
+       "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328992040-blob.jpg",
+       "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328996140-blob.jpg",
+       "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328997297-blob.jpg",
+       "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328996515-blob.jpg",
+       "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328996570-blob.jpg",
+       "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328996768-blob.jpg",
+       "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328997156-blob.jpg",
+       "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328997213-blob.jpg"
+      },
+      "webp": {
+       "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328991464-blob.webp",
+       "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328996182-blob.webp",
+       "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328996159-blob.webp",
+       "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328993328-blob.webp",
+       "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328993415-blob.webp",
+       "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328993890-blob.webp",
+       "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328993808-blob.webp",
+       "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781328994761-blob.webp"
+      }
+     },
+     "video_banner_images": {
+      "default": {
+       "web": "gudsho-upload-video-banner-images/13-06-2026/1781330074915-web-blob.jpg",
+       "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781330074924-mobile-blob.jpg",
+       "Key": "gudsho-upload-video-banner-images/13-06-2026/1781330074915-web-blob.jpg"
+      },
+      "webp": {
+       "web": "gudsho-upload-video-banner-images/13-06-2026/1781330080238-web-blob.webp",
+       "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781330080248-mobile-blob.webp",
+       "Key": "gudsho-upload-video-banner-images/13-06-2026/1781330080238-web-blob.webp"
+      }
+     },
+     "use_video_thumbnail_image_instead": false,
+     "monetization": 5,
+     "description": "Following the events of Avengers: Endgame, Sam Wilson (The Falcon) grapples with the weight of Captain America's legacy while Bucky Barnes (the Winter Soldier) seeks redemption for his violent past. ",
+     "genre": [
+      {
+       "_id": "6a1432f418d4d53c2c6003c4",
+       "title": "Action",
+       "slug": "action"
+      }
+     ],
+     "default_genre": {
+      "_id": "6a1432f418d4d59ab56003c5",
+      "is_active": true,
+      "is_archived": false,
+      "title": "Adventure",
+      "slug": "adventure",
+      "creator_id": "6a1432ca11219130eba167e0",
+      "updator_id": "6a1432ca11219130eba167e0",
+      "created_at": "2026-05-25T11:31:00.506Z",
+      "updated_at": "2026-05-25T11:31:00.506Z",
+      "__v": 0
+     },
+     "studio_slug": "vplayeddev",
+     "is_published": 1,
+     "publish_status": 0,
+     "sho_released_on": "2026-06-01T00:00:00.000Z",
+     "is_subscription": false,
+     "scheduled": false,
+     "geo_type": 1,
+     "languages": [
+      "English"
+     ],
+     "total_video_duration": 12.96,
+     "rating_points": 3,
+     "prices": [],
+     "is_release_requested": 0,
+     "is_user_notified": false,
+     "is_allowed": 0,
+     "is_geo_restricted": false,
+     "seasons_count": 1,
+     "episodes_count": 1,
+     "is_watch_later": 0,
+     "is_user_subscribed": false,
+     "episode_slug": "the-falcon-and-the-winter-soldier",
+     "season_index": 1,
+     "episode_details": {
+      "_id": "6a2cef6f4ca54212c5096aed",
+      "title": "The Falcon and the Winter Soldier",
+      "slug": "the-falcon-and-the-winter-soldier",
+      "video_duration": "12.96"
+     }
+    },
+    "promos": {
+     "_id": "6aa13c3f274793349ce570b1",
+     "title": "sample_mp4",
+     "video_url": "gudsho-promo-output/2026/09/09/1788951636456-sample_mp4-4_promo.mp4",
+     "video_duration": "30.033333",
+     "hls_playlist_url": "output/2026/09/09/1788951634909-sample_mp4-4/playlist",
+     "slug": "sample_mp4-4",
+     "new_thumbnail_images": {
+      "default": {
+       "web": "gudsho-upload-promo_thumbnail_image/09-09-2026/1788951683787-blob.jpg",
+       "mobile": "gudsho-upload-promo_thumbnail_image/09-09-2026/1788951683814-blob.jpg"
+      },
+      "webp": {
+       "web": "gudsho-upload-promo_thumbnail_image/09-09-2026/1788951683773-blob.webp",
+       "mobile": "gudsho-upload-promo_thumbnail_image/09-09-2026/1788951683796-blob.webp"
+      }
+     },
+     "view_count": 0,
+     "guds_count": 0
+    }
+   },
+   {
+    "_id": "6ac33d7da8dd9b09e6a08ae4",
+    "is_active": true,
+    "rank": "0|xzzzyo:",
+    "created_at": "2026-10-05T06:02:37.594Z",
+    "updated_at": "2026-10-05T06:02:37.594Z",
+    "__v": 0,
+    "master_details": {
+     "_id": "6a2d2b424ca542acd5098bf3",
+     "title": "The Snow Girl",
+     "age_limit": 3,
+     "slug": "the-snow-girl",
+     "sho_type": 6,
+     "new_thumbnail_images": {
+      "default": {
+       "to": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345314777-blob.jpg",
+       "tl": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315385-blob.jpg",
+       "tc": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315352-blob.jpg",
+       "tm": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315616-blob.jpg",
+       "ts": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315562-blob.jpg",
+       "tp": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315750-blob.jpg",
+       "tv": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315711-blob.jpg"
+      },
+      "webp": {
+       "to": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345314501-blob.webp",
+       "tl": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315257-blob.webp",
+       "tc": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345314845-blob.webp",
+       "tm": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345314979-blob.webp",
+       "ts": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345314668-blob.webp",
+       "tp": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315504-blob.webp",
+       "tv": "gudsho-upload-micro_series_thumbnail_images/13-06-2026/1781345315162-blob.webp"
+      }
+     },
+     "video_banner_images": {
+      "default": {
+       "web": "gudsho-upload-video-banner-images/13-06-2026/1781345654852-web-blob.jpg",
+       "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781345654860-mobile-blob.jpg",
+       "Key": "gudsho-upload-video-banner-images/13-06-2026/1781345654852-web-blob.jpg"
+      },
+      "webp": {
+       "web": "gudsho-upload-video-banner-images/13-06-2026/1781345658611-web-blob.webp",
+       "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781345658616-mobile-blob.webp",
+       "Key": "gudsho-upload-video-banner-images/13-06-2026/1781345658611-web-blob.webp"
+      }
+     },
+     "use_video_thumbnail_image_instead": false,
+     "monetization": 5,
+     "description": "During the Cavalcade of the Magi parade, the Martín family's daughter Amaya disappears. Journalist Miren takes on the case, determined to find her.",
+     "genre": [
+      {
+       "_id": "6a1432f418d4d5994d6003c7",
+       "title": "Crime",
+       "slug": "crime"
+      },
+      {
+       "_id": "6a1432f418d4d517c66003cd",
+       "title": "Philosophical",
+       "slug": "philosophical"
+      }
+     ],
+     "default_genre": {
+      "_id": "6a1432f418d4d563cb6003c8",
+      "is_active": true,
+      "is_archived": false,
+      "title": "Drama",
+      "slug": "drama",
+      "creator_id": "6a1432ca11219130eba167e0",
+      "updator_id": "6a1432ca11219130eba167e0",
+      "created_at": "2026-05-25T11:31:00.507Z",
+      "updated_at": "2026-05-25T11:31:00.507Z",
+      "__v": 0
+     },
+     "studio_slug": "vplayeddev",
+     "scheduled_at": null,
+     "is_published": 1,
+     "publish_status": 0,
+     "sho_released_on": "2026-06-01T00:00:00.000Z",
+     "is_subscription": false,
+     "scheduled": false,
+     "geo_type": 1,
+     "languages": [
+      "English"
+     ],
+     "total_video_duration": 98.64666700000001,
+     "rating_points": 3,
+     "prices": [],
+     "is_release_requested": 0,
+     "is_user_notified": false,
+     "is_allowed": 0,
+     "is_geo_restricted": false,
+     "seasons_count": 1,
+     "episodes_count": 2,
+     "is_watch_later": 0,
+     "is_user_subscribed": false,
+     "episode_slug": "ep-1",
+     "season_index": 1,
+     "is_trailer": false,
+     "episode_details": {
+      "_id": "6a2d2c374ca54245d0098d5a",
+      "title": "EP 1",
+      "slug": "ep-1",
+      "video_duration": "93.366667"
+     }
+    },
+    "promos": {}
+   }
+  ]
+ },
+ "error": false
+}

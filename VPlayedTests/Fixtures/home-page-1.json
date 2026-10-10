@@ -1,0 +1,439 @@
+{
+ "statusCode": 200,
+ "message": "Data fetched successfully.",
+ "status": "success",
+ "response": {
+  "data": [
+   {
+    "_id": "6abb4af4a077cc3305ab242e",
+    "is_top_ten": false,
+    "title": "Bulk purchase",
+    "type": 5,
+    "row_count": 1,
+    "count": 7,
+    "total": 7,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 1,
+    "previous": null,
+    "next": null,
+    "data": [
+     {
+      "_id": "6abb57c1da2aa2ad491d0aaa",
+      "device_limit": 1,
+      "is_superadmin": false,
+      "status": true,
+      "is_active": true,
+      "is_archived": false,
+      "banner_img": "https://gsvp-dev.s3.ap-south-1.amazonaws.com/static/images/blue.png",
+      "name": "Bp Plan",
+      "label": {
+       "en": "Special ony for you"
+      },
+      "description": "labellabellabellabellabellabellabellabel",
+      "in_app_purchase_id": "label",
+      "days": 7,
+      "bulk_thumbnail_images": {
+       "default": {
+        "tl": "gudsho-upload-bulk_thumbnail_images/29-09-2026/1790662563522-blob-tl.jpg",
+        "tp": "gudsho-upload-bulk_thumbnail_images/29-09-2026/1790662562643-blob-tp.jpg",
+        "tv": "gudsho-upload-bulk_thumbnail_images/29-09-2026/1790662563001-blob-tv.jpg"
+       },
+       "webp": {
+        "tl": "gudsho-upload-bulk_thumbnail_images/29-09-2026/1790662564133-blob-tl.webp",
+        "tp": "gudsho-upload-bulk_thumbnail_images/29-09-2026/1790662563443-blob-tp.webp",
+        "tv": "gudsho-upload-bulk_thumbnail_images/29-09-2026/1790662563875-blob-tv.webp"
+       }
+      },
+      "banner_badge": "static/images/video-camera.svg",
+      "background_color": "#6DDEF5",
+      "prices": [
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6ac8cff6c7447bc043266d30",
+        "currency": "INR",
+        "currency_type": 1,
+        "currency_sign": "₹",
+        "amount": 1,
+        "discounted_price": 0,
+        "discounted_percentage": 12
+       },
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6ac8cff6c7447b72a6266d31",
+        "currency": "USD",
+        "currency_type": 2,
+        "currency_sign": "$",
+        "amount": 12,
+        "discounted_price": 0,
+        "discounted_percentage": 1
+       }
+      ],
+      "category": 2,
+      "slug": "label",
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "rank": "0|xzzzxk:",
+      "creator_id": "6a1432ca11219130eba167e0",
+      "updator_id": "6a1432ca11219130eba167e0",
+      "created_at": "2026-09-29T06:16:33.978Z",
+      "updated_at": "2026-10-09T11:28:54.099Z",
+      "__v": 0,
+      "_cacheVersion": 1,
+      "type": 5,
+      "category_id": "6abb4af4a077cc3305ab242e",
+      "is_top_ten": false,
+      "media_id": "6abb57c1da2aa2ad491d0aaa"
+     },
+     {
+      "device_limit": 1,
+      "is_superadmin": false,
+      "status": true,
+      "is_active": true,
+      "is_archived": false,
+      "banner_img": "https://gsvp-dev.s3.ap-south-1.amazonaws.com/static/images/dark-red.png",
+      "_id": "6ac8ce17c7447b3a86266180",
+      "name": "New BulkPurchase ",
+      "label": {
+       "en": "Special Offer"
+      },
+      "description": "New BulkPurchase  New BulkPurchase ",
+      "in_app_purchase_id": "121",
+      "days": 30,
+      "bulk_thumbnail_images": {
+       "default": {
+        "tl": "gudsho-upload-bulk_thumbnail_images/09-10-2026/1791544850795-blob-tl.jpg",
+        "tp": "gudsho-upload-bulk_thumbnail_images/09-10-2026/1791544848585-blob-tp.jpg",
+        "tv": "gudsho-upload-bulk_thumbnail_images/09-10-2026/1791544849624-blob-tv.jpg"
+       },
+       "webp": {
+        "tl": "gudsho-upload-bulk_thumbnail_images/09-10-2026/1791544851279-blob-tl.webp",
+        "tp": "gudsho-upload-bulk_thumbnail_images/09-10-2026/1791544850057-blob-tp.webp",
+        "tv": "gudsho-upload-bulk_thumbnail_images/09-10-2026/1791544850772-blob-tv.webp"
+       }
+      },
+      "banner_badge": "static/images/bag.svg",
+      "background_color": "#ED0A51",
+      "prices": [
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6ac8ce17c7447b0fa2266181",
+        "currency": "INR",
+        "currency_type": 1,
+        "currency_sign": "₹",
+        "amount": 200,
+        "discounted_price": 0,
+        "discounted_percentage": 0
+       },
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6ac8ce17c7447b4d19266182",
+        "currency": "USD",
+        "currency_type": 2,
+        "currency_sign": "$",
+        "amount": 200,
+        "discounted_price": 0,
+        "discounted_percentage": 0
+       }
+      ],
+      "category": 2,
+      "slug": "new-bulkpurchase",
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "rank": "0|xzzzxc:",
+      "creator_id": "6a1432ca11219130eba167e0",
+      "updator_id": "6a1432ca11219130eba167e0",
+      "created_at": "2026-10-09T11:20:55.865Z",
+      "updated_at": "2026-10-09T11:20:55.865Z",
+      "__v": 0,
+      "_cacheVersion": 1,
+      "type": 5,
+      "category_id": "6abb4af4a077cc3305ab242e",
+      "is_top_ten": false,
+      "media_id": "6ac8ce17c7447b3a86266180"
+     }
+    ]
+   },
+   {
+    "_id": "6aa27a1ff3fc183e91518b75",
+    "is_top_ten": false,
+    "title": "Videos / Series",
+    "type": 1,
+    "row_count": 1,
+    "count": 27,
+    "total": 27,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 3,
+    "previous": null,
+    "next": 2,
+    "data": [
+     {
+      "_id": "6a2f84f52e1dcb33c68e6457",
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "sho_type": 1,
+      "slug": "blood-father",
+      "default_language": "French",
+      "age_limit": 1,
+      "prices": [
+       {
+        "amount": 33,
+        "currency": "INR",
+        "currency_type": 1
+       }
+      ],
+      "is_published": 1,
+      "publish_status": 0,
+      "monetization": 5,
+      "geo_type": 1,
+      "is_subscription": false,
+      "scheduled": false,
+      "poster_images": {
+       "default": {
+        "mobile": "gudsho-upload-poster-images/15-06-2026/1781499115052-mobile-BloodFather.jpg",
+        "web": "gudsho-upload-poster-images/15-06-2026/1781499115019-web-BloodFather.jpg",
+        "Key": "gudsho-upload-poster-images/15-06-2026/1781499115019-web-BloodFather.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-poster-images/15-06-2026/1781499115177-mobile-BloodFather.webp",
+        "web": "gudsho-upload-poster-images/15-06-2026/1781499115135-web-BloodFather.webp",
+        "Key": "gudsho-upload-poster-images/15-06-2026/1781499115135-web-BloodFather.webp"
+       }
+      },
+      "poster_image": "gudsho-upload-poster-images/15-06-2026/1781499115019-web-BloodFather.jpg",
+      "thumbnail_images": {
+       "default": {
+        "mobile": "gudsho-upload-thumbnail-images/15-06-2026/1781499117856-mobile-BloodFather.jpg",
+        "web": "gudsho-upload-thumbnail-images/15-06-2026/1781499117862-web-BloodFather.jpg",
+        "Key": "gudsho-upload-thumbnail-images/15-06-2026/1781499117862-web-BloodFather.jpg"
+       },
+       "webp": {
+        "web": "gudsho-upload-thumbnail-images/15-06-2026/1781499117864-web-BloodFather.webp",
+        "mobile": "gudsho-upload-thumbnail-images/15-06-2026/1781499117876-mobile-BloodFather.webp",
+        "Key": "gudsho-upload-thumbnail-images/15-06-2026/1781499117864-web-BloodFather.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-thumbnail-images/15-06-2026/1781499117862-web-BloodFather.jpg",
+      "video_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-video-banner-images/15-06-2026/1781499123095-mobile-BloodFather.jpg",
+        "web": "gudsho-upload-video-banner-images/15-06-2026/1781499123101-web-BloodFather.jpg",
+        "Key": "gudsho-upload-video-banner-images/15-06-2026/1781499123101-web-BloodFather.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-video-banner-images/15-06-2026/1781499123146-mobile-BloodFather.webp",
+        "web": "gudsho-upload-video-banner-images/15-06-2026/1781499123139-web-BloodFather.webp",
+        "Key": "gudsho-upload-video-banner-images/15-06-2026/1781499123139-web-BloodFather.webp"
+       }
+      },
+      "home_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-home-banner-images/15-06-2026/1781499123694-mobile-BloodFather.jpg",
+        "web": "gudsho-upload-home-banner-images/15-06-2026/1781499123703-web-BloodFather.jpg",
+        "Key": "gudsho-upload-home-banner-images/15-06-2026/1781499123703-web-BloodFather.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-home-banner-images/15-06-2026/1781499123706-mobile-BloodFather.webp",
+        "web": "gudsho-upload-home-banner-images/15-06-2026/1781499123732-web-BloodFather.webp",
+        "Key": "gudsho-upload-home-banner-images/15-06-2026/1781499123732-web-BloodFather.webp"
+       }
+      },
+      "home_banner_image": "gudsho-upload-home-banner-images/15-06-2026/1781499123703-web-BloodFather.jpg",
+      "new_thumbnail_images": {
+       "default": {
+        "tm": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124255-tm-BloodFather.jpg",
+        "ts": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124262-ts-BloodFather.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124316-tv-BloodFather.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124282-ta-BloodFather.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124275-tp-BloodFather.jpg",
+        "to": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124286-to-BloodFather.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124288-tc-BloodFather.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124287-tl-BloodFather.jpg"
+       },
+       "webp": {
+        "ta": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124347-ta-BloodFather.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124334-ts-BloodFather.webp",
+        "tm": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124325-tm-BloodFather.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124342-tc-BloodFather.webp",
+        "tp": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124348-tp-BloodFather.webp",
+        "tv": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124388-tv-BloodFather.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124343-tl-BloodFather.webp",
+        "to": "gudsho-upload-new_thumbnail_images/15-06-2026/1781499124340-to-BloodFather.webp"
+       }
+      },
+      "scheduled_at": null,
+      "video_duration": "267.72",
+      "updated_at": "2026-10-08T13:24:20.652Z",
+      "_cacheVersion": 1,
+      "title": "Blood Father1",
+      "description": "An ex-con reconnects with his estranged teenage daughter while fighting to keep her alive after she becomes a target of violent drug dealers.",
+      "default_genre": {
+       "_id": "6a1432f418d4d53c2c6003c4",
+       "title": "action",
+       "slug": "action"
+      },
+      "genre": [
+       {
+        "_id": "6a1432f418d4d53c2c6003c4",
+        "title": "Action",
+        "slug": "action"
+       },
+       {
+        "_id": "6a1432f418d4d54c5d6003d2",
+        "title": "Thriller",
+        "slug": "thriller"
+       },
+       {
+        "_id": "6a1432f418d4d563cb6003c8",
+        "title": "Drama",
+        "slug": "drama"
+       }
+      ],
+      "_langUpdatedAt": "2026-10-08T13:24:20.652Z",
+      "type": 1,
+      "category_id": "6aa27a1ff3fc183e91518b75",
+      "is_top_ten": false,
+      "is_watch_later": 0,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0
+     },
+     {
+      "age_limit": 4,
+      "is_published": 1,
+      "monetization": 4,
+      "geo_type": 1,
+      "scheduled": false,
+      "media_audio_languages": [],
+      "is_subscription": false,
+      "publish_status": 0,
+      "_id": "6ab261cca3df17c89c167207",
+      "slug": "test",
+      "sho_type": 1,
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "video_banner_images": {
+       "default": {
+        "web": "gudsho-upload-video-banner-images/22-09-2026/1790075465736-web-blob.jpg",
+        "mobile": "gudsho-upload-video-banner-images/22-09-2026/1790075465746-mobile-blob.jpg",
+        "Key": "gudsho-upload-video-banner-images/22-09-2026/1790075465736-web-blob.jpg"
+       },
+       "webp": null
+      },
+      "default_language": "English",
+      "scheduled_at": null,
+      "prices": [
+       {
+        "amount": 123,
+        "currency": "INR",
+        "currency_type": 1
+       }
+      ],
+      "new_thumbnail_images": {},
+      "updated_at": "2026-10-09T12:09:40.408Z",
+      "_cacheVersion": 1,
+      "genre": [
+       {
+        "_id": "6a1432f418d4d5994d6003c7",
+        "title": "Crime",
+        "slug": "crime"
+       },
+       {
+        "_id": "6a1432f418d4d563cb6003c8",
+        "title": "Drama",
+        "slug": "drama"
+       },
+       {
+        "_id": "6a1432f418d4d53c2c6003c4",
+        "title": "Action",
+        "slug": "action"
+       }
+      ],
+      "title": "Video with no Promo",
+      "default_genre": {
+       "_id": "6a1432f418d4d53c2c6003c4",
+       "is_active": true,
+       "is_archived": false,
+       "title": "Action",
+       "slug": "action",
+       "creator_id": "6a1432ca11219130eba167e0",
+       "updator_id": "6a1432ca11219130eba167e0",
+       "created_at": "2026-05-25T11:31:00.506Z",
+       "updated_at": "2026-05-25T11:31:00.506Z",
+       "__v": 0
+      },
+      "description": "\"Views decreased 18% primarily on mobile Safari. The drop started after release v4.2.1 and is concentrated on the watch-promo page.\"",
+      "_langUpdatedAt": "2026-10-09T12:09:40.408Z",
+      "type": 1,
+      "category_id": "6aa27a1ff3fc183e91518b75",
+      "is_top_ten": false,
+      "video_duration": 0,
+      "is_watch_later": 0,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0
+     }
+    ]
+   },
+   {
+    "_id": "6a302c12f4074a3be869f976",
+    "is_top_ten": false,
+    "title": "Popular Channels",
+    "type": 4,
+    "row_count": 1,
+    "count": 8,
+    "total": 8,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 1,
+    "previous": null,
+    "next": null,
+    "data": [
+     {
+      "_id": "6a1432ca1121914bd8a167f2",
+      "profile_picture": "images/1779980945139-blob.png",
+      "is_active": 1,
+      "name": "VplayedDev",
+      "slug": "vplayeddev",
+      "is_published": 1,
+      "sho_type": 3,
+      "follow_count": 4,
+      "bg_card_color": "#A0E3FF",
+      "id": "6a1432ca1121914bd8a167f2",
+      "type": 4,
+      "category_id": "6a302c12f4074a3be869f976",
+      "is_top_ten": false
+     },
+     {
+      "_id": "6a143b54c729db1125629ad4",
+      "follow_count": 4,
+      "is_active": 1,
+      "bg_card_color": "#FFA0A0",
+      "name": "Comedy Spot",
+      "slug": "comedy-spot",
+      "sho_type": 3,
+      "is_published": 1,
+      "profile_picture": "images/1779787669473-blob.png",
+      "type": 4,
+      "category_id": "6a302c12f4074a3be869f976",
+      "is_top_ten": false
+     }
+    ]
+   }
+  ],
+  "total": 18,
+  "recordsPerPage": 3,
+  "currentPage": 1,
+  "totalPages": 6,
+  "previous": null,
+  "next": 2
+ },
+ "error": false
+}

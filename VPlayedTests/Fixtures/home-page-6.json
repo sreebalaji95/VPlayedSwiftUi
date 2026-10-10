@@ -1,0 +1,998 @@
+{
+ "statusCode": 200,
+ "message": "Data fetched successfully.",
+ "status": "success",
+ "response": {
+  "data": [
+   {
+    "_id": "6a2d645848647c0273b2a0fc",
+    "is_top_ten": false,
+    "title": "Action Moives",
+    "type": 1,
+    "row_count": 1,
+    "count": 109,
+    "total": 109,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 11,
+    "previous": null,
+    "next": 2,
+    "data": [
+     {
+      "_id": "6a2d5adf6fd68806672e597f",
+      "studio_id": "6a143b54c729db1125629ad4",
+      "studio_name": "Comedy Spot",
+      "studio_slug": "comedy-spot",
+      "sho_type": 1,
+      "title": "Freakier Friday",
+      "slug": "freakier-friday",
+      "default_slug": "freakier-friday",
+      "inc_id": 1,
+      "sho_id": "GS6a143b54c729db1125629ad4SH1",
+      "description": "Years after Tess and Anna endured an identity crisis, Anna now has a daughter of her own and a soon-to-be stepdaughter. As they navigate the myriad challenges that come when two families merge, Tess and Anna discover lightning might indeed strike twice.",
+      "meta_title": "Freakier Friday",
+      "meta_description": "Years after Tess and Anna endured an identity crisis, Anna now has a daughter of her own and a soon-to-be stepdaughter. As they navigate the myriad challenges t",
+      "default_language": "English",
+      "age_limit": 4,
+      "default_genre": {
+       "_id": "6a1432f418d4d5aba06003c6",
+       "title": "comedy",
+       "slug": "comedy"
+      },
+      "genre": [
+       {
+        "_id": "6a1432f418d4d5aba06003c6",
+        "title": "Comedy",
+        "slug": "comedy"
+       },
+       {
+        "_id": "6a1432f418d4d534a56003c9",
+        "title": "Fantasy",
+        "slug": "fantasy"
+       },
+       {
+        "_id": "6a143b5318d4d5255b60051e",
+        "title": "Family",
+        "slug": "family"
+       }
+      ],
+      "prices": [],
+      "status": 3,
+      "is_active": 1,
+      "is_public": 1,
+      "is_published": 1,
+      "publish_status": 0,
+      "published_on": "2026-06-13T13:27:59.025Z",
+      "monetization": 5,
+      "geo_type": 1,
+      "is_archived": 0,
+      "is_fast_channel": false,
+      "page_view": 0,
+      "bought_count": 0,
+      "is_subscription": false,
+      "is_donation": false,
+      "is_meta_edited": false,
+      "scheduled": false,
+      "excel_image_status": 0,
+      "facebook_shares": 0,
+      "twitter_shares": 0,
+      "whatsapp_shares": 0,
+      "other_shares": 0,
+      "use_video_thumbnail_image_instead": false,
+      "creator_id": "6a1432ca112191320fa167ed",
+      "updator_id": "6a1432ca112191320fa167ed",
+      "sho_released_on": "2025-08-06",
+      "poster_images": {
+       "default": {
+        "mobile": "gudsho-upload-poster-images/13-06-2026/1781357224029-mobile-FreakierFriday.jpg",
+        "web": "gudsho-upload-poster-images/13-06-2026/1781357224022-web-FreakierFriday.jpg",
+        "Key": "gudsho-upload-poster-images/13-06-2026/1781357224022-web-FreakierFriday.jpg"
+       },
+       "webp": {
+        "web": "gudsho-upload-poster-images/13-06-2026/1781357224234-web-FreakierFriday.webp",
+        "mobile": "gudsho-upload-poster-images/13-06-2026/1781357224114-mobile-FreakierFriday.webp",
+        "Key": "gudsho-upload-poster-images/13-06-2026/1781357224234-web-FreakierFriday.webp"
+       }
+      },
+      "poster_image": "gudsho-upload-poster-images/13-06-2026/1781357224022-web-FreakierFriday.jpg",
+      "thumbnail_images": {
+       "default": {
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781357238019-mobile-FreakierFriday.jpg",
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781357238026-web-FreakierFriday.jpg",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781357238026-web-FreakierFriday.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781357238020-mobile-FreakierFriday.webp",
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781357238028-web-FreakierFriday.webp",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781357238028-web-FreakierFriday.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781357238026-web-FreakierFriday.jpg",
+      "mobile_poster_images": {
+       "default": "gudsho-upload-mobile-poster-images/13-06-2026/1781357239918-mobile-FreakierFriday.jpg",
+       "webp": "gudsho-upload-mobile-poster-images/13-06-2026/1781357240001-mobile-FreakierFriday.webp"
+      },
+      "mobile_poster_image": "gudsho-upload-mobile-poster-images/13-06-2026/1781357239918-mobile-FreakierFriday.jpg",
+      "video_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781357250114-mobile-FreakierFriday.jpg",
+        "web": "gudsho-upload-video-banner-images/13-06-2026/1781357250182-web-FreakierFriday.jpg",
+        "Key": "gudsho-upload-video-banner-images/13-06-2026/1781357250182-web-FreakierFriday.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781357250277-mobile-FreakierFriday.webp",
+        "web": "gudsho-upload-video-banner-images/13-06-2026/1781357250303-web-FreakierFriday.webp",
+        "Key": "gudsho-upload-video-banner-images/13-06-2026/1781357250303-web-FreakierFriday.webp"
+       }
+      },
+      "video_banner_image": "gudsho-upload-video-banner-images/13-06-2026/1781357250182-web-FreakierFriday.jpg",
+      "home_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781357257525-mobile-FreakierFriday.jpg",
+        "web": "gudsho-upload-home-banner-images/13-06-2026/1781357257579-web-FreakierFriday.jpg",
+        "Key": "gudsho-upload-home-banner-images/13-06-2026/1781357257579-web-FreakierFriday.jpg"
+       },
+       "webp": {
+        "web": "gudsho-upload-home-banner-images/13-06-2026/1781357257689-web-FreakierFriday.webp",
+        "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781357257628-mobile-FreakierFriday.webp",
+        "Key": "gudsho-upload-home-banner-images/13-06-2026/1781357257689-web-FreakierFriday.webp"
+       }
+      },
+      "home_banner_image": "gudsho-upload-home-banner-images/13-06-2026/1781357257579-web-FreakierFriday.jpg",
+      "new_thumbnail_images": {
+       "default": {
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357266750-tl-FreakierFriday.jpg",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357266899-ts-FreakierFriday.jpg",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357266902-tm-FreakierFriday.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357266974-tp-FreakierFriday.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357266913-tc-FreakierFriday.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357266975-ta-FreakierFriday.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267022-tv-FreakierFriday.jpg",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267007-to-FreakierFriday.jpg"
+       },
+       "webp": {
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267237-tp-FreakierFriday.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267250-tl-FreakierFriday.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267298-ta-FreakierFriday.webp",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267348-tv-FreakierFriday.webp",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267092-tm-FreakierFriday.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267159-ts-FreakierFriday.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267229-tc-FreakierFriday.webp",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781357267701-to-FreakierFriday.webp"
+       }
+      },
+      "may_be_later": [
+       "PROMOS",
+       "AUDIO"
+      ],
+      "background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "thumb_background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "_langUpdatedAt": null,
+      "_cacheVersion": 1,
+      "type": 1,
+      "category_id": "6a2d645848647c0273b2a0fc",
+      "is_top_ten": false,
+      "video_duration": "267.72",
+      "is_watch_later": 0,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0
+     },
+     {
+      "_id": "6a2d651c6fd68806672e81fe",
+      "studio_id": "6a143b54c729db1125629ad4",
+      "studio_name": "Comedy Spot",
+      "studio_slug": "comedy-spot",
+      "sho_type": 1,
+      "title": "Dilwale Dulhania Le Jayenge",
+      "slug": "dilwale-dulhania-le-jayenge",
+      "default_slug": "dilwale-dulhania-le-jayenge",
+      "inc_id": 1,
+      "sho_id": "GS6a143b54c729db1125629ad4SH1",
+      "description": "Raj is a rich, carefree, happy-go-lucky second generation NRI. Simran is the daughter of Chaudhary Baldev Singh, who in spite of being an NRI is very strict about adherence to Indian values. Simran has left for India to be married to her childhood fiancé. Raj leaves for India with a mission at his hands, to claim his lady love under the noses of her whole family. Thus begins a saga.",
+      "meta_title": "Dilwale Dulhania Le Jayenge",
+      "meta_description": "Raj is a rich, carefree, happy-go-lucky second generation NRI. Simran is the daughter of Chaudhary Baldev Singh, who in spite of being an NRI is very strict abo",
+      "default_language": "Hindi",
+      "age_limit": 4,
+      "default_genre": {
+       "_id": "6a1432f418d4d5aba06003c6",
+       "title": "comedy",
+       "slug": "comedy"
+      },
+      "genre": [
+       {
+        "_id": "6a1432f418d4d5aba06003c6",
+        "title": "Comedy",
+        "slug": "comedy"
+       },
+       {
+        "_id": "6a1432f418d4d563cb6003c8",
+        "title": "Drama",
+        "slug": "drama"
+       },
+       {
+        "_id": "6a1432f418d4d56b516003cf",
+        "title": "Romance",
+        "slug": "romance"
+       }
+      ],
+      "prices": [],
+      "status": 3,
+      "is_active": 1,
+      "is_public": 1,
+      "is_published": 1,
+      "publish_status": 0,
+      "published_on": "2026-06-13T14:11:40.150Z",
+      "monetization": 5,
+      "geo_type": 1,
+      "is_archived": 0,
+      "is_fast_channel": false,
+      "page_view": 0,
+      "bought_count": 0,
+      "is_subscription": false,
+      "is_donation": false,
+      "is_meta_edited": false,
+      "scheduled": false,
+      "excel_image_status": 0,
+      "facebook_shares": 0,
+      "twitter_shares": 0,
+      "whatsapp_shares": 0,
+      "other_shares": 0,
+      "use_video_thumbnail_image_instead": false,
+      "creator_id": "6a1432ca112191320fa167ed",
+      "updator_id": "6a1432ca112191320fa167ed",
+      "sho_released_on": "1995-10-20",
+      "poster_images": {
+       "default": {
+        "mobile": "gudsho-upload-poster-images/13-06-2026/1781359878756-mobile-DilwaleDulhaniaLeJayenge.jpg",
+        "web": "gudsho-upload-poster-images/13-06-2026/1781359878845-web-DilwaleDulhaniaLeJayenge.jpg",
+        "Key": "gudsho-upload-poster-images/13-06-2026/1781359878845-web-DilwaleDulhaniaLeJayenge.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-poster-images/13-06-2026/1781359878902-mobile-DilwaleDulhaniaLeJayenge.webp",
+        "web": "gudsho-upload-poster-images/13-06-2026/1781359878896-web-DilwaleDulhaniaLeJayenge.webp",
+        "Key": "gudsho-upload-poster-images/13-06-2026/1781359878896-web-DilwaleDulhaniaLeJayenge.webp"
+       }
+      },
+      "poster_image": "gudsho-upload-poster-images/13-06-2026/1781359878845-web-DilwaleDulhaniaLeJayenge.jpg",
+      "thumbnail_images": {
+       "default": {
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781359883042-web-DilwaleDulhaniaLeJayenge.jpg",
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781359883047-mobile-DilwaleDulhaniaLeJayenge.jpg",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781359883042-web-DilwaleDulhaniaLeJayenge.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781359883066-mobile-DilwaleDulhaniaLeJayenge.webp",
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781359883079-web-DilwaleDulhaniaLeJayenge.webp",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781359883079-web-DilwaleDulhaniaLeJayenge.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781359883042-web-DilwaleDulhaniaLeJayenge.jpg",
+      "mobile_poster_images": {
+       "default": "gudsho-upload-mobile-poster-images/13-06-2026/1781359886706-mobile-DilwaleDulhaniaLeJayenge.jpg",
+       "webp": "gudsho-upload-mobile-poster-images/13-06-2026/1781359886750-mobile-DilwaleDulhaniaLeJayenge.webp"
+      },
+      "mobile_poster_image": "gudsho-upload-mobile-poster-images/13-06-2026/1781359886706-mobile-DilwaleDulhaniaLeJayenge.jpg",
+      "video_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781359888408-mobile-DilwaleDulhaniaLeJayenge.jpg",
+        "web": "gudsho-upload-video-banner-images/13-06-2026/1781359888459-web-DilwaleDulhaniaLeJayenge.jpg",
+        "Key": "gudsho-upload-video-banner-images/13-06-2026/1781359888459-web-DilwaleDulhaniaLeJayenge.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781359888486-mobile-DilwaleDulhaniaLeJayenge.webp",
+        "web": "gudsho-upload-video-banner-images/13-06-2026/1781359888526-web-DilwaleDulhaniaLeJayenge.webp",
+        "Key": "gudsho-upload-video-banner-images/13-06-2026/1781359888526-web-DilwaleDulhaniaLeJayenge.webp"
+       }
+      },
+      "video_banner_image": "gudsho-upload-video-banner-images/13-06-2026/1781359888459-web-DilwaleDulhaniaLeJayenge.jpg",
+      "home_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781359890646-mobile-DilwaleDulhaniaLeJayenge.jpg",
+        "web": "gudsho-upload-home-banner-images/13-06-2026/1781359890656-web-DilwaleDulhaniaLeJayenge.jpg",
+        "Key": "gudsho-upload-home-banner-images/13-06-2026/1781359890656-web-DilwaleDulhaniaLeJayenge.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781359890708-mobile-DilwaleDulhaniaLeJayenge.webp",
+        "web": "gudsho-upload-home-banner-images/13-06-2026/1781359890780-web-DilwaleDulhaniaLeJayenge.webp",
+        "Key": "gudsho-upload-home-banner-images/13-06-2026/1781359890780-web-DilwaleDulhaniaLeJayenge.webp"
+       }
+      },
+      "home_banner_image": "gudsho-upload-home-banner-images/13-06-2026/1781359890656-web-DilwaleDulhaniaLeJayenge.jpg",
+      "new_thumbnail_images": {
+       "default": {
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896393-ta-DilwaleDulhaniaLeJayenge.jpg",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896384-ts-DilwaleDulhaniaLeJayenge.jpg",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896385-tm-DilwaleDulhaniaLeJayenge.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896398-tp-DilwaleDulhaniaLeJayenge.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896404-tc-DilwaleDulhaniaLeJayenge.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896431-tv-DilwaleDulhaniaLeJayenge.jpg",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896375-to-DilwaleDulhaniaLeJayenge.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896374-tl-DilwaleDulhaniaLeJayenge.jpg"
+       },
+       "webp": {
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896466-tp-DilwaleDulhaniaLeJayenge.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896474-ta-DilwaleDulhaniaLeJayenge.webp",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896520-to-DilwaleDulhaniaLeJayenge.webp",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896522-tv-DilwaleDulhaniaLeJayenge.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896554-tc-DilwaleDulhaniaLeJayenge.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896550-tl-DilwaleDulhaniaLeJayenge.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896450-ts-DilwaleDulhaniaLeJayenge.webp",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781359896441-tm-DilwaleDulhaniaLeJayenge.webp"
+       }
+      },
+      "may_be_later": [
+       "PROMOS",
+       "AUDIO"
+      ],
+      "background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "thumb_background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "_langUpdatedAt": null,
+      "_cacheVersion": 1,
+      "type": 1,
+      "category_id": "6a2d645848647c0273b2a0fc",
+      "is_top_ten": false,
+      "video_duration": "267.72",
+      "is_watch_later": 0,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0
+     }
+    ]
+   },
+   {
+    "_id": "6a79cc1bc2084923352508e5",
+    "is_top_ten": false,
+    "title": "Bulk Purchase",
+    "type": 5,
+    "row_count": 1,
+    "count": 5,
+    "total": 5,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 1,
+    "previous": null,
+    "next": null,
+    "data": [
+     {
+      "_id": "6a302d3edf9e840f73bcd22f",
+      "device_limit": 1,
+      "is_superadmin": false,
+      "status": true,
+      "is_active": true,
+      "is_archived": false,
+      "banner_img": "https://gsvp-dev.s3.ap-south-1.amazonaws.com/static/images/yellow.png",
+      "name": "Summer Offer",
+      "description": "Premium is available for Rs 99 per month under a limited-period Summer OTT Sale",
+      "in_app_purchase_id": "324567",
+      "days": 7,
+      "prices": [
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6ac37b2b0c7b400683174785",
+        "currency": "INR",
+        "currency_type": 1,
+        "currency_sign": "₹",
+        "amount": 99,
+        "discounted_price": 0,
+        "discounted_percentage": 0
+       },
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6ac37b2b0c7b403efa174786",
+        "currency": "USD",
+        "currency_type": 2,
+        "currency_sign": "$",
+        "amount": 5,
+        "discounted_price": 0,
+        "discounted_percentage": 0
+       }
+      ],
+      "category": 2,
+      "slug": "summer-offer",
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "rank": "0|xzzzzy:",
+      "creator_id": "6a1432ca11219130eba167e0",
+      "updator_id": "6a1432ca11219130eba167e0",
+      "created_at": "2026-06-15T16:50:06.317Z",
+      "updated_at": "2026-10-08T07:47:21.830Z",
+      "background_color": "#FFCF1B",
+      "banner_badge": "static/images/bag.svg",
+      "bulk_thumbnail_images": {
+       "default": {
+        "tl": "gudsho-upload-bulk_thumbnail_images/05-10-2026/1791195851339-blob-tl.jpg",
+        "tp": "gudsho-upload-bulk_thumbnail_images/05-10-2026/1791195849520-blob-tp.jpg",
+        "tv": "gudsho-upload-bulk_thumbnail_images/05-10-2026/1791195849804-blob-tv.jpg"
+       },
+       "webp": {
+        "tl": "gudsho-upload-bulk_thumbnail_images/05-10-2026/1791195851801-blob-tl.webp",
+        "tp": "gudsho-upload-bulk_thumbnail_images/05-10-2026/1791195851110-blob-tp.webp",
+        "tv": "gudsho-upload-bulk_thumbnail_images/05-10-2026/1791195851384-blob-tv.webp"
+       }
+      },
+      "label": {
+       "en": "Hot Summer offer"
+      },
+      "type": 5,
+      "category_id": "6a79cc1bc2084923352508e5",
+      "is_top_ten": false,
+      "media_id": "6a302d3edf9e840f73bcd22f"
+     },
+     {
+      "_id": "6a3b863b250a8754aebce8d0",
+      "device_limit": 1,
+      "is_superadmin": false,
+      "status": true,
+      "is_active": true,
+      "is_archived": false,
+      "banner_img": "gudsho-upload-bulkpurchase-banner-images/24-06-2026/1782285571136-blob.jpg",
+      "name": "June feast",
+      "description": "june feast Feasrtttttttttttttttttttttttttttt",
+      "in_app_purchase_id": "feast10",
+      "days": 7,
+      "prices": [
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6a3b90c554a990488a834d1a",
+        "currency": "INR",
+        "currency_type": 1,
+        "currency_sign": "₹",
+        "amount": 100,
+        "discounted_price": 10,
+        "discounted_percentage": 10
+       },
+       {
+        "is_active": true,
+        "is_archived": false,
+        "_id": "6a3b90c554a990cee4834d1b",
+        "currency": "USD",
+        "currency_type": 2,
+        "currency_sign": "$",
+        "amount": 100,
+        "discounted_price": 10,
+        "discounted_percentage": 10
+       }
+      ],
+      "category": 2,
+      "slug": "june-feast",
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "rank": "0|xzzzzs:",
+      "creator_id": "6a1432ca11219130eba167e0",
+      "updator_id": "6a1432ca11219130eba167e0",
+      "created_at": "2026-06-24T07:24:43.097Z",
+      "updated_at": "2026-10-08T07:47:20.452Z",
+      "type": 5,
+      "category_id": "6a79cc1bc2084923352508e5",
+      "is_top_ten": false,
+      "media_id": "6a3b863b250a8754aebce8d0"
+     }
+    ]
+   },
+   {
+    "_id": "6a2fd509a217a34277f9b263",
+    "is_top_ten": false,
+    "title": "Promo Titles",
+    "type": 2,
+    "row_count": 1,
+    "count": 81,
+    "total": 81,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 9,
+    "previous": null,
+    "next": 2,
+    "data": [
+     {
+      "_id": "6a2d81ca2088d28529d38a1a",
+      "title": "Iyobinte Pusthakam - Official Trailer",
+      "slug": "iyobinte-pusthakam-official-trailer",
+      "master_details_id": {
+       "_id": "6a2d7c840baa554e4926ffdf",
+       "studio_id": "6a143b54c729db4c6a629ac0",
+       "studio_name": "Drama Spotlight",
+       "studio_slug": "drama-spotlight",
+       "sho_type": 1,
+       "title": "Iyobinte Pusthakam",
+       "slug": "iyobinte-pusthakam",
+       "inc_id": 1,
+       "sho_id": "GS6a143b54c729db4c6a629ac0SH1",
+       "description": "Set in the backdrop of the picturesque Munnar, it tells the story of Iyob, a slave-turned-master.",
+       "meta_title": "Iyobinte Pusthakam",
+       "meta_description": "Set in the backdrop of the picturesque Munnar, it tells the story of Iyob, a slave-turned-master.",
+       "default_language": "Malayalam",
+       "age_limit": 1,
+       "default_genre": {
+        "_id": "6a1432f418d4d563cb6003c8",
+        "title": "drama",
+        "slug": "drama"
+       },
+       "genre": [
+        {
+         "_id": "6a1432f418d4d563cb6003c8",
+         "title": "Drama",
+         "slug": "drama"
+        },
+        {
+         "_id": "6a1432f418d4d5688d6003ca",
+         "title": "Historical",
+         "slug": "historical"
+        },
+        {
+         "_id": "6a1432f418d4d54c5d6003d2",
+         "title": "Thriller",
+         "slug": "thriller"
+        }
+       ],
+       "prices": [
+        {
+         "currency": "INR",
+         "amount": 199
+        },
+        {
+         "currency": "USD",
+         "amount": 0.99
+        }
+       ],
+       "status": 3,
+       "is_public": 1,
+       "is_published": 1,
+       "publish_status": 0,
+       "published_on": "2026-06-13T15:51:32.887Z",
+       "monetization": 5,
+       "geo_type": 1,
+       "is_archived": 0,
+       "is_fast_channel": false,
+       "page_view": 0,
+       "bought_count": 0,
+       "is_subscription": false,
+       "is_donation": false,
+       "is_meta_edited": false,
+       "scheduled": false,
+       "excel_image_status": 0,
+       "facebook_shares": 0,
+       "twitter_shares": 0,
+       "whatsapp_shares": 0,
+       "other_shares": 0,
+       "creator_id": "6a1432ca112191320fa167ed",
+       "updator_id": "6a1432ca112191320fa167ed",
+       "sho_released_on": "2014-11-07",
+       "poster_images": {
+        "default": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781365856574-mobile-IyobintePusthakam.jpg",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781365856638-web-IyobintePusthakam.jpg",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781365856638-web-IyobintePusthakam.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781365856713-mobile-IyobintePusthakam.webp",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781365856743-web-IyobintePusthakam.webp",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781365856743-web-IyobintePusthakam.webp"
+        }
+       },
+       "poster_image": "gudsho-upload-poster-images/13-06-2026/1781365856638-web-IyobintePusthakam.jpg",
+       "thumbnail_images": {
+        "default": {
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781365862328-web-IyobintePusthakam.jpg",
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781365862342-mobile-IyobintePusthakam.jpg",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781365862328-web-IyobintePusthakam.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781365862352-mobile-IyobintePusthakam.webp",
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781365862365-web-IyobintePusthakam.webp",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781365862365-web-IyobintePusthakam.webp"
+        }
+       },
+       "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781365862328-web-IyobintePusthakam.jpg",
+       "mobile_poster_images": {
+        "default": "gudsho-upload-mobile-poster-images/13-06-2026/1781365872461-mobile-IyobintePusthakam.jpg",
+        "webp": "gudsho-upload-mobile-poster-images/13-06-2026/1781365872471-mobile-IyobintePusthakam.webp"
+       },
+       "mobile_poster_image": "gudsho-upload-mobile-poster-images/13-06-2026/1781365872461-mobile-IyobintePusthakam.jpg",
+       "video_banner_images": {
+        "default": {
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781365875097-mobile-IyobintePusthakam.jpg",
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781365875116-web-IyobintePusthakam.jpg",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781365875116-web-IyobintePusthakam.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781365875182-mobile-IyobintePusthakam.webp",
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781365875253-web-IyobintePusthakam.webp",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781365875253-web-IyobintePusthakam.webp"
+        }
+       },
+       "video_banner_image": "gudsho-upload-video-banner-images/13-06-2026/1781365875116-web-IyobintePusthakam.jpg",
+       "home_banner_images": {
+        "default": {
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781365878166-mobile-IyobintePusthakam.jpg",
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781365878205-web-IyobintePusthakam.jpg",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781365878205-web-IyobintePusthakam.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781365878227-mobile-IyobintePusthakam.webp",
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781365878221-web-IyobintePusthakam.webp",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781365878221-web-IyobintePusthakam.webp"
+        }
+       },
+       "home_banner_image": "gudsho-upload-home-banner-images/13-06-2026/1781365878205-web-IyobintePusthakam.jpg",
+       "new_thumbnail_images": {
+        "default": {
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888176-ts-IyobintePusthakam.jpg",
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888158-tm-IyobintePusthakam.jpg",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888223-ta-IyobintePusthakam.jpg",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888201-tp-IyobintePusthakam.jpg",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888124-to-IyobintePusthakam.jpg",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888139-tl-IyobintePusthakam.jpg",
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888272-tv-IyobintePusthakam.jpg",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888224-tc-IyobintePusthakam.jpg"
+        },
+        "webp": {
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888422-tv-IyobintePusthakam.webp",
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888310-ts-IyobintePusthakam.webp",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888356-ta-IyobintePusthakam.webp",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888340-tp-IyobintePusthakam.webp",
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888292-tm-IyobintePusthakam.webp",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888358-tc-IyobintePusthakam.webp",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888376-to-IyobintePusthakam.webp",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888402-tl-IyobintePusthakam.webp"
+        }
+       },
+       "may_be_later": [
+        "PROMOS",
+        "AUDIO"
+       ],
+       "background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "thumb_background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "_langUpdatedAt": null,
+       "_cacheVersion": 1
+      },
+      "sho_type": 1,
+      "view_count": 17,
+      "guds_count": 2,
+      "video_url": "gudsho-promo-output/2026/05/26/1779772581348-baby-flying-squirrel-takes-flight-for-the-first-ti_promo.mp4",
+      "hls_playlist_url": "output/2026/05/26/1779772581096-baby-flying-squirrel-takes-flight-for-the-first-ti/playlist",
+      "video_duration": "206.64",
+      "thumbnail_images": {
+       "default": {
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888176-ts-IyobintePusthakam.jpg",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888158-tm-IyobintePusthakam.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888223-ta-IyobintePusthakam.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888201-tp-IyobintePusthakam.jpg",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888124-to-IyobintePusthakam.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888139-tl-IyobintePusthakam.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888272-tv-IyobintePusthakam.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888224-tc-IyobintePusthakam.jpg"
+       },
+       "webp": {
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888422-tv-IyobintePusthakam.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888310-ts-IyobintePusthakam.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888356-ta-IyobintePusthakam.webp",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888340-tp-IyobintePusthakam.webp",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888292-tm-IyobintePusthakam.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888358-tc-IyobintePusthakam.webp",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888376-to-IyobintePusthakam.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888402-tl-IyobintePusthakam.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888139-tl-IyobintePusthakam.jpg",
+      "new_thumbnail_images": {
+       "default": {
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888176-ts-IyobintePusthakam.jpg",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888158-tm-IyobintePusthakam.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888223-ta-IyobintePusthakam.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888201-tp-IyobintePusthakam.jpg",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888124-to-IyobintePusthakam.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888139-tl-IyobintePusthakam.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888272-tv-IyobintePusthakam.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888224-tc-IyobintePusthakam.jpg"
+       },
+       "webp": {
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888422-tv-IyobintePusthakam.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888310-ts-IyobintePusthakam.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888356-ta-IyobintePusthakam.webp",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888340-tp-IyobintePusthakam.webp",
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888292-tm-IyobintePusthakam.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888358-tc-IyobintePusthakam.webp",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888376-to-IyobintePusthakam.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365888402-tl-IyobintePusthakam.webp"
+       }
+      },
+      "description": "Official trailer for Iyobinte Pusthakam",
+      "_langUpdatedAt": null,
+      "_cacheVersion": 1,
+      "type": 2,
+      "category_id": "6a2fd509a217a34277f9b263",
+      "is_top_ten": false,
+      "is_guds": 0
+     },
+     {
+      "_id": "6a2d81ca2088d28529d38a28",
+      "title": "Kandahar - Official Trailer",
+      "slug": "kandahar-official-trailer",
+      "master_details_id": {
+       "_id": "6a2d7c930baa554e49270036",
+       "studio_id": "6a1432ca1121914bd8a167f2",
+       "studio_name": "VplayedDev",
+       "studio_slug": "vplayeddev",
+       "sho_type": 1,
+       "title": "Kandahar",
+       "slug": "kandahar",
+       "inc_id": 1,
+       "sho_id": "GS6a1432ca1121914bd8a167f2SH1",
+       "description": "Another mission with Mahadevan and crew, as they deal with international terrorism with a flight being hijacked by hardcore terrorists.",
+       "meta_title": "Kandahar",
+       "meta_description": "Another mission with Mahadevan and crew, as they deal with international terrorism with a flight being hijacked by hardcore terrorists.",
+       "default_language": "Malayalam",
+       "age_limit": 1,
+       "default_genre": {
+        "_id": "6a1432f418d4d563cb6003c8",
+        "title": "drama",
+        "slug": "drama"
+       },
+       "genre": [
+        {
+         "_id": "6a1432f418d4d563cb6003c8",
+         "title": "Drama",
+         "slug": "drama"
+        },
+        {
+         "_id": "6a1432f418d4d5688d6003ca",
+         "title": "Historical",
+         "slug": "historical"
+        }
+       ],
+       "prices": [
+        {
+         "currency": "INR",
+         "amount": 149
+        },
+        {
+         "currency": "USD",
+         "amount": 0
+        }
+       ],
+       "status": 3,
+       "is_public": 1,
+       "is_published": 1,
+       "publish_status": 0,
+       "published_on": "2026-06-13T15:51:47.416Z",
+       "monetization": 5,
+       "geo_type": 1,
+       "is_archived": 0,
+       "is_fast_channel": false,
+       "page_view": 0,
+       "bought_count": 0,
+       "is_subscription": false,
+       "is_donation": false,
+       "is_meta_edited": false,
+       "scheduled": false,
+       "excel_image_status": 0,
+       "facebook_shares": 0,
+       "twitter_shares": 0,
+       "whatsapp_shares": 0,
+       "other_shares": 0,
+       "creator_id": "6a1432ca112191320fa167ed",
+       "updator_id": "6a1432ca112191320fa167ed",
+       "sho_released_on": "2010-12-16",
+       "poster_images": {
+        "default": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781365872971-mobile-Kandahar.jpg",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781365873009-web-Kandahar.jpg",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781365873009-web-Kandahar.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781365873012-mobile-Kandahar.webp",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781365873059-web-Kandahar.webp",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781365873059-web-Kandahar.webp"
+        }
+       },
+       "poster_image": "gudsho-upload-poster-images/13-06-2026/1781365873009-web-Kandahar.jpg",
+       "thumbnail_images": {
+        "default": {
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781365875602-mobile-Kandahar.jpg",
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781365875587-web-Kandahar.jpg",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781365875587-web-Kandahar.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781365875623-mobile-Kandahar.webp",
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781365875622-web-Kandahar.webp",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781365875622-web-Kandahar.webp"
+        }
+       },
+       "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781365875587-web-Kandahar.jpg",
+       "mobile_poster_images": {
+        "default": "gudsho-upload-mobile-poster-images/13-06-2026/1781365878074-mobile-Kandahar.jpg",
+        "webp": "gudsho-upload-mobile-poster-images/13-06-2026/1781365878077-mobile-Kandahar.webp"
+       },
+       "mobile_poster_image": "gudsho-upload-mobile-poster-images/13-06-2026/1781365878074-mobile-Kandahar.jpg",
+       "video_banner_images": {
+        "default": {
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781365886183-web-Kandahar.jpg",
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781365886200-mobile-Kandahar.jpg",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781365886183-web-Kandahar.jpg"
+        },
+        "webp": {
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781365886262-web-Kandahar.webp",
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781365886311-mobile-Kandahar.webp",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781365886262-web-Kandahar.webp"
+        }
+       },
+       "video_banner_image": "gudsho-upload-video-banner-images/13-06-2026/1781365886183-web-Kandahar.jpg",
+       "home_banner_images": {
+        "default": {
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781365891481-web-Kandahar.jpg",
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781365891570-mobile-Kandahar.jpg",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781365891481-web-Kandahar.jpg"
+        },
+        "webp": {
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781365891611-web-Kandahar.webp",
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781365891663-mobile-Kandahar.webp",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781365891611-web-Kandahar.webp"
+        }
+       },
+       "home_banner_image": "gudsho-upload-home-banner-images/13-06-2026/1781365891481-web-Kandahar.jpg",
+       "new_thumbnail_images": {
+        "default": {
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894250-tm-Kandahar.jpg",
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894264-ts-Kandahar.jpg",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894284-tp-Kandahar.jpg",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894298-ta-Kandahar.jpg",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894285-tc-Kandahar.jpg",
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894317-tv-Kandahar.jpg",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894308-tl-Kandahar.jpg",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894467-to-Kandahar.jpg"
+        },
+        "webp": {
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894418-tm-Kandahar.webp",
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894433-ts-Kandahar.webp",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894453-tp-Kandahar.webp",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894456-ta-Kandahar.webp",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894404-tc-Kandahar.webp",
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894491-tv-Kandahar.webp",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894441-tl-Kandahar.webp",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894645-to-Kandahar.webp"
+        }
+       },
+       "may_be_later": [
+        "PROMOS",
+        "AUDIO"
+       ],
+       "background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "thumb_background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "_langUpdatedAt": null,
+       "_cacheVersion": 1
+      },
+      "sho_type": 1,
+      "view_count": 1,
+      "guds_count": 0,
+      "video_url": "gudsho-promo-output/2026/05/26/1779772581348-baby-flying-squirrel-takes-flight-for-the-first-ti_promo.mp4",
+      "hls_playlist_url": "output/2026/05/26/1779772581096-baby-flying-squirrel-takes-flight-for-the-first-ti/playlist",
+      "video_duration": "206.64",
+      "thumbnail_images": {
+       "default": {
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894250-tm-Kandahar.jpg",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894264-ts-Kandahar.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894284-tp-Kandahar.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894298-ta-Kandahar.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894285-tc-Kandahar.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894317-tv-Kandahar.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894308-tl-Kandahar.jpg",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894467-to-Kandahar.jpg"
+       },
+       "webp": {
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894418-tm-Kandahar.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894433-ts-Kandahar.webp",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894453-tp-Kandahar.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894456-ta-Kandahar.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894404-tc-Kandahar.webp",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894491-tv-Kandahar.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894441-tl-Kandahar.webp",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894645-to-Kandahar.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894308-tl-Kandahar.jpg",
+      "new_thumbnail_images": {
+       "default": {
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894250-tm-Kandahar.jpg",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894264-ts-Kandahar.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894284-tp-Kandahar.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894298-ta-Kandahar.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894285-tc-Kandahar.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894317-tv-Kandahar.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894308-tl-Kandahar.jpg",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894467-to-Kandahar.jpg"
+       },
+       "webp": {
+        "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894418-tm-Kandahar.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894433-ts-Kandahar.webp",
+        "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894453-tp-Kandahar.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894456-ta-Kandahar.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894404-tc-Kandahar.webp",
+        "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894491-tv-Kandahar.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894441-tl-Kandahar.webp",
+        "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781365894645-to-Kandahar.webp"
+       }
+      },
+      "description": "Official trailer for Kandahar",
+      "_langUpdatedAt": null,
+      "_cacheVersion": 1,
+      "type": 2,
+      "category_id": "6a2fd509a217a34277f9b263",
+      "is_top_ten": false,
+      "is_guds": 0
+     }
+    ]
+   }
+  ],
+  "total": 18,
+  "recordsPerPage": 3,
+  "currentPage": 6,
+  "totalPages": 6,
+  "previous": 5,
+  "next": null
+ },
+ "error": false
+}

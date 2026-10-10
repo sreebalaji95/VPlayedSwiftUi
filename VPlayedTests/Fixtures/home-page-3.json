@@ -1,0 +1,1079 @@
+{
+ "statusCode": 200,
+ "message": "Data fetched successfully.",
+ "status": "success",
+ "response": {
+  "data": [
+   {
+    "_id": "6a302882f4074a3f5469f71e",
+    "is_top_ten": false,
+    "title": "Audio",
+    "type": 3,
+    "row_count": 1,
+    "count": 160,
+    "total": 160,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 16,
+    "previous": null,
+    "next": 2,
+    "data": [
+     {
+      "_id": "6a2d4640f70e8db201674e2e",
+      "title": "Tourist Family - Title Song",
+      "studio_id": "6a143b54c729db1125629ad4",
+      "master_details_id": {
+       "_id": "6a2d463ff70e8db201674e06",
+       "studio_id": "6a143b54c729db1125629ad4",
+       "studio_name": "Comedy Spot",
+       "studio_slug": "comedy-spot",
+       "sho_type": 1,
+       "title": "Tourist Family",
+       "slug": "tourist-family",
+       "default_slug": "tourist-family",
+       "inc_id": 1,
+       "sho_id": "GS6a143b54c729db1125629ad4SH1",
+       "description": "A quirky Sri Lankan family seeking a fresh start in India transforms a disconnected neighborhood into a vibrant community with their infectious love and kindness.",
+       "meta_title": "Tourist Family",
+       "meta_description": "A quirky Sri Lankan family seeking a fresh start in India transforms a disconnected neighborhood into a vibrant community with their infectious love and kindnes",
+       "default_language": "Tamil",
+       "age_limit": 4,
+       "default_genre": {
+        "_id": "6a1432f418d4d5aba06003c6",
+        "title": "comedy",
+        "slug": "comedy"
+       },
+       "genre": [
+        {
+         "_id": "6a1432f418d4d5aba06003c6",
+         "title": "Comedy",
+         "slug": "comedy"
+        },
+        {
+         "_id": "6a1432f418d4d563cb6003c8",
+         "title": "Drama",
+         "slug": "drama"
+        },
+        {
+         "_id": "6a143b5318d4d5255b60051e",
+         "title": "Family",
+         "slug": "family"
+        }
+       ],
+       "prices": [
+        {
+         "currency": "INR",
+         "amount": 0
+        },
+        {
+         "currency": "USD",
+         "amount": 2.99
+        }
+       ],
+       "status": 3,
+       "is_active": 1,
+       "is_public": 1,
+       "is_published": 1,
+       "publish_status": 0,
+       "published_on": "2026-06-13T11:59:59.436Z",
+       "monetization": 5,
+       "geo_type": 1,
+       "is_archived": 0,
+       "is_fast_channel": false,
+       "page_view": 0,
+       "bought_count": 0,
+       "is_subscription": false,
+       "is_donation": false,
+       "is_meta_edited": false,
+       "scheduled": false,
+       "excel_image_status": 0,
+       "facebook_shares": 0,
+       "twitter_shares": 0,
+       "whatsapp_shares": 0,
+       "other_shares": 0,
+       "use_video_thumbnail_image_instead": false,
+       "creator_id": "6a1432ca112191320fa167ed",
+       "updator_id": "6a1432ca112191320fa167ed",
+       "sho_released_on": "2025-04-30",
+       "poster_images": {
+        "default": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781351941547-mobile-TouristFamily.jpg",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781351941434-web-TouristFamily.jpg",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781351941434-web-TouristFamily.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781351941804-mobile-TouristFamily.webp",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781351941818-web-TouristFamily.webp",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781351941818-web-TouristFamily.webp"
+        }
+       },
+       "poster_image": "gudsho-upload-poster-images/13-06-2026/1781351941434-web-TouristFamily.jpg",
+       "thumbnail_images": {
+        "default": {
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351950998-mobile-TouristFamily.jpg",
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351951117-mobile-TouristFamily.webp",
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351951064-web-TouristFamily.webp",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351951064-web-TouristFamily.webp"
+        }
+       },
+       "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg",
+       "mobile_poster_images": {
+        "default": "gudsho-upload-mobile-poster-images/13-06-2026/1781351962687-mobile-TouristFamily.jpg",
+        "webp": "gudsho-upload-mobile-poster-images/13-06-2026/1781351962787-mobile-TouristFamily.webp"
+       },
+       "mobile_poster_image": "gudsho-upload-mobile-poster-images/13-06-2026/1781351962687-mobile-TouristFamily.jpg",
+       "video_banner_images": {
+        "default": {
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781351972647-mobile-TouristFamily.jpg",
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781351972736-web-TouristFamily.jpg",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781351972736-web-TouristFamily.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781351972657-mobile-TouristFamily.webp",
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781351972762-web-TouristFamily.webp",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781351972762-web-TouristFamily.webp"
+        }
+       },
+       "video_banner_image": "gudsho-upload-video-banner-images/13-06-2026/1781351972736-web-TouristFamily.jpg",
+       "home_banner_images": {
+        "default": {
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781351979435-mobile-TouristFamily.jpg",
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781351979336-web-TouristFamily.jpg",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781351979336-web-TouristFamily.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781351979536-mobile-TouristFamily.webp",
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781351979624-web-TouristFamily.webp",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781351979624-web-TouristFamily.webp"
+        }
+       },
+       "home_banner_image": "gudsho-upload-home-banner-images/13-06-2026/1781351979336-web-TouristFamily.jpg",
+       "new_thumbnail_images": {
+        "default": {
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990364-tm-TouristFamily.jpg",
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990415-ts-TouristFamily.jpg",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990481-ta-TouristFamily.jpg",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990436-tp-TouristFamily.jpg",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990216-tl-TouristFamily.jpg",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990421-tc-TouristFamily.jpg",
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990532-tv-TouristFamily.jpg",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990350-to-TouristFamily.jpg"
+        },
+        "webp": {
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990686-tm-TouristFamily.webp",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990825-tp-TouristFamily.webp",
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990752-ts-TouristFamily.webp",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990816-ta-TouristFamily.webp",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990750-tc-TouristFamily.webp",
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990874-tv-TouristFamily.webp",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351990759-tl-TouristFamily.webp",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351991081-to-TouristFamily.webp"
+        }
+       },
+       "may_be_later": [
+        "PROMOS",
+        "AUDIO"
+       ],
+       "background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "thumb_background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "_langUpdatedAt": null,
+       "_cacheVersion": 1
+      },
+      "sho_type": 1,
+      "description": "Track 1 from Tourist Family",
+      "artist_name": "Sean Roldan",
+      "is_published": true,
+      "is_active": true,
+      "is_transcoded": true,
+      "is_transcode_triggered": true,
+      "s3_job_status": 2,
+      "job_status": 3,
+      "transcode_percentage": 100,
+      "upload_percentage": 100,
+      "progress": 100,
+      "status": "completed",
+      "is_hls": "true",
+      "creator_id": "6a1432ca112191320fa167ed",
+      "updator_id": "6a1432ca112191320fa167ed",
+      "is_archived": false,
+      "audio_url": "gudsho_video_samples/26-05-2026/1779773145538-BTSaaaPLAYLISTa2016a2023aMOSTaPOPULARaSONGSaamp3apmaamp3.mp3",
+      "audio_duration": "9488.300408",
+      "audio_size": "151813268",
+      "thumbnail_images": {
+       "default": {
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351950998-mobile-TouristFamily.jpg",
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351951117-mobile-TouristFamily.webp",
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351951064-web-TouristFamily.webp",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351951064-web-TouristFamily.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg",
+      "default_slug": "tourist-family-title-song",
+      "meta_description": "Track 1 from Tourist Family",
+      "meta_title": "Tourist Family - Title Song",
+      "slug": "tourist-family-title-song",
+      "new_thumbnail_images": {
+       "default": {
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351950998-mobile-TouristFamily.jpg",
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351950936-web-TouristFamily.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351951117-mobile-TouristFamily.webp",
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351951064-web-TouristFamily.webp",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351951064-web-TouristFamily.webp"
+       }
+      },
+      "play_count": 56,
+      "updated_at": "2026-10-07T07:02:48.157Z",
+      "_langUpdatedAt": "2026-10-07T07:02:48.157Z",
+      "_cacheVersion": 1,
+      "type": 3,
+      "category_id": "6a302882f4074a3f5469f71e",
+      "is_top_ten": false,
+      "is_guds": 0
+     },
+     {
+      "_id": "6a2d463ff70e8db201674e13",
+      "title": "Thalaivan Thalaivii - Theme Song",
+      "studio_id": "6a143b54c729db9f85629aca",
+      "master_details_id": {
+       "_id": "6a2d463df70e8db201674de8",
+       "studio_id": "6a143b54c729db9f85629aca",
+       "studio_name": "Romance & Family",
+       "studio_slug": "romance-and-family",
+       "sho_type": 1,
+       "title": "Thalaivan Thalaivii",
+       "slug": "thalaivan-thalaivii",
+       "default_slug": "thalaivan-thalaivii",
+       "inc_id": 1,
+       "sho_id": "GS6a143b54c729db9f85629acaSH1",
+       "description": "Two headstrong lovers navigate a turbulent relationship where passion and conflict intertwine, creating an intense emotional bond through their shared journey.",
+       "meta_title": "Thalaivan Thalaivii",
+       "meta_description": "Two headstrong lovers navigate a turbulent relationship where passion and conflict intertwine, creating an intense emotional bond through their shared journey.",
+       "default_language": "Tamil",
+       "age_limit": 4,
+       "default_genre": {
+        "_id": "6a1432f418d4d56b516003cf",
+        "title": "romance",
+        "slug": "romance"
+       },
+       "genre": [
+        {
+         "_id": "6a1432f418d4d5aba06003c6",
+         "title": "Comedy",
+         "slug": "comedy"
+        },
+        {
+         "_id": "6a1432f418d4d563cb6003c8",
+         "title": "Drama",
+         "slug": "drama"
+        },
+        {
+         "_id": "6a1432f418d4d56b516003cf",
+         "title": "Romance",
+         "slug": "romance"
+        }
+       ],
+       "prices": [
+        {
+         "currency": "INR",
+         "amount": 0
+        },
+        {
+         "currency": "USD",
+         "amount": 2.99
+        }
+       ],
+       "status": 3,
+       "is_active": 1,
+       "is_public": 1,
+       "is_published": 1,
+       "publish_status": 0,
+       "published_on": "2026-06-13T11:59:57.717Z",
+       "monetization": 5,
+       "geo_type": 1,
+       "is_archived": 0,
+       "is_fast_channel": false,
+       "page_view": 0,
+       "bought_count": 0,
+       "is_subscription": false,
+       "is_donation": false,
+       "is_meta_edited": false,
+       "scheduled": false,
+       "excel_image_status": 0,
+       "facebook_shares": 0,
+       "twitter_shares": 0,
+       "whatsapp_shares": 0,
+       "other_shares": 0,
+       "use_video_thumbnail_image_instead": false,
+       "creator_id": "6a1432ca112191320fa167ed",
+       "updator_id": "6a1432ca112191320fa167ed",
+       "sho_released_on": "2025-07-23",
+       "poster_images": {
+        "default": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781351963108-mobile-ThalaivanThalaivii.jpg",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781351963106-web-ThalaivanThalaivii.jpg",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781351963106-web-ThalaivanThalaivii.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-poster-images/13-06-2026/1781351963187-mobile-ThalaivanThalaivii.webp",
+         "web": "gudsho-upload-poster-images/13-06-2026/1781351963311-web-ThalaivanThalaivii.webp",
+         "Key": "gudsho-upload-poster-images/13-06-2026/1781351963311-web-ThalaivanThalaivii.webp"
+        }
+       },
+       "poster_image": "gudsho-upload-poster-images/13-06-2026/1781351963106-web-ThalaivanThalaivii.jpg",
+       "thumbnail_images": {
+        "default": {
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg",
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351967677-mobile-ThalaivanThalaivii.jpg",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg"
+        },
+        "webp": {
+         "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351967740-web-ThalaivanThalaivii.webp",
+         "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351967791-mobile-ThalaivanThalaivii.webp",
+         "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351967740-web-ThalaivanThalaivii.webp"
+        }
+       },
+       "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg",
+       "mobile_poster_images": {
+        "default": "gudsho-upload-mobile-poster-images/13-06-2026/1781351970369-mobile-ThalaivanThalaivii.jpg",
+        "webp": "gudsho-upload-mobile-poster-images/13-06-2026/1781351970371-mobile-ThalaivanThalaivii.webp"
+       },
+       "mobile_poster_image": "gudsho-upload-mobile-poster-images/13-06-2026/1781351970369-mobile-ThalaivanThalaivii.jpg",
+       "video_banner_images": {
+        "default": {
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781351973467-mobile-ThalaivanThalaivii.jpg",
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781351973340-web-ThalaivanThalaivii.jpg",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781351973340-web-ThalaivanThalaivii.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-video-banner-images/13-06-2026/1781351973596-mobile-ThalaivanThalaivii.webp",
+         "web": "gudsho-upload-video-banner-images/13-06-2026/1781351973686-web-ThalaivanThalaivii.webp",
+         "Key": "gudsho-upload-video-banner-images/13-06-2026/1781351973686-web-ThalaivanThalaivii.webp"
+        }
+       },
+       "video_banner_image": "gudsho-upload-video-banner-images/13-06-2026/1781351973340-web-ThalaivanThalaivii.jpg",
+       "home_banner_images": {
+        "default": {
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781351980412-mobile-ThalaivanThalaivii.jpg",
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781351980302-web-ThalaivanThalaivii.jpg",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781351980302-web-ThalaivanThalaivii.jpg"
+        },
+        "webp": {
+         "mobile": "gudsho-upload-home-banner-images/13-06-2026/1781351980577-mobile-ThalaivanThalaivii.webp",
+         "web": "gudsho-upload-home-banner-images/13-06-2026/1781351980607-web-ThalaivanThalaivii.webp",
+         "Key": "gudsho-upload-home-banner-images/13-06-2026/1781351980607-web-ThalaivanThalaivii.webp"
+        }
+       },
+       "home_banner_image": "gudsho-upload-home-banner-images/13-06-2026/1781351980302-web-ThalaivanThalaivii.jpg",
+       "new_thumbnail_images": {
+        "default": {
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351986663-tm-ThalaivanThalaivii.jpg",
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351986726-ts-ThalaivanThalaivii.jpg",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351986791-tp-ThalaivanThalaivii.jpg",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351986851-ta-ThalaivanThalaivii.jpg",
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351986899-tv-ThalaivanThalaivii.jpg",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351986784-tc-ThalaivanThalaivii.jpg",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351986820-tl-ThalaivanThalaivii.jpg",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987047-to-ThalaivanThalaivii.jpg"
+        },
+        "webp": {
+         "tm": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987114-tm-ThalaivanThalaivii.webp",
+         "ts": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987166-ts-ThalaivanThalaivii.webp",
+         "ta": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987187-ta-ThalaivanThalaivii.webp",
+         "tp": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987176-tp-ThalaivanThalaivii.webp",
+         "tv": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987274-tv-ThalaivanThalaivii.webp",
+         "tc": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987105-tc-ThalaivanThalaivii.webp",
+         "tl": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987131-tl-ThalaivanThalaivii.webp",
+         "to": "gudsho-upload-new_thumbnail_images/13-06-2026/1781351987490-to-ThalaivanThalaivii.webp"
+        }
+       },
+       "may_be_later": [
+        "PROMOS",
+        "AUDIO"
+       ],
+       "background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "thumb_background_color": {
+        "rgb": [
+         20,
+         20,
+         20
+        ],
+        "hex": "#141414"
+       },
+       "_langUpdatedAt": null,
+       "_cacheVersion": 1
+      },
+      "sho_type": 1,
+      "description": "Track 3 from Thalaivan Thalaivii",
+      "artist_name": "Santhosh Narayanan",
+      "is_published": true,
+      "is_active": true,
+      "is_transcoded": true,
+      "is_transcode_triggered": true,
+      "s3_job_status": 2,
+      "job_status": 3,
+      "transcode_percentage": 100,
+      "upload_percentage": 100,
+      "progress": 100,
+      "status": "completed",
+      "is_hls": "true",
+      "creator_id": "6a1432ca112191320fa167ed",
+      "updator_id": "6a1432ca112191320fa167ed",
+      "is_archived": false,
+      "audio_url": "gudsho_video_samples/26-05-2026/1779773391246-NaattuaKoothuamp3.mp3",
+      "audio_duration": "208.368",
+      "audio_size": "3654912",
+      "thumbnail_images": {
+       "default": {
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg",
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351967677-mobile-ThalaivanThalaivii.jpg",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg"
+       },
+       "webp": {
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351967740-web-ThalaivanThalaivii.webp",
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351967791-mobile-ThalaivanThalaivii.webp",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351967740-web-ThalaivanThalaivii.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg",
+      "default_slug": "thalaivan-thalaivii-theme-song",
+      "meta_description": "Track 3 from Thalaivan Thalaivii",
+      "meta_title": "Thalaivan Thalaivii - Theme Song",
+      "slug": "thalaivan-thalaivii-theme-song",
+      "new_thumbnail_images": {
+       "default": {
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg",
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351967677-mobile-ThalaivanThalaivii.jpg",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351967620-web-ThalaivanThalaivii.jpg"
+       },
+       "webp": {
+        "web": "gudsho-upload-thumbnail-images/13-06-2026/1781351967740-web-ThalaivanThalaivii.webp",
+        "mobile": "gudsho-upload-thumbnail-images/13-06-2026/1781351967791-mobile-ThalaivanThalaivii.webp",
+        "Key": "gudsho-upload-thumbnail-images/13-06-2026/1781351967740-web-ThalaivanThalaivii.webp"
+       }
+      },
+      "play_count": 43,
+      "updated_at": "2026-10-07T07:02:48.416Z",
+      "_langUpdatedAt": "2026-10-07T07:02:48.416Z",
+      "_cacheVersion": 1,
+      "type": 3,
+      "category_id": "6a302882f4074a3f5469f71e",
+      "is_top_ten": false,
+      "is_guds": 0
+     }
+    ]
+   },
+   {
+    "_id": "6a33d9a8f4074a83f46a090d",
+    "is_top_ten": false,
+    "title": "Live streaming",
+    "type": 6,
+    "row_count": 1,
+    "count": 2,
+    "total": 2,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 1,
+    "previous": null,
+    "next": null,
+    "data": [
+     {
+      "_id": "6a61b19c44eb73be40a2b73e",
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "studio_name": "VplayedDev",
+      "studio_slug": "vplayeddev",
+      "default_title": "title-2",
+      "title": "FastchannelLive",
+      "slug": "fastchannellive",
+      "is_active": 1,
+      "live_id": "GSVPLIVE-P2zKdc",
+      "recording_url": null,
+      "streaming_status": 0,
+      "streaming_watch_url": null,
+      "is_stream_key_deleted": true,
+      "is_cf_enable": false,
+      "cf_webhook_update": null,
+      "is_premium": 0,
+      "page_view": 0,
+      "is_published": 1,
+      "is_public": 1,
+      "is_subscription": false,
+      "genre": [
+       {
+        "_id": "6a1432f418d4d5994d6003c7",
+        "title": "Crime",
+        "slug": "crime"
+       }
+      ],
+      "bought_count": 0,
+      "facebook_shares": 0,
+      "twitter_shares": 0,
+      "whatsapp_shares": 0,
+      "other_shares": 0,
+      "is_archived": 0,
+      "is_converted": 0,
+      "status": 1,
+      "publish_status": 0,
+      "updator_id": "6a1432ca11219130eba167e0",
+      "prices": [],
+      "created_at": "2026-07-23T06:15:57.026Z",
+      "updated_at": "2026-09-02T11:44:03.909Z",
+      "__v": 0,
+      "conversion_status": "pending",
+      "new_thumbnail_images": {
+       "default": {
+        "to": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046029747-blob.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046032941-blob.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046033937-blob.jpg",
+        "tm": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046033192-blob.jpg",
+        "ts": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046033319-blob.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046033726-blob.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046033469-blob.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046033930-blob.jpg"
+       },
+       "webp": {
+        "to": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046028656-blob.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046033212-blob.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046032784-blob.webp",
+        "tm": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046031593-blob.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046031664-blob.webp",
+        "tp": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046031966-blob.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046031904-blob.webp",
+        "tv": "gudsho-upload-new_thumbnail_images/18-08-2026/1787046032542-blob.webp"
+       }
+      },
+      "description": "FastChannel live",
+      "geo_type": 1,
+      "is_recording": false,
+      "monetization": 5,
+      "published_on": "2026-08-18T09:40:43.567Z",
+      "stream_end_time": null,
+      "stream_start_time": null,
+      "stream_type": 2,
+      "_langUpdatedAt": "2026-09-02T11:44:03.909Z",
+      "_cacheVersion": 1,
+      "type": 6,
+      "category_id": "6a33d9a8f4074a83f46a090d",
+      "is_top_ten": false,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0
+     },
+     {
+      "_id": "6ab0f27474ee643a0d8d5411",
+      "studio_id": "6a1432ca1121914bd8a167f2",
+      "studio_slug": "vplayeddev",
+      "slug": "future-plan",
+      "is_active": 1,
+      "live_id": "GSVPLIVE-qPgADV",
+      "recording_url": null,
+      "streaming_status": 0,
+      "streaming_watch_url": {
+       "hls": "https://1b48f0f4d2af.ap-south-1.playback.live-video.net/api/video/v1/ap-south-1.603425007851.channel.AgWTpzZBGXku.m3u8"
+      },
+      "is_stream_key_deleted": false,
+      "is_cf_enable": false,
+      "cf_webhook_update": null,
+      "is_premium": 0,
+      "page_view": 0,
+      "is_published": 1,
+      "is_public": 1,
+      "is_subscription": false,
+      "genre": [
+       {
+        "_id": "6a1432f418d4d53c2c6003c4",
+        "title": "Action",
+        "slug": "action"
+       }
+      ],
+      "facebook_shares": 0,
+      "twitter_shares": 0,
+      "whatsapp_shares": 0,
+      "other_shares": 0,
+      "is_archived": 0,
+      "is_converted": 0,
+      "status": 1,
+      "publish_status": 1,
+      "prices": [],
+      "stream_type": 2,
+      "streaming_id": "arn:aws:ivs:ap-south-1:603425007851:channel/AgWTpzZBGXku",
+      "streaming_key": "sk_ap-south-1_sVhh5q3ib52x_gqXum4HwYnu6WgStMh3xNdRXwjmNQU",
+      "streaming_type": 2,
+      "streaming_url": "rtmps://1b48f0f4d2af.global-contribute.live-video.net:443/app/",
+      "new_thumbnail_images": {
+       "default": {
+        "to": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462596957-blob.jpg",
+        "tl": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462598363-blob.jpg",
+        "tc": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462599918-blob.jpg",
+        "tm": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462598743-blob.jpg",
+        "ts": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462598912-blob.jpg",
+        "tp": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462599260-blob.jpg",
+        "ta": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462599524-blob.jpg",
+        "tv": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462600086-blob.jpg"
+       },
+       "webp": {
+        "to": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462594846-blob.webp",
+        "tl": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462599930-blob.webp",
+        "tc": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462598175-blob.webp",
+        "tm": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462595672-blob.webp",
+        "ts": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462595814-blob.webp",
+        "tp": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462596646-blob.webp",
+        "ta": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462596430-blob.webp",
+        "tv": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462597808-blob.webp"
+       }
+      },
+      "geo_type": 1,
+      "is_recording": true,
+      "is_scheduled": true,
+      "monetization": 5,
+      "published_on": "2026-10-08T12:30:21.877Z",
+      "schedule_at": "2026-10-09T18:30:00.000Z",
+      "schedule_timezone": "Asia/Kolkata",
+      "scheduled_Date": "2026-10-10T00:00:00.000Z",
+      "stream_end_time": null,
+      "stream_start_time": null,
+      "updated_at": "2026-10-08T12:30:32.522Z",
+      "_cacheVersion": 1,
+      "studio_name": "VplayedDev",
+      "default_title": "title-20",
+      "title": "Future Plan",
+      "description": "future planing session",
+      "_langUpdatedAt": "2026-10-08T12:30:32.522Z",
+      "type": 6,
+      "category_id": "6a33d9a8f4074a83f46a090d",
+      "is_top_ten": false,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0
+     }
+    ]
+   },
+   {
+    "_id": "6a302b55f4074a248369f807",
+    "is_top_ten": true,
+    "title": "Top Loves Stories",
+    "type": 7,
+    "row_count": 1,
+    "count": 10,
+    "total": 10,
+    "recordsPerPage": 10,
+    "currentPage": 1,
+    "totalPages": 1,
+    "previous": null,
+    "next": null,
+    "data": [
+     {
+      "_id": "6a2ed0d0f80ed71cbc385a78",
+      "studio_id": "6a143b54c729db1125629ad4",
+      "studio_name": "Comedy Spot",
+      "studio_slug": "comedy-spot",
+      "sho_type": 6,
+      "title": "Young Sheldon",
+      "slug": "young-sheldon-1",
+      "default_slug": "young-sheldon",
+      "inc_id": 1,
+      "sho_id": "GS6a143b54c729db1125629ad4SS1",
+      "description": "The early life of child genius Sheldon Cooper, later seen in The Big Bang Theory.",
+      "meta_title": "Young Sheldon",
+      "meta_description": "The early life of child genius Sheldon Cooper, later seen in The Big Bang Theory.",
+      "default_language": "English",
+      "age_limit": 4,
+      "default_genre": {
+       "_id": "6a1432f418d4d5aba06003c6",
+       "title": "comedy",
+       "slug": "comedy"
+      },
+      "genre": [
+       {
+        "_id": "6a1432f418d4d5aba06003c6",
+        "title": "Comedy",
+        "slug": "comedy"
+       },
+       {
+        "_id": "6a143b5318d4d5255b60051e",
+        "title": "Family",
+        "slug": "family"
+       },
+       {
+        "_id": "6a1432f418d4d563cb6003c8",
+        "title": "Drama",
+        "slug": "drama"
+       }
+      ],
+      "prices": [],
+      "status": 3,
+      "is_active": 1,
+      "is_public": 1,
+      "is_published": 1,
+      "publish_status": 0,
+      "published_on": "2026-06-14T16:03:28.278Z",
+      "monetization": 5,
+      "geo_type": 1,
+      "is_archived": 0,
+      "is_fast_channel": false,
+      "page_view": 0,
+      "bought_count": 0,
+      "is_subscription": false,
+      "is_donation": false,
+      "is_meta_edited": false,
+      "scheduled": false,
+      "excel_image_status": 0,
+      "facebook_shares": 0,
+      "twitter_shares": 0,
+      "whatsapp_shares": 0,
+      "other_shares": 0,
+      "use_video_thumbnail_image_instead": false,
+      "creator_id": "6a1432ca112191320fa167ed",
+      "updator_id": "6a1432ca112191320fa167ed",
+      "sho_released_on": "2017-09-25",
+      "poster_images": {
+       "default": {
+        "web": "gudsho-upload-poster-images/14-06-2026/1781452943385-web-YoungSheldon.jpg",
+        "mobile": "gudsho-upload-poster-images/14-06-2026/1781452943645-mobile-YoungSheldon.jpg",
+        "Key": "gudsho-upload-poster-images/14-06-2026/1781452943385-web-YoungSheldon.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-poster-images/14-06-2026/1781452943934-mobile-YoungSheldon.webp",
+        "web": "gudsho-upload-poster-images/14-06-2026/1781452943930-web-YoungSheldon.webp",
+        "Key": "gudsho-upload-poster-images/14-06-2026/1781452943930-web-YoungSheldon.webp"
+       }
+      },
+      "poster_image": "gudsho-upload-poster-images/14-06-2026/1781452943385-web-YoungSheldon.jpg",
+      "thumbnail_images": {
+       "default": {
+        "mobile": "gudsho-upload-thumbnail-images/14-06-2026/1781452956568-mobile-YoungSheldon.jpg",
+        "web": "gudsho-upload-thumbnail-images/14-06-2026/1781452956534-web-YoungSheldon.jpg",
+        "Key": "gudsho-upload-thumbnail-images/14-06-2026/1781452956534-web-YoungSheldon.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-thumbnail-images/14-06-2026/1781452956593-mobile-YoungSheldon.webp",
+        "web": "gudsho-upload-thumbnail-images/14-06-2026/1781452956616-web-YoungSheldon.webp",
+        "Key": "gudsho-upload-thumbnail-images/14-06-2026/1781452956616-web-YoungSheldon.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-thumbnail-images/14-06-2026/1781452956534-web-YoungSheldon.jpg",
+      "mobile_poster_images": {
+       "default": "gudsho-upload-mobile-poster-images/14-06-2026/1781452965932-mobile-YoungSheldon.jpg",
+       "webp": "gudsho-upload-mobile-poster-images/14-06-2026/1781452965950-mobile-YoungSheldon.webp"
+      },
+      "mobile_poster_image": "gudsho-upload-mobile-poster-images/14-06-2026/1781452965932-mobile-YoungSheldon.jpg",
+      "video_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-video-banner-images/14-06-2026/1781452976572-mobile-YoungSheldon.jpg",
+        "web": "gudsho-upload-video-banner-images/14-06-2026/1781452976678-web-YoungSheldon.jpg",
+        "Key": "gudsho-upload-video-banner-images/14-06-2026/1781452976678-web-YoungSheldon.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-video-banner-images/14-06-2026/1781452976744-mobile-YoungSheldon.webp",
+        "web": "gudsho-upload-video-banner-images/14-06-2026/1781452976928-web-YoungSheldon.webp",
+        "Key": "gudsho-upload-video-banner-images/14-06-2026/1781452976928-web-YoungSheldon.webp"
+       }
+      },
+      "video_banner_image": "gudsho-upload-video-banner-images/14-06-2026/1781452976678-web-YoungSheldon.jpg",
+      "home_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-home-banner-images/14-06-2026/1781452986921-mobile-YoungSheldon.jpg",
+        "web": "gudsho-upload-home-banner-images/14-06-2026/1781452987017-web-YoungSheldon.jpg",
+        "Key": "gudsho-upload-home-banner-images/14-06-2026/1781452987017-web-YoungSheldon.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-home-banner-images/14-06-2026/1781452986936-mobile-YoungSheldon.webp",
+        "web": "gudsho-upload-home-banner-images/14-06-2026/1781452987069-web-YoungSheldon.webp",
+        "Key": "gudsho-upload-home-banner-images/14-06-2026/1781452987069-web-YoungSheldon.webp"
+       }
+      },
+      "home_banner_image": "gudsho-upload-home-banner-images/14-06-2026/1781452987017-web-YoungSheldon.jpg",
+      "new_thumbnail_images": {
+       "default": {
+        "ts": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453000958-ts-YoungSheldon.jpg",
+        "tc": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453000928-tc-YoungSheldon.jpg",
+        "tl": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453000811-tl-YoungSheldon.jpg",
+        "tv": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001039-tv-YoungSheldon.jpg",
+        "tm": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453000961-tm-YoungSheldon.jpg",
+        "tp": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001102-tp-YoungSheldon.jpg"
+       },
+       "webp": {
+        "ts": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001175-ts-YoungSheldon.webp",
+        "tc": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001075-tc-YoungSheldon.webp",
+        "tm": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001172-tm-YoungSheldon.webp",
+        "tl": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001155-tl-YoungSheldon.webp",
+        "tv": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001276-tv-YoungSheldon.webp",
+        "tp": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781453001319-tp-YoungSheldon.webp"
+       }
+      },
+      "may_be_later": [
+       "PROMOS",
+       "AUDIO"
+      ],
+      "background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "thumb_background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "_langUpdatedAt": null,
+      "_cacheVersion": 1,
+      "type": 7,
+      "category_id": "6a302b55f4074a248369f807",
+      "is_top_ten": true,
+      "seasons_count": 1,
+      "episode_slug": "young-sheldon-1-episode-1",
+      "season_index": 1,
+      "is_trailer": false,
+      "is_watch_later": 0,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0,
+      "episodes_count": 30,
+      "episode_details": {
+       "_id": "6a2ed0dbf80ed71cbc385add",
+       "title": "Episode 1",
+       "slug": "young-sheldon-1-episode-1",
+       "video_duration": "84.4"
+      }
+     },
+     {
+      "_id": "6a2ec8e9f80ed71cbc380204",
+      "studio_id": "6a143b54c729db1125629ad4",
+      "studio_name": "Comedy Spot",
+      "studio_slug": "comedy-spot",
+      "sho_type": 6,
+      "title": "Death in Paradise",
+      "slug": "death-in-paradise-1",
+      "default_slug": "death-in-paradise",
+      "inc_id": 1,
+      "sho_id": "GS6a143b54c729db1125629ad4SS1",
+      "description": "A brilliant but idiosyncratic British detective and his resourceful local team solve baffling murder mysteries on the fictional Caribbean island of Saint Marie.",
+      "meta_title": "Death in Paradise",
+      "meta_description": "A brilliant but idiosyncratic British detective and his resourceful local team solve baffling murder mysteries on the fictional Caribbean island of Saint Marie.",
+      "default_language": "English",
+      "age_limit": 4,
+      "default_genre": {
+       "_id": "6a1432f418d4d5aba06003c6",
+       "title": "comedy",
+       "slug": "comedy"
+      },
+      "genre": [
+       {
+        "_id": "6a1432f418d4d5aba06003c6",
+        "title": "Comedy",
+        "slug": "comedy"
+       },
+       {
+        "_id": "6a1432f418d4d54c5d6003d2",
+        "title": "Thriller",
+        "slug": "thriller"
+       },
+       {
+        "_id": "6a1432f418d4d563cb6003c8",
+        "title": "Drama",
+        "slug": "drama"
+       }
+      ],
+      "prices": [],
+      "status": 3,
+      "is_active": 1,
+      "is_public": 1,
+      "is_published": 1,
+      "publish_status": 0,
+      "published_on": "2026-06-14T15:29:45.147Z",
+      "monetization": 5,
+      "geo_type": 1,
+      "is_archived": 0,
+      "is_fast_channel": false,
+      "page_view": 0,
+      "bought_count": 0,
+      "is_subscription": false,
+      "is_donation": false,
+      "is_meta_edited": false,
+      "scheduled": false,
+      "excel_image_status": 0,
+      "facebook_shares": 0,
+      "twitter_shares": 0,
+      "whatsapp_shares": 0,
+      "other_shares": 0,
+      "use_video_thumbnail_image_instead": false,
+      "creator_id": "6a1432ca112191320fa167ed",
+      "updator_id": "6a1432ca112191320fa167ed",
+      "sho_released_on": "2011-10-25",
+      "poster_images": {
+       "default": {
+        "mobile": "gudsho-upload-poster-images/14-06-2026/1781450943969-mobile-DeathinParadise.jpg",
+        "web": "gudsho-upload-poster-images/14-06-2026/1781450944156-web-DeathinParadise.jpg",
+        "Key": "gudsho-upload-poster-images/14-06-2026/1781450944156-web-DeathinParadise.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-poster-images/14-06-2026/1781450944042-mobile-DeathinParadise.webp",
+        "web": "gudsho-upload-poster-images/14-06-2026/1781450944182-web-DeathinParadise.webp",
+        "Key": "gudsho-upload-poster-images/14-06-2026/1781450944182-web-DeathinParadise.webp"
+       }
+      },
+      "poster_image": "gudsho-upload-poster-images/14-06-2026/1781450944156-web-DeathinParadise.jpg",
+      "thumbnail_images": {
+       "default": {
+        "mobile": "gudsho-upload-thumbnail-images/14-06-2026/1781450947711-mobile-DeathinParadise.jpg",
+        "web": "gudsho-upload-thumbnail-images/14-06-2026/1781450947735-web-DeathinParadise.jpg",
+        "Key": "gudsho-upload-thumbnail-images/14-06-2026/1781450947735-web-DeathinParadise.jpg"
+       },
+       "webp": {
+        "web": "gudsho-upload-thumbnail-images/14-06-2026/1781450947729-web-DeathinParadise.webp",
+        "mobile": "gudsho-upload-thumbnail-images/14-06-2026/1781450947777-mobile-DeathinParadise.webp",
+        "Key": "gudsho-upload-thumbnail-images/14-06-2026/1781450947729-web-DeathinParadise.webp"
+       }
+      },
+      "thumbnail_image": "gudsho-upload-thumbnail-images/14-06-2026/1781450947735-web-DeathinParadise.jpg",
+      "mobile_poster_images": {
+       "default": "gudsho-upload-mobile-poster-images/14-06-2026/1781450955558-mobile-DeathinParadise.jpg",
+       "webp": "gudsho-upload-mobile-poster-images/14-06-2026/1781450955671-mobile-DeathinParadise.webp"
+      },
+      "mobile_poster_image": "gudsho-upload-mobile-poster-images/14-06-2026/1781450955558-mobile-DeathinParadise.jpg",
+      "video_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-video-banner-images/14-06-2026/1781450956908-mobile-DeathinParadise.jpg",
+        "web": "gudsho-upload-video-banner-images/14-06-2026/1781450957053-web-DeathinParadise.jpg",
+        "Key": "gudsho-upload-video-banner-images/14-06-2026/1781450957053-web-DeathinParadise.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-video-banner-images/14-06-2026/1781450957004-mobile-DeathinParadise.webp",
+        "web": "gudsho-upload-video-banner-images/14-06-2026/1781450957050-web-DeathinParadise.webp",
+        "Key": "gudsho-upload-video-banner-images/14-06-2026/1781450957050-web-DeathinParadise.webp"
+       }
+      },
+      "video_banner_image": "gudsho-upload-video-banner-images/14-06-2026/1781450957053-web-DeathinParadise.jpg",
+      "home_banner_images": {
+       "default": {
+        "mobile": "gudsho-upload-home-banner-images/14-06-2026/1781450966538-mobile-DeathinParadise.jpg",
+        "web": "gudsho-upload-home-banner-images/14-06-2026/1781450966604-web-DeathinParadise.jpg",
+        "Key": "gudsho-upload-home-banner-images/14-06-2026/1781450966604-web-DeathinParadise.jpg"
+       },
+       "webp": {
+        "mobile": "gudsho-upload-home-banner-images/14-06-2026/1781450966645-mobile-DeathinParadise.webp",
+        "web": "gudsho-upload-home-banner-images/14-06-2026/1781450966743-web-DeathinParadise.webp",
+        "Key": "gudsho-upload-home-banner-images/14-06-2026/1781450966743-web-DeathinParadise.webp"
+       }
+      },
+      "home_banner_image": "gudsho-upload-home-banner-images/14-06-2026/1781450966604-web-DeathinParadise.jpg",
+      "new_thumbnail_images": {
+       "default": {
+        "tc": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977587-tc-DeathinParadise.jpg",
+        "ts": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977600-ts-DeathinParadise.jpg",
+        "tv": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977639-tv-DeathinParadise.jpg",
+        "tm": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977619-tm-DeathinParadise.jpg",
+        "tl": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977613-tl-DeathinParadise.jpg",
+        "tp": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977713-tp-DeathinParadise.jpg"
+       },
+       "webp": {
+        "tc": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977665-tc-DeathinParadise.webp",
+        "tm": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977704-tm-DeathinParadise.webp",
+        "ts": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977716-ts-DeathinParadise.webp",
+        "tv": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977737-tv-DeathinParadise.webp",
+        "tp": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977819-tp-DeathinParadise.webp",
+        "tl": "gudsho-upload-micro_series_thumbnail_images/14-06-2026/1781450977707-tl-DeathinParadise.webp"
+       }
+      },
+      "may_be_later": [
+       "PROMOS",
+       "AUDIO"
+      ],
+      "background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "thumb_background_color": {
+       "rgb": [
+        20,
+        20,
+        20
+       ],
+       "hex": "#141414"
+      },
+      "_langUpdatedAt": null,
+      "_cacheVersion": 1,
+      "type": 7,
+      "category_id": "6a302b55f4074a248369f807",
+      "is_top_ten": true,
+      "seasons_count": 1,
+      "episode_slug": "death-in-paradise-1-episode-1",
+      "season_index": 1,
+      "is_trailer": false,
+      "is_watch_later": 0,
+      "is_user_subscribed": false,
+      "is_geo_restricted": false,
+      "is_proxy": false,
+      "is_release_requested": 0,
+      "is_user_notified": false,
+      "is_allowed": 0,
+      "episodes_count": 30,
+      "episode_details": {
+       "_id": "6a2ec8f3f80ed71cbc380277",
+       "title": "Episode 1",
+       "slug": "death-in-paradise-1-episode-1",
+       "video_duration": "93.366667"
+      }
+     }
+    ]
+   }
+  ],
+  "total": 18,
+  "recordsPerPage": 3,
+  "currentPage": 3,
+  "totalPages": 6,
+  "previous": 2,
+  "next": 4
+ },
+ "error": false
+}
