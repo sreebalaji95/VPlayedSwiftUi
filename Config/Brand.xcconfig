@@ -1,0 +1,13 @@
+// Brand identity for every scheme (Dev, Qa, Stage, Demo) and both targets. A white-label fork
+// edits this file rather than the project's build settings; see WHITE_LABEL.md.
+//
+// Bundle IDs are BRAND_BUNDLE_ID plus .dev, .qa or .stage (Demo uses it as is; the tests add
+// .tests). Home-screen names are Dev, Qa or Stage followed by BRAND_DISPLAY_NAME (Demo uses it
+// as is).
+
+BRAND_BUNDLE_ID = com.contus.vplayed
+BRAND_DISPLAY_NAME = VPlayed
+
+DEVELOPMENT_TEAM = G44VFA67ZG
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1

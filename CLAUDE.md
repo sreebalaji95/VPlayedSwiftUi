@@ -46,6 +46,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
 - The condition is set at project level (`SWIFT_ACTIVE_COMPILATION_CONDITIONS`), and `APIEnvironment.current` picks the hosts with `#if`. Demo is the UIKit app's PROD build, which points at the demo hosts.
 - There are no plain `Debug` / `Release` configurations. Building without a scheme uses `ReleaseDemo`. Code built with no condition falls back to Dev.
 - To add a setting per environment, set it in all eight configurations of the right target (project, `VPlayed` or `VPlayedTests`); new configurations must exist in all three configuration lists.
+- Brand identity lives in `Config/Brand.xcconfig`, the base configuration of all eight project-level configurations: `BRAND_BUNDLE_ID`, `BRAND_DISPLAY_NAME`, `DEVELOPMENT_TEAM`, `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION`. The target configurations build the bundle IDs (`$(BRAND_BUNDLE_ID).dev`, `.tests`…) and home-screen names (`Dev$(BRAND_DISPLAY_NAME)`…) from it. Don't set those keys in the target configurations, or they override the xcconfig.
 - Stage's Home API currently returns only empty rails for a guest, so Stage's Home shows the hero and pages through ~39 empty pages.
 
 ## Project configuration that affects code
