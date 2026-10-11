@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// Full-width hero carousel fed by `homebanners`. Swipeable, autoplays every 6s, with
-/// the prototype's progress dots (the active dot fills yellow over the slide interval).
+/// the prototype's progress dots (the active dot fills with the highlight colour over the slide
+/// interval).
 struct HeroCarouselView: View {
     let banners: [HomeBanner]
 
@@ -146,7 +147,7 @@ private struct HeroSlide: View {
                             .frame(maxWidth: .infinity)
                     }
                     .glassButtonStyle(.prominent)
-                    .tint(Theme.Palette.brand)
+                    .tint(Theme.Palette.primary)
 
                     Button { openRoute(.signInRequired(prompt: String(localized: "Sign in to add to your watchlist", bundle: .localized))) } label: {
                         Image(systemName: "plus")
@@ -168,9 +169,9 @@ private struct HeroSlide: View {
     private var kindBadge: some View {
         HStack(spacing: 8) {
             Circle()
-                .fill(Theme.Palette.accent)
+                .fill(Theme.Palette.highlight)
                 .frame(width: 7, height: 7)
-                .shadow(color: Theme.Palette.accent, radius: 4)
+                .shadow(color: Theme.Palette.highlight, radius: 4)
             Text(banner.kind.displayName.uppercased())
                 .font(.system(size: 11, weight: .bold))
                 .letterSpacing(1.5)
@@ -306,7 +307,7 @@ private struct HeroPageDots: View {
                 .frame(width: 20, height: 7)
                 .overlay(alignment: .leading) {
                     Capsule()
-                        .fill(Theme.Palette.accent)
+                        .fill(Theme.Palette.highlight)
                         .frame(width: 20 * (animates ? progress : 1), height: 7)
                 }
                 .clipShape(.capsule)

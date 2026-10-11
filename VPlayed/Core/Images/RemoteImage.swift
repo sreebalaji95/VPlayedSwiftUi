@@ -53,7 +53,7 @@ private struct RemoteImageContent: View {
                     .aspectRatio(contentMode: contentMode)
                     .frame(width: size.width, height: size.height, alignment: alignment)
             } else if showsFailureIcon, url == nil || (key != nil && failedKey == key) {
-                Theme.Palette.neutral700
+                Theme.Palette.fillStrong
                 Image(systemName: "photo")
                     .font(.system(size: min(32, size.height * 0.3)))
                     .foregroundStyle(Theme.Palette.textTertiary)

@@ -36,21 +36,21 @@ Views never use raw colours. They read `Theme.Palette` ([`DesignSystem/Theme.swi
 
 | Colorset | Theme name | Role and where it shows |
 |---|---|---|
-| `AccentColor` *(one value)* | `brand` | The primary colour: selected tab, "Watch now", "Watch Live", retry buttons, the LIVE badge, the Language checkmark, the splash glow and the start of the splash bar, the fallback tint of bulk-purchase cards |
+| `AccentColor` *(one value)* | `primary` | The primary colour: selected tab, "Watch now", "Watch Live", retry buttons, the LIVE badge, the Language checkmark, the splash glow and the start of the splash bar, the fallback tint of bulk-purchase cards |
 | `Colors/OnPrimary` *(one value)* | `onPrimary` | Text and icons on the primary colour. White suits a dark primary. **If your primary is light, make this dark.** |
-| `Colors/AccentYellow` | `accent` | Secondary highlight: crown and price tags on cards, the hero's category dot and active page dot, the end of the splash bar, the music-note icon |
+| `Colors/Highlight` | `highlight` | Secondary highlight: crown and price tags on cards, the hero's category dot and active page dot, the end of the splash bar, the music-note icon |
 | `Colors/Background` | `background` | Page background; the hero artwork fades into it |
 | `LaunchBackground` | – | The launch screen's background. **Keep it identical to `Background`**, or the launch-to-app handoff flashes. |
 | `Colors/Surface` | `surface` | Card backgrounds (Live, channel and bulk-purchase cards) |
 | `Colors/Raised` | `raised` | Image placeholders, skeleton loaders, toasts, icon tiles |
-| `Colors/Neutral700` | `neutral700` | Failed-image fill; crown tag gradient |
+| `Colors/FillStrong` | `fillStrong` | Failed-image fill; crown tag gradient |
 | `Colors/TextPrimary`, `TextSecondary`, `TextTertiary` | `text…` | Text, from most to least prominent |
-| `Colors/Line`, `Line2` | `line`, `line2` | Hairline borders; `Line2` is the stronger one (toast border, rank numerals) |
+| `Colors/Line`, `LineStrong` | `line`, `lineStrong` | Hairline borders; `LineStrong` is the more visible one (toast border, rank numerals) |
 | `Colors/Scrim` *(one value)* | `scrim` | Dark overlay behind text on artwork, and the menu's dimming. Keep it dark. |
 | `Colors/ShimmerHighlight` | `shimmer` | The sweep across skeleton loaders |
 | `Colors/OnLight` *(one value)* | `onLight` | Dark icon on light fills (the bulk-purchase icon tile) |
 
-Chips drawn on artwork (card corner tags, the Live card's badge and caption) always use the **Dark** values of their colours (`AccentYellow`, `Scrim`, `Neutral700`, `Background`, `TextSecondary`, `Line2`), even in light mode. Check those Dark values over bright artwork.
+Chips drawn on artwork (card corner tags, the Live card's badge and caption) always use the **Dark** values of their colours (`Highlight`, `Scrim`, `FillStrong`, `Background`, `TextSecondary`, `LineStrong`), even in light mode. Check those Dark values over bright artwork.
 
 ### Wordmark: `VPlayed/Assets.xcassets/SplashLogo.imageset`
 
@@ -91,7 +91,7 @@ This file holds the API host and image bucket per environment. Edit it only if y
 These are owned by the core team. Brands get their look from the tokens above, so don't edit these files to rebrand.
 
 - [`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift): palette, corner radii, spacing.
-- [`DesignSystem/Glass.swift`](VPlayed/DesignSystem/Glass.swift): Liquid Glass buttons and surfaces, with all the iOS 17–18 and visionOS fallbacks. Primary actions use `glassButtonStyle(.prominent)` tinted with `brand`, with `onPrimary` labels.
+- [`DesignSystem/Glass.swift`](VPlayed/DesignSystem/Glass.swift): Liquid Glass buttons and surfaces, with all the iOS 17–18 and visionOS fallbacks. Primary actions use `glassButtonStyle(.prominent)` tinted with `primary`, with `onPrimary` labels.
 - [`DesignSystem/BrandWordmark.swift`](VPlayed/DesignSystem/BrandWordmark.swift), [`Skeleton.swift`](VPlayed/DesignSystem/Skeleton.swift), [`LetterSpacing.swift`](VPlayed/DesignSystem/LetterSpacing.swift).
 - Card layouts in `Features/**/Views`. Card sizes and aspect ratios match the API's image variants (`Core/Images/ImageSet.swift`), so don't change them.
 

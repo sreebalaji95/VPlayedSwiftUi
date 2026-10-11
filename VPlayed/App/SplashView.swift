@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// Intro shown on cold launch (prototype "VPlayed Splash"): the wordmark centered on the brand
-/// background with a red glow, a loading bar and tagline, then a fade into Home after 3s.
+/// background with a glow in the primary colour, a loading bar and tagline, then a fade into Home
+/// after 3s.
 ///
 /// The logo sits exactly where the system launch screen draws `SplashLogo` (centered on the full
 /// screen at its natural size, the SVG's `width` and `height`), so the handoff from the launch
@@ -54,8 +55,8 @@ struct SplashView: View {
             let diameter = min(760, min(proxy.size.width, proxy.size.height) * 1.6)
             RadialGradient(
                 stops: [
-                    .init(color: Theme.Palette.brand.opacity(0.22), location: 0),
-                    .init(color: Theme.Palette.brand.opacity(0.06), location: 0.42),
+                    .init(color: Theme.Palette.primary.opacity(0.22), location: 0),
+                    .init(color: Theme.Palette.primary.opacity(0.06), location: 0.42),
                     .init(color: .clear, location: 0.70),
                 ],
                 center: .center,
@@ -77,7 +78,7 @@ struct SplashView: View {
             .frame(width: 180, height: 3)
             .overlay(alignment: .leading) {
                 Capsule()
-                    .fill(LinearGradient(colors: [Theme.Palette.brand, Theme.Palette.accent], startPoint: .leading, endPoint: .trailing))
+                    .fill(LinearGradient(colors: [Theme.Palette.primary, Theme.Palette.highlight], startPoint: .leading, endPoint: .trailing))
                     .flipsForRightToLeftLayoutDirection(true)
                     .frame(width: 180 * barProgress, height: 3)
             }

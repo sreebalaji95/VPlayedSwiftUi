@@ -109,7 +109,7 @@ struct HomeMessageView: View {
                 .padding(.horizontal, 12)
             }
             .glassButtonStyle(.prominent)
-            .tint(Theme.Palette.brand)
+            .tint(Theme.Palette.primary)
             .buttonBorderShape(.capsule)
             .controlSize(.large)
             .disabled(isWorking)
@@ -161,7 +161,7 @@ struct ToastView: View {
             .padding(.horizontal, 18)
             .padding(.vertical, 11)
             .background(Theme.Palette.raised, in: .capsule)
-            .overlay { Capsule().strokeBorder(Theme.Palette.line2, lineWidth: 1) }
+            .overlay { Capsule().strokeBorder(Theme.Palette.lineStrong, lineWidth: 1) }
             .padding(.horizontal, 24)
     }
 }

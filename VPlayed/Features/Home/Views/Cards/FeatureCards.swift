@@ -56,12 +56,12 @@ struct LiveNowCard: View {
         .padding(.horizontal, 11)
         .padding(.vertical, 6)
         .background(
-            item.isLive ? AnyShapeStyle(Theme.Palette.brand) : AnyShapeStyle(Theme.Palette.scrim.opacity(0.72)),
+            item.isLive ? AnyShapeStyle(Theme.Palette.primary) : AnyShapeStyle(Theme.Palette.scrim.opacity(0.72)),
             in: .rect(cornerRadius: Theme.Radius.control)
         )
         .overlay {
             if !item.isLive {
-                RoundedRectangle(cornerRadius: Theme.Radius.control).strokeBorder(Theme.Palette.line2, lineWidth: 1)
+                RoundedRectangle(cornerRadius: Theme.Radius.control).strokeBorder(Theme.Palette.lineStrong, lineWidth: 1)
             }
         }
     }
@@ -107,7 +107,7 @@ struct LiveNowCard: View {
                             .foregroundStyle(Theme.Palette.onPrimary)
                     }
                     .glassButtonStyle(.prominent)
-                    .tint(Theme.Palette.brand)
+                    .tint(Theme.Palette.primary)
                 } else {
                     Button(action: onRemind) {
                         Label("Set reminder", systemImage: "bell")
@@ -190,7 +190,7 @@ struct BulkPlanCard: View {
     let onExplore: () -> Void
 
     /// The bundle's colour from the API, else the brand colour.
-    private var tint: Color { Color(hexString: plan.accentHex) ?? Theme.Palette.brand }
+    private var tint: Color { Color(hexString: plan.accentHex) ?? Theme.Palette.primary }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -302,7 +302,7 @@ struct AudioCard: View {
                 Label {
                     Text(artist)
                 } icon: {
-                    Image(systemName: "music.note").foregroundStyle(Theme.Palette.accent)
+                    Image(systemName: "music.note").foregroundStyle(Theme.Palette.highlight)
                 }
                 .font(.system(size: 12))
                 .foregroundStyle(Theme.Palette.textTertiary)

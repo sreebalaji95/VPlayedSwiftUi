@@ -2,32 +2,39 @@ import SwiftUI
 
 /// Design tokens from the VPlayed prototype (dark theme, `vp-ds-tokens.css`).
 enum Theme {
-    /// Colours live in `Assets.xcassets/Colors`; these refer to them through Xcode's generated
-    /// asset symbols, so a renamed or missing asset fails the build. Most have a light value and
-    /// a Dark appearance and follow the system theme; the exceptions are noted below.
+    /// Colours by role. They live in `Assets.xcassets/Colors` (named after the role) and are read
+    /// through Xcode's generated asset symbols, so a renamed or missing asset fails the build.
+    /// Most have a light value and a Dark appearance and follow the system theme; the exceptions
+    /// are noted below.
     enum Palette {
+        /// Page background; the hero artwork fades into it.
         static let background = Color(.background)
+        /// Card backgrounds.
         static let surface = Color(.surface)
+        /// Placeholders, skeletons, toasts and icon tiles: one step up from `surface`.
         static let raised = Color(.raised)
-        static let neutral700 = Color(.neutral700)
+        /// A stronger neutral fill: failed images, the crown tag.
+        static let fillStrong = Color(.fillStrong)
 
         static let textPrimary = Color(.textPrimary)
         static let textSecondary = Color(.textSecondary)
         static let textTertiary = Color(.textTertiary)
 
-        /// The brand red, from the `AccentColor` asset and the same in both themes: the selected
-        /// tab, primary actions, the LIVE badge. Rebrand the primary colour there and nowhere else.
-        static let brand = Color(.accent)
-        /// Text and icons drawn on `brand` fills, in both themes. Keep it readable against `brand`
-        /// (white for a dark primary, `onLight`-style dark for a light one).
+        /// The brand's main colour (red for VPlayed), from the `AccentColor` asset and the same in
+        /// both themes: the selected tab, primary actions, the LIVE badge. Rebrand it there.
+        static let primary = Color(.accent)
+        /// Text and icons drawn on `primary` fills, in both themes. Keep it readable against
+        /// `primary` (white for a dark primary, dark for a light one).
         static let onPrimary = Color(.onPrimary)
-        /// Secondary yellow highlight. The app's main accent is the red `brand`.
-        static let accent = Color(.accentYellow)
+        /// Secondary highlight (yellow for VPlayed): crowns, prices, the hero's dots.
+        static let highlight = Color(.highlight)
         /// Dark text for light fills, in both themes.
         static let onLight = Color(.onLight)
 
+        /// Hairline borders.
         static let line = Color(.line)
-        static let line2 = Color(.line2)
+        /// A more visible line: toast borders, rank numeral outlines.
+        static let lineStrong = Color(.lineStrong)
         /// Always dark: backs chips and labels drawn on artwork, which stay dark in both themes.
         static let scrim = Color(.scrim)
         /// The highlight that sweeps across skeleton placeholders while content loads.

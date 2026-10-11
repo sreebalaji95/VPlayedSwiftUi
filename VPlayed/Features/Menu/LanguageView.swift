@@ -51,7 +51,7 @@ struct LanguageView: View {
             if language == languageStore.language {
                 Image(systemName: "checkmark")
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(Theme.Palette.brand)
+                    .foregroundStyle(Theme.Palette.primary)
             }
         }
         .frame(maxWidth: .infinity, minHeight: 40)

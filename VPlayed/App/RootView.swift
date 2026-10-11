@@ -30,7 +30,7 @@ struct RootView: View {
                 }
             }
             // Colours the selected tab; the stacks reset it so their content stays white.
-            .tint(Theme.Palette.brand)
+            .tint(Theme.Palette.primary)
             .id(languageStore.language)
             .accessibilityHidden(showsSplash || showsMenu)
 

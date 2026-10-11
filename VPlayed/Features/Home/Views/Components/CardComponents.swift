@@ -94,11 +94,11 @@ struct CornerTag: View {
             case .crown:
                 Image(systemName: "crown.fill")
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(Theme.Palette.accent)
+                    .foregroundStyle(Theme.Palette.highlight)
                     .frame(width: 32, height: height)
                     .background(
                         LinearGradient(
-                            colors: [Theme.Palette.neutral700, Theme.Palette.background],
+                            colors: [Theme.Palette.fillStrong, Theme.Palette.background],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
@@ -109,13 +109,13 @@ struct CornerTag: View {
                     .font(.system(size: 11, weight: .bold))
                     .letterSpacing(0.66)
                     .monospacedDigit()
-                    .foregroundStyle(Theme.Palette.accent)
+                    .foregroundStyle(Theme.Palette.highlight)
                     .padding(.horizontal, 11)
                     .frame(height: height)
                     .background(Theme.Palette.scrim.opacity(0.82), in: shape)
             }
         }
-        .overlay { shape.strokeBorder(Theme.Palette.accent.opacity(0.55), lineWidth: 1) }
+        .overlay { shape.strokeBorder(Theme.Palette.highlight.opacity(0.55), lineWidth: 1) }
         .environment(\.colorScheme, .dark)
         .accessibilityLabel(accessibilityText)
     }
@@ -150,7 +150,7 @@ struct PressableButtonStyle: ButtonStyle {
     }
 }
 
-/// Outline rank numeral for Top-10 rails (prototype: Inter 800, no fill, 15% `line2` stroke).
+/// Outline rank numeral for Top-10 rails (prototype: Inter 800, no fill, a `lineStrong` stroke).
 /// SwiftUI can't stroke glyphs, so the outline is built from offset copies masked by the glyph.
 struct RankNumeral: View {
     let rank: Int
@@ -164,7 +164,7 @@ struct RankNumeral: View {
         ZStack {
             ForEach(Self.offsets.indices, id: \.self) { index in
                 digits
-                    .foregroundStyle(Theme.Palette.line2)
+                    .foregroundStyle(Theme.Palette.lineStrong)
                     .offset(x: Self.offsets[index].width, y: Self.offsets[index].height)
             }
             digits.foregroundStyle(Theme.Palette.background)

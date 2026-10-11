@@ -114,7 +114,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
 - **Liquid Glass (always)**:
   - Bars are system bars. Home's top bar is `HomeToolbar` (`HomeChrome.swift`): system toolbar items for the menu, the `SplashLogo` wordmark (`.sharedBackgroundVisibility(.hidden)`) and the bell. The feed `ScrollView` ignores the top safe area so the hero runs behind the glass bar (and the status bar), with `.softTopScrollEdge()` and a top fade in the hero scrims for legibility. The scrims are weaker in light mode (`ScrimTone`), where the near-white page colour would wash the art out.
   - Controls are glass, through `DesignSystem/Glass.swift`, never custom filled styles:
-    - `glassButtonStyle()` for controls, and `glassButtonStyle(.prominent)` + `.tint(Theme.Palette.brand)` for the primary action, with `Theme.Palette.onPrimary` (never `.white`) for its label;
+    - `glassButtonStyle()` for controls, and `glassButtonStyle(.prominent)` + `.tint(Theme.Palette.primary)` for the primary action, with `Theme.Palette.onPrimary` (never `.white`) for its label;
     - `GlassCardButtonStyle(shape:padding:)` for Menu/Language rows;
     - `glassSurface(in:)` for floating chips;
     - `GlassGroup` to blend neighbouring glass.
@@ -124,11 +124,11 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
     - The hero's full-bleed background image tap stays plain, since an edge-to-edge photo has no shape for glass. "Watch now" is its glass action.
 - **Design**:
   - `DesignSystem/Theme.swift` holds the tokens from the HTML prototype (`~/Downloads/VPlayed Complete Prototype (offline) (9).html`, page "VPlayed Home Mobile"): SF Pro, Material Symbols mapped to SF Symbols. The prototype is dark-only; the light values are our own.
-  - Colours are colorsets in `Assets.xcassets/Colors`; `Theme.Palette` refers to them through generated asset symbols (`Color(.textPrimary)`). Add a colour as an asset first, and avoid names that collide with SwiftUI's own `Color` members (hence `AccentYellow`, not `Yellow`).
+  - Colours are colorsets in `Assets.xcassets/Colors`; `Theme.Palette` refers to them through generated asset symbols (`Color(.textPrimary)`). Palette members are named by role (`primary`, `highlight`, `fillStrong`, `lineStrong`…), and so are their colorsets, so a white-label brand can recolour them without the names lying. Add a colour as a role-named asset first, and avoid names that collide with SwiftUI's own `Color` members (hence the primary colour stays in `AccentColor`, since `Primary` would clash with `Color.primary`).
   - The app follows the system Light/Dark setting. Each colorset has a light base value plus a Dark appearance; give new colours both. `AccentColor`, `OnLight` and `Scrim` are deliberately the same in both themes.
   - Chips and labels drawn on artwork (`CornerTag`, the Live card's badge and caption) apply `.environment(\.colorScheme, .dark)` so they stay dark on photos. The hero is the exception: it fades into the page background in both themes.
   - On page surfaces use `Theme.Palette.textPrimary.opacity(x)` rather than `Color.white.opacity(x)`, so it inverts in light mode.
-  - The app's main accent is the red `AccentColor` asset, the only primary colour: `Theme.Palette.brand` reads it, and the selected tab, primary actions and the LIVE badge use it. Don't reference `Color(.accent)` directly. `Theme.Palette.accent` is a secondary yellow highlight (asset `AccentYellow`).
+  - The app's main accent is the red `AccentColor` asset, the only primary colour: `Theme.Palette.primary` reads it, and the selected tab, primary actions and the LIVE badge use it. Don't reference `Color(.accent)` directly. `Theme.Palette.highlight` is a secondary yellow highlight (asset `Highlight`).
   - Loading states are shimmer skeletons that mirror the real layout (`HomeLoadingView`, `MoviesLoadingView`), built from `SkeletonBlock` and `.shimmering()` in `DesignSystem/Skeleton.swift`. The hero skeleton shares `HeroCarouselView.height(inContainer:)` with the real hero.
   - To render a prototype page for comparison, open the file in headless Chrome with the page name as the URL hash, e.g. `…(9).html#VPlayed%20Home%20Mobile.html`. Chrome may not exit on its own because the page keeps animating.
 
