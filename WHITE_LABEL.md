@@ -34,11 +34,11 @@ Every scheme and both targets read this file. Don't set these keys in the projec
 Views never use raw colours. They read `Theme.Palette` ([`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift)), which reads these colorsets through Xcode's generated asset symbols. So:
 
 - **Edit values, never names.** A renamed or deleted colorset fails the build, by design.
-- **Give each colour a light value and a Dark appearance**, except the ones marked *one value*, which are the same in both themes.
+- **Give each colour a light value and a Dark appearance.** The ones marked *one value* are the same in both themes in VPlayed. `AccentColor` and `OnPrimary` may still get a Dark appearance if your brand needs it (see the light-primary pitfall below). `Scrim` and `OnLight` should stay single dark values.
 
 | Colorset | Theme name | Role and where it shows |
 |---|---|---|
-| `AccentColor` *(one value)* | `primary` | The primary colour: selected tab, "Watch now", "Watch Live", retry buttons, the LIVE badge, the Language checkmark, the splash glow and the start of the splash bar, the fallback tint of bulk-purchase cards |
+| `AccentColor` *(one value)* | `primary` | The primary colour, both as a fill ("Watch now", "Watch Live", retry buttons, the LIVE badge) and as text and icons on the page (the selected tab, the Language checkmark), plus the splash glow and the start of the splash bar, the fallback tint of bulk-purchase cards |
 | `Colors/OnPrimary` *(one value)* | `onPrimary` | Text and icons on the primary colour. White suits a dark primary. **If your primary is light, make this dark.** |
 | `Colors/Highlight` | `highlight` | Secondary highlight: crown and price tags on cards, the hero's category dot and active page dot, the end of the splash bar, the music-note icon |
 | `Colors/Background` | `background` | Page background, and the launch screen's; the hero artwork fades into it |
@@ -65,6 +65,7 @@ One asset serves the launch screen, the animated splash, the Home toolbar and th
 
 This is an Icon Composer (Liquid Glass) document with two glass groups, `Play` (front) and `V` (back). Each group is an SVG in `Assets/` drawn on the same 1024 × 1024 canvas, and `icon.json` sets the light and dark background fill. Edit it with `/Applications/Xcode.app/Contents/Applications/Icon Composer.app`. Xcode generates the flat icons for iOS 17–18 itself.
 
+- You can also replace `Assets/V.svg` and `Assets/Play.svg` directly. Keep the file names, draw on the 1024 × 1024 canvas, and change the background `solid` colours in `icon.json`.
 - Icon Composer ignores `clip-rule="evenodd"`. Build cut-outs by layering shapes in paint order.
 - To preview a rendition:
   ```bash
@@ -89,7 +90,7 @@ Every text style then uses that family. Each style picks the face nearest to its
 ### Brand name and copy
 
 - `Brand.name` in [`VPlayed/Brand/Brand.swift`](VPlayed/Brand/Brand.swift) is the product name people see. It is the wordmark's VoiceOver label, and it fills the `%@` in the messages below. It is not translated.
-- Copy in [`VPlayed/Localizable.xcstrings`](VPlayed/Localizable.xcstrings) that is about the brand. Every string needs English, Arabic (`ar`), Portuguese (`pt`) and Tamil (`ta`).
+- Copy in [`VPlayed/Localizable.xcstrings`](VPlayed/Localizable.xcstrings) that is about the brand. Every string needs English, Arabic (`ar`), Portuguese (`pt`) and Tamil (`ta`). **To reword the English, give the key an English (`en`) value in the catalog; don't change the key itself**, because that's what the code looks it up by. For example, setting `en` of `Stream the experience` to "Watch it together" changes the tagline with no code edit.
 
 | Key | Where |
 |---|---|
@@ -150,6 +151,6 @@ Run these after every rebrand.
 
 ## Known pitfalls
 
-- **A light primary colour** needs a dark `OnPrimary`. Glass buttons are tinted with the primary, so very pale or very saturated primaries can lose legibility. Check both themes.
+- **A light primary colour** (lime, yellow, pastel) needs a dark `OnPrimary`. It also needs a darker **light-mode** appearance on `AccentColor`, because the primary draws the selected tab and the Language checkmark directly on the page, and lime on the near-white tab bar is unreadable. Keep `OnPrimary` readable on both values. Glass buttons are tinted with the primary, so check very pale or very saturated primaries in both themes.
 - **The hero's fades are tuned to `Background`.** A background with a very different lightness or hue may make the hero artwork look washed out or muddy. Raise it with the core team if so; the strengths live in `ScrimTone` in `HeroCarouselView.swift`.
 - **Don't put hex colours or `.white` in views.** If a new colour is needed, add a colorset, give it a role in `Theme.Palette`, and give it a Dark appearance.
