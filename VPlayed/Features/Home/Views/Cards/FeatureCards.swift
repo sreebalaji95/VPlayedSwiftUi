@@ -189,7 +189,8 @@ struct BulkPlanCard: View {
     let plan: BulkPlan
     let onExplore: () -> Void
 
-    private var tint: Color { Color(hexString: plan.accentHex) ?? Color(hex: 0x3B82F6) }
+    /// The bundle's colour from the API, else the brand colour.
+    private var tint: Color { Color(hexString: plan.accentHex) ?? Theme.Palette.brand }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {

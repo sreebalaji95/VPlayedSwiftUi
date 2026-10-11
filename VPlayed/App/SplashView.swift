@@ -4,13 +4,13 @@ import SwiftUI
 /// background with a red glow, a loading bar and tagline, then a fade into Home after 3s.
 ///
 /// The logo sits exactly where the system launch screen draws `SplashLogo` (centered on the full
-/// screen at its natural 288pt size), so the handoff from the launch screen has no jump.
+/// screen at its natural size, the SVG's `width` and `height`), so the handoff from the launch
+/// screen has no jump. The bar and tagline hang below whatever size the logo has.
 struct SplashView: View {
     let onFinish: () -> Void
 
     static let duration: Duration = .seconds(3)
     private static let exitDuration = 0.48
-    private static let logoSize = CGSize(width: 288, height: 75.43)
 
     @State private var glowVisible = false
     @State private var detailsVisible = false
@@ -27,7 +27,7 @@ struct SplashView: View {
 
             Image(.splashLogo)
                 .accessibilityLabel(Text(verbatim: Brand.name))
-                .overlay(alignment: .top) {
+                .overlay(alignment: .bottom) {
                     VStack(spacing: 28) {
                         loadingBar
                         Text("Stream the experience")
@@ -38,7 +38,8 @@ struct SplashView: View {
                             .fixedSize()
                     }
                     .opacity(detailsVisible ? 1 : 0)
-                    .offset(y: Self.logoSize.height + 28)
+                    // Tops the bar 28pt below the logo's bottom edge, whatever the logo's size.
+                    .alignmentGuide(.bottom) { $0[.top] - 28 }
                 }
                 .scaleEffect(isLeaving ? 1.04 : 1)
         }
