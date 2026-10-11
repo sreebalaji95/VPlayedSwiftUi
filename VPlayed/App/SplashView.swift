@@ -32,9 +32,9 @@ struct SplashView: View {
                         loadingBar
                         Text("Stream the experience")
                             .font(.system(size: 13))
-                            .tracking(3.6)
+                            .letterSpacing(3.6)
                             .textCase(.uppercase)
-                            .foregroundStyle(Color.white.opacity(0.62))
+                            .foregroundStyle(Theme.Palette.textPrimary.opacity(0.62))
                             .fixedSize()
                     }
                     .opacity(detailsVisible ? 1 : 0)
@@ -72,11 +72,12 @@ struct SplashView: View {
 
     private var loadingBar: some View {
         Capsule()
-            .fill(Color.white.opacity(0.14))
+            .fill(Theme.Palette.textPrimary.opacity(0.14))
             .frame(width: 180, height: 3)
             .overlay(alignment: .leading) {
                 Capsule()
                     .fill(LinearGradient(colors: [Theme.Palette.brand, Theme.Palette.accent], startPoint: .leading, endPoint: .trailing))
+                    .flipsForRightToLeftLayoutDirection(true)
                     .frame(width: 180 * barProgress, height: 3)
             }
             .accessibilityHidden(true)
@@ -88,15 +89,14 @@ struct SplashView: View {
         } label: {
             HStack(spacing: 6) {
                 Text("Skip intro")
-                Image(systemName: "arrow.right").font(.system(size: 12, weight: .semibold))
+                Image(systemName: "arrow.forward").font(.system(size: 12, weight: .semibold))
             }
             .font(.system(size: 14, weight: .semibold))
-            .foregroundStyle(Color.white.opacity(0.72))
-            .padding(.horizontal, 16)
-            .frame(minHeight: 44)
-            .contentShape(.rect)
+            .foregroundStyle(Theme.Palette.textPrimary.opacity(0.72))
+            .padding(.horizontal, 4)
         }
-        .buttonStyle(PressableButtonStyle(scale: 0.95))
+        .glassButtonStyle()
+        .buttonBorderShape(.capsule)
         .opacity(detailsVisible ? 1 : 0)
         .padding(.bottom, 16)
     }
@@ -130,5 +130,4 @@ struct SplashView: View {
 
 #Preview {
     SplashView {}
-        .preferredColorScheme(.dark)
 }

@@ -11,8 +11,10 @@ enum AppRoute: Hashable {
     case voiceSearch
     case notifications
     case menu
+    case language
     /// Actions that need a signed-in user (watchlist, reminders) — there is no sign-in yet.
-    case signInRequired(action: String)
+    /// `prompt` is the localized title to show, e.g. "Sign in to add to your watchlist".
+    case signInRequired(prompt: String)
 }
 
 /// Lets any Home subview request navigation without threading closures through every card.

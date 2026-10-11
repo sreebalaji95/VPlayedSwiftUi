@@ -34,7 +34,8 @@ struct CardArtwork: View {
     }
 }
 
-/// Top-right access tag: crown (subscription), COMING SOON, or a price.
+/// Top-right access tag: crown (subscription), COMING SOON, or a price. Drawn on artwork, so it
+/// stays dark in both themes.
 struct CornerTag: View {
     let tag: AccessTag
     var height: CGFloat = 26
@@ -67,7 +68,7 @@ struct CornerTag: View {
             case .comingSoon, .price:
                 Text(label)
                     .font(.system(size: 11, weight: .bold))
-                    .tracking(0.66)
+                    .letterSpacing(0.66)
                     .monospacedDigit()
                     .foregroundStyle(Theme.Palette.accent)
                     .padding(.horizontal, 11)
@@ -76,12 +77,13 @@ struct CornerTag: View {
             }
         }
         .overlay { shape.strokeBorder(Theme.Palette.accent.opacity(0.55), lineWidth: 1) }
+        .environment(\.colorScheme, .dark)
         .accessibilityLabel(accessibilityText)
     }
 
     private var label: String {
         switch tag {
-        case .comingSoon: "COMING SOON"
+        case .comingSoon: String(localized: "COMING SOON", bundle: .localized)
         case .price(let value): value.uppercased()
         case .crown: ""
         }
@@ -89,14 +91,15 @@ struct CornerTag: View {
 
     private var accessibilityText: String {
         switch tag {
-        case .comingSoon: "Coming soon"
-        case .price(let value): "Price \(value)"
-        case .crown: "Subscription"
+        case .comingSoon: String(localized: "Coming soon", bundle: .localized)
+        case .price(let value): String(localized: "Price \(value)", bundle: .localized)
+        case .crown: String(localized: "Subscription", bundle: .localized)
         }
     }
 }
 
-/// Press feedback used across Home: a slight shrink and dim, matching the prototype's `:active`.
+/// Press feedback for Home's rail cards and rail titles: a slight shrink and dim, matching the
+/// prototype's `:active`. Content, not controls, so it stays outside the Liquid Glass styles.
 struct PressableButtonStyle: ButtonStyle {
     var scale: CGFloat = 0.97
 
@@ -108,7 +111,7 @@ struct PressableButtonStyle: ButtonStyle {
     }
 }
 
-/// Outline rank numeral for Top-10 rails (prototype: Inter 800, no fill, 15% white stroke).
+/// Outline rank numeral for Top-10 rails (prototype: Inter 800, no fill, 15% `line2` stroke).
 /// SwiftUI can't stroke glyphs, so the outline is built from offset copies masked by the glyph.
 struct RankNumeral: View {
     let rank: Int
@@ -122,7 +125,7 @@ struct RankNumeral: View {
         ZStack {
             ForEach(Self.offsets.indices, id: \.self) { index in
                 digits
-                    .foregroundStyle(Color.white.opacity(0.15))
+                    .foregroundStyle(Theme.Palette.line2)
                     .offset(x: Self.offsets[index].width, y: Self.offsets[index].height)
             }
             digits.foregroundStyle(Theme.Palette.background)

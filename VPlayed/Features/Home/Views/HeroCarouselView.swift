@@ -84,8 +84,8 @@ private struct HeroSlide: View {
             LinearGradient(
                 stops: [
                     .init(color: Theme.Palette.background, location: 0.02),
-                    .init(color: Theme.Palette.scrim.opacity(0.82), location: 0.20),
-                    .init(color: Theme.Palette.scrim.opacity(0.32), location: 0.46),
+                    .init(color: Theme.Palette.background.opacity(0.82), location: 0.20),
+                    .init(color: Theme.Palette.background.opacity(0.32), location: 0.46),
                     .init(color: .clear, location: 0.68),
                 ],
                 startPoint: .bottom,
@@ -93,11 +93,22 @@ private struct HeroSlide: View {
             )
             LinearGradient(
                 stops: [
-                    .init(color: Theme.Palette.scrim.opacity(0.45), location: 0),
+                    .init(color: Theme.Palette.background.opacity(0.45), location: 0),
                     .init(color: .clear, location: 0.6),
                 ],
                 startPoint: .leading,
                 endPoint: .trailing
+            )
+            // Keep the darker side behind the text, which sits on the right in RTL languages.
+            .flipsForRightToLeftLayoutDirection(true)
+            // Behind the glass top bar: keeps the wordmark and bar buttons legible on bright art.
+            LinearGradient(
+                stops: [
+                    .init(color: Theme.Palette.background.opacity(0.55), location: 0),
+                    .init(color: .clear, location: 0.25),
+                ],
+                startPoint: .top,
+                endPoint: .bottom
             )
         }
     }
@@ -119,33 +130,30 @@ private struct HeroSlide: View {
                     .padding(.top, 14)
             }
 
-            HStack(spacing: 10) {
-                Button { openRoute(openDetail) } label: {
-                    Label("Watch now", systemImage: "play.fill")
-                        .font(.system(size: 16, weight: .bold))
-                        .labelStyle(SpacedLabelStyle(spacing: 9))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 50)
-                        .background(Theme.Palette.brand, in: .rect(cornerRadius: Theme.Radius.control))
-                        .shadow(color: Theme.Palette.brand.opacity(0.26), radius: 10, y: 8)
-                }
-                .buttonStyle(PressableButtonStyle())
+            GlassGroup(spacing: 10) {
+                HStack(spacing: 10) {
+                    Button { openRoute(openDetail) } label: {
+                        Label("Watch now", systemImage: "play.fill")
+                            .font(.system(size: 16, weight: .bold))
+                            .labelStyle(SpacedLabelStyle(spacing: 9))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .glassButtonStyle(.prominent)
+                    .tint(Theme.Palette.brand)
 
-                Button { openRoute(.signInRequired(action: "Add to watchlist")) } label: {
-                    Image(systemName: "plus")
-                        .font(.system(size: 22, weight: .medium))
-                        .foregroundStyle(.white)
-                        .frame(width: 50, height: 50)
-                        .background(.ultraThinMaterial, in: .rect(cornerRadius: Theme.Radius.control))
-                        .background(Color.white.opacity(0.12), in: .rect(cornerRadius: Theme.Radius.control))
-                        .overlay {
-                            RoundedRectangle(cornerRadius: Theme.Radius.control)
-                                .strokeBorder(Color.white.opacity(0.4), lineWidth: 1)
-                        }
+                    Button { openRoute(.signInRequired(prompt: String(localized: "Sign in to add to your watchlist", bundle: .localized))) } label: {
+                        Image(systemName: "plus")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(Theme.Palette.textPrimary)
+                            .frame(width: 22, height: 22)
+                    }
+                    .glassButtonStyle()
+                    .buttonBorderShape(.circle)
+                    .accessibilityLabel("Add \(banner.title) to watchlist")
                 }
-                .buttonStyle(PressableButtonStyle())
-                .accessibilityLabel("Add \(banner.title) to watchlist")
+                .controlSize(.large)
+                .buttonBorderShape(.capsule)
             }
             .padding(.top, 14)
         }
@@ -159,25 +167,23 @@ private struct HeroSlide: View {
                 .shadow(color: Theme.Palette.accent, radius: 4)
             Text(banner.kind.displayName.uppercased())
                 .font(.system(size: 11, weight: .bold))
-                .tracking(1.5)
-                .foregroundStyle(.white)
+                .letterSpacing(1.5)
+                .foregroundStyle(Theme.Palette.textPrimary)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
-        .background(.ultraThinMaterial, in: .capsule)
-        .background(Theme.Palette.scrim.opacity(0.55), in: .capsule)
-        .overlay { Capsule().strokeBorder(Theme.Palette.line2, lineWidth: 1) }
+        .glassSurface(in: .capsule)
     }
 
     @ViewBuilder
     private var titleView: some View {
         let textTitle = Text(banner.title)
             .font(.system(size: 37, weight: .bold))
-            .tracking(-1.3)
-            .foregroundStyle(.white)
+            .letterSpacing(-1.3)
+            .foregroundStyle(Theme.Palette.textPrimary)
             .lineLimit(2)
             .minimumScaleFactor(0.7)
-            .shadow(color: .black.opacity(0.4), radius: 12, y: 4)
+            .shadow(color: Theme.Palette.background.opacity(0.4), radius: 12, y: 4)
 
         if let titleImageURL = banner.titleImageURL {
             TitleArtwork(url: titleImageURL, fallback: textTitle)
@@ -248,7 +254,7 @@ private struct HeroPageDots: View {
                     ActiveDot(animates: animates).id(current)
                 } else {
                     Circle()
-                        .fill(Color.white.opacity(0.28))
+                        .fill(Theme.Palette.textPrimary.opacity(0.28))
                         .frame(width: 7, height: 7)
                 }
             }
@@ -265,7 +271,7 @@ private struct HeroPageDots: View {
 
         var body: some View {
             Capsule()
-                .fill(Color.white.opacity(0.28))
+                .fill(Theme.Palette.textPrimary.opacity(0.28))
                 .frame(width: 20, height: 7)
                 .overlay(alignment: .leading) {
                     Capsule()

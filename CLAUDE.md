@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home is the only real screen so far; every other destination is a placeholder.
+VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home, Menu and Language are the only real screens so far; every other destination is a placeholder.
 
 It is a native rewrite of the existing UIKit app at `/Users/balaji/Desktop/GSVplayed/Vplayed New`. Its source (`GudSho/`) is the reference for endpoints, headers, JSON keys and business rules, but nothing there compiles standalone (Alamofire, ObjectMapper, UIKit globals). Port logic into new Swift 6 code; never modify that project.
 
@@ -39,7 +39,7 @@ xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platfor
 - **`MemberImportVisibility` is enabled.** Each file must `import` every module whose members it uses; transitive imports don't count.
 - **File-system-synchronized groups.** Files added under `VPlayed/` are picked up by the target automatically, so `project.pbxproj` doesn't need editing to add sources or resources.
 - **The Info.plist is generated** (`GENERATE_INFOPLIST_FILE = YES`). Add keys such as usage descriptions as `INFOPLIST_KEY_*` build settings in `project.pbxproj` (in both Debug and Release target configs).
-  - The only exception is the launch screen. `VPlayed/Info.plist` holds just `UILaunchScreen` (the `SplashLogo` image on the `LaunchBackground` color), because there is no build setting for a launch image.
+  - The only exception is the launch screen. `VPlayed/Info.plist` holds just `UILaunchScreen` (the `SplashLogo` image on the `LaunchBackground` color; both have light and dark variants, the light logo being `SplashLogoLight.svg` with a dark wordmark), because there is no build setting for a launch image.
   - That plist is merged via `INFOPLIST_FILE` and excluded from the synchronized folder by a `PBXFileSystemSynchronizedBuildFileExceptionSet`. Keep that exception, or the build fails with duplicate Info.plist outputs.
 - **Launch flow**:
   - The system launch screen shows the wordmark centered.
@@ -71,11 +71,36 @@ xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platfor
   - `AccessTag` ports the UIKit card badge rules (`SeriesCollectionViewCell`).
   - `HomeViewModel` (`@Observable`) owns phases, refresh and de-duplicated pagination. It is held by `RootView` so Home doesn't reload after navigation.
 - **Navigation**:
-  - `RootView` hosts a system `TabView` (tabs in `AppTab`: Home, Search, Promos, Subscription, Rewards), which gets the Liquid Glass tab bar on iOS 26+. Only Home is built; the other tabs show `PlaceholderDestinationView(tab:)`.
+  - `RootView` hosts a system `TabView` (tabs in `AppTab`: Home, Promos, Subscription, then Search on the right as in the App Store), which gets the Liquid Glass tab bar on iOS 26+. Only Home is built; the other tabs show `PlaceholderDestinationView(tab:)`.
   - Each tab has its own `NavigationStack`. Views call `@Environment(\.openRoute)` with an `AppRoute`; `RootView` pushes it onto the selected tab's stack, except `.search`, which switches to the Search tab.
   - Every route currently resolves to `PlaceholderDestinationView`. Add real screens by switching on the route in `navigationDestination`.
+- **Localization**:
+  - English is the development language. Arabic (`ar`, right-to-left), Portuguese (`pt`) and Tamil (`ta`) are listed in `knownRegions`, and every string lives in `VPlayed/Localizable.xcstrings`.
+  - The app language is `AppLanguage` (`Core/Localization`). Users pick it in Menu (Home's top-left button) → Language (`Features/Menu`), or in iOS Settings → VPlayed → Language. Both write the app's `AppleLanguages`, so they always agree.
+  - Switching is live. `RootView` owns a `LanguageStore`, sets `\.locale` and `\.layoutDirection`, gives the `TabView` an `.id` so everything re-renders, and refreshes Home so API text comes back in the new language. Navigation paths live in `RootView`, so the user stays on the Language screen.
+  - Literals passed to `Text`, `Label`, `Button` and `accessibilityLabel` are localized automatically. Strings built elsewhere (enum titles, error messages, route titles) need `String(localized: "…", bundle: .localized)`. `Bundle.main` only picks its language at launch; `Bundle.localized` is the current language's `.lproj`. View parameters that take UI text should be `LocalizedStringKey`. Add every new key's `ar`, `pt` and `ta` translations to the catalog. Find the exact keys in the build's `*.stringsdata` files, or let Xcode sync the catalog.
+  - Counts that need plural forms use catalog substitutions (see the `%@ followers %lld` key; Arabic has six plural categories).
+  - `AppLanguage.current` also drives the API's `X-Language-Code` header and the `LocalizedText` choice.
+  - RTL: layout mirrors automatically. Use `.forward` SF Symbols rather than `.right`, and `.flipsForRightToLeftLayoutDirection(true)` on directional gradients. Use `.letterSpacing(_:)` instead of `.tracking(_:)` for display text; it only tracks Latin-script languages, because tracking breaks Arabic joins and Tamil conjuncts.
+  - Try a language with launch arguments, e.g. `xcrun simctl launch booted com.contus.vplayed -AppleLanguages "(ar)" -AppleLocale ar_SA`.
+- **Liquid Glass (always)**:
+  - Bars are system bars. Home's top bar is `HomeToolbar` (`HomeChrome.swift`): system toolbar items for the menu, the `SplashLogo` wordmark (`.sharedBackgroundVisibility(.hidden)`) and the bell. The feed `ScrollView` ignores the top safe area so the hero runs behind the glass bar, with `.softTopScrollEdge()` and a top fade in the hero scrims for legibility.
+  - Controls are glass, through `DesignSystem/Glass.swift`, never custom filled styles:
+    - `glassButtonStyle()` for controls, and `glassButtonStyle(.prominent)` + `.tint(Theme.Palette.brand)` for the primary action;
+    - `GlassCardButtonStyle(shape:padding:)` for Menu/Language rows;
+    - `glassSurface(in:)` for floating chips;
+    - `GlassGroup` to blend neighbouring glass.
+  - The helpers hold all availability logic: iOS / macOS 26 get `.glass` / `.glassEffect`; iOS 17–18 get bordered styles or material; visionOS (no glass button styles) uses `.bordered`, which is glass there. Don't add `#available` checks in views.
+  - Exceptions:
+    - Home rail content (poster/promo/audio/channel cards, the Live card panel, rail titles) keeps its original surfaces and `PressableButtonStyle`; the user preferred it to glass. Buttons inside cards ("Watch Live", "Set reminder", "Explore bundles") are glass.
+    - The hero's full-bleed background image tap stays plain, since an edge-to-edge photo has no shape for glass. "Watch now" is its glass action.
 - **Design**:
-  - `DesignSystem/Theme.swift` holds the tokens from the HTML prototype (`~/Downloads/VPlayed Complete Prototype (offline) (9).html`, page "VPlayed Home Mobile"): dark theme only, SF Pro, Material Symbols mapped to SF Symbols.
+  - `DesignSystem/Theme.swift` holds the tokens from the HTML prototype (`~/Downloads/VPlayed Complete Prototype (offline) (9).html`, page "VPlayed Home Mobile"): SF Pro, Material Symbols mapped to SF Symbols. The prototype is dark-only; the light values are our own.
+  - Colours are colorsets in `Assets.xcassets/Colors`; `Theme.Palette` refers to them through generated asset symbols (`Color(.textPrimary)`). Add a colour as an asset first, and avoid names that collide with SwiftUI's own `Color` members (hence `AccentTeal`, not `Teal`).
+  - The app follows the system Light/Dark setting. Each colorset has a light base value plus a Dark appearance; give new colours both. `Brand`, `BrandPressed`, `AccentColor`, `OnLight` and `Scrim` are deliberately the same in both themes.
+  - Chips and labels drawn on artwork (`CornerTag`, the Live card's badge and caption) apply `.environment(\.colorScheme, .dark)` so they stay dark on photos. The hero is the exception: it fades into the page background in both themes.
+  - On page surfaces use `Theme.Palette.textPrimary.opacity(x)` rather than `Color.white.opacity(x)`, so it inverts in light mode.
+  - The app's main accent is the red `AccentColor` asset (the selected tab uses it). `Theme.Palette.accent` is a secondary yellow highlight (asset `AccentYellow`).
   - To render a prototype page for comparison, open the file in headless Chrome with the page name as the URL hash, e.g. `…(9).html#VPlayed%20Home%20Mobile.html`. Chrome may not exit on its own because the page keeps animating.
 
 ## App icon

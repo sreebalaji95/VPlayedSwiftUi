@@ -21,7 +21,7 @@ struct RailSectionView: View {
     private var header: some View {
         let title = Text(section.title)
             .font(.system(size: 19.5, weight: .bold))
-            .tracking(-0.2)
+            .letterSpacing(-0.2)
             .foregroundStyle(Theme.Palette.textPrimary)
             .lineLimit(1)
             .frame(minHeight: 44, alignment: .leading)
@@ -89,7 +89,7 @@ struct RailSectionView: View {
                 LiveNowCard(
                     item: item,
                     onWatch: { openRoute(.content(slug: item.slug, title: item.title, kind: .live)) },
-                    onRemind: { openRoute(.signInRequired(action: "Set a reminder")) }
+                    onRemind: { openRoute(.signInRequired(prompt: String(localized: "Sign in to set a reminder", bundle: .localized))) }
                 )
             }
         case (.bulkPlans, .bulkPlans(let plans)):

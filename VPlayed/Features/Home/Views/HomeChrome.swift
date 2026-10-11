@@ -1,45 +1,46 @@
 import SwiftUI
 
-/// Solid 56pt top bar: menu on the left; search tile, mic and notifications on the right.
-struct HomeHeaderView: View {
-    @Environment(\.openRoute) private var openRoute
+/// Home's top bar, built from system toolbar items so it is Liquid Glass on iOS / macOS 26:
+/// menu on the leading side, the VPlayed wordmark centred, notifications on the trailing side.
+struct HomeToolbar: ToolbarContent {
+    let openRoute: RouteAction
 
-    var body: some View {
-        HStack(spacing: 0) {
-            iconButton("line.3.horizontal", size: 22, label: "Menu") { openRoute(.menu) }
-            Spacer(minLength: 0)
-            Button { openRoute(.search) } label: {
-                Image(systemName: "magnifyingglass")
-                    .font(.system(size: 17, weight: .medium))
-                    .foregroundStyle(Theme.Palette.muted)
-                    .frame(width: 44, height: 44)
-                    .background(Theme.Palette.sunken, in: .rect(cornerRadius: Theme.Radius.control))
-                    .overlay {
-                        RoundedRectangle(cornerRadius: Theme.Radius.control)
-                            .strokeBorder(Theme.Palette.line, lineWidth: 1)
-                    }
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .navigation) {
+            Button { openRoute(.menu) } label: {
+                Label("Menu", systemImage: "line.3.horizontal")
             }
-            .buttonStyle(PressableButtonStyle(scale: 0.94))
-            .accessibilityLabel("Search")
-            iconButton("mic", size: 20, label: "Voice search") { openRoute(.voiceSearch) }
-            iconButton("bell", size: 20, label: "Notifications") { openRoute(.notifications) }
         }
-        .padding(.leading, 6)
-        .padding(.trailing, Theme.Spacing.gutter - 6)
-        .frame(height: Theme.Layout.headerHeight)
-        .background(Theme.Palette.background.ignoresSafeArea(edges: .top))
-        .overlay(alignment: .bottom) { Theme.Palette.line.frame(height: 1) }
+        logo
+        ToolbarItem(placement: .primaryAction) {
+            Button { openRoute(.notifications) } label: {
+                Label("Notifications", systemImage: "bell")
+            }
+        }
     }
 
-    private func iconButton(_ symbol: String, size: CGFloat, label: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: symbol)
-                .font(.system(size: size, weight: .regular))
-                .foregroundStyle(Theme.Palette.textPrimary)
-                .frame(width: 44, height: 44)
-                .contentShape(.rect)
+    /// The wordmark floats on its own, without the glass capsule toolbar items get by default.
+    @ToolbarContentBuilder
+    private var logo: some ToolbarContent {
+        #if os(visionOS)
+        ToolbarItem(placement: .principal) { wordmark }
+        #else
+        if #available(iOS 26, macOS 26, *) {
+            ToolbarItem(placement: .principal) { wordmark }
+                .sharedBackgroundVisibility(.hidden)
+        } else {
+            ToolbarItem(placement: .principal) { wordmark }
         }
-        .buttonStyle(PressableButtonStyle(scale: 0.9))
-        .accessibilityLabel(label)
+        #endif
+    }
+
+    private var wordmark: some View {
+        // Same asset as the splash, so it has the light and dark variants.
+        Image(.splashLogo)
+            .resizable()
+            .scaledToFit()
+            .frame(height: Theme.Layout.headerLogoHeight)
+            .accessibilityLabel("VPlayed")
+            .accessibilityAddTraits(.isHeader)
     }
 }

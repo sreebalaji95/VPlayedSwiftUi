@@ -4,8 +4,13 @@ import SwiftUI
 /// covered by the splash on cold launch. The Home model lives here so it survives navigation
 /// and tab switches, and Home doesn't reload when the user comes back. Home starts loading
 /// under the splash, so content is usually ready when it fades.
+///
+/// It also applies the language picked in Menu → Language: the locale and layout direction,
+/// plus a fresh view tree (`.id`) so strings built in code re-resolve. Navigation state lives
+/// here, so the user stays on the Language screen while the app switches around them.
 struct RootView: View {
     @State private var homeModel = HomeViewModel()
+    @State private var languageStore = LanguageStore()
     @State private var selectedTab: AppTab = .home
     @State private var paths: [AppTab: [AppRoute]] = [:]
     @State private var showsSplash = true
@@ -16,14 +21,16 @@ struct RootView: View {
                 ForEach(AppTab.allCases) { tab in
                     NavigationStack(path: path(for: tab)) {
                         root(for: tab)
-                            .navigationDestination(for: AppRoute.self) { route in
-                                PlaceholderDestinationView(route: route)
-                            }
+                            .navigationDestination(for: AppRoute.self, destination: destination)
                     }
+                    .tint(Theme.Palette.textPrimary)
                     .tabItem { Label(tab.title, systemImage: tab.symbol) }
                     .tag(tab)
                 }
             }
+            // Colours the selected tab; the stacks reset it so their content stays white.
+            .tint(Color(.accent))
+            .id(languageStore.language)
             .environment(\.openRoute, RouteAction(open))
             .accessibilityHidden(showsSplash)
 
@@ -33,7 +40,22 @@ struct RootView: View {
             }
         }
         .tint(Theme.Palette.textPrimary)
-        .preferredColorScheme(.dark)
+        .environment(languageStore)
+        .environment(\.locale, languageStore.language.locale)
+        .environment(\.layoutDirection, languageStore.language.isRightToLeft ? .rightToLeft : .leftToRight)
+        // API text (rail titles, synopses) is fetched in the chosen language, so fetch it again.
+        .onChange(of: languageStore.language) {
+            Task { await homeModel.refresh() }
+        }
+    }
+
+    @ViewBuilder
+    private func destination(for route: AppRoute) -> some View {
+        switch route {
+        case .menu: MenuView()
+        case .language: LanguageView()
+        default: PlaceholderDestinationView(route: route)
+        }
     }
 
     @ViewBuilder

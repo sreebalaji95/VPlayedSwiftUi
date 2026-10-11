@@ -90,7 +90,7 @@ nonisolated struct LocalizedText: Decodable, Sendable, Hashable {
             return
         }
         let translations = try container.decode([String: String?].self).compactMapValues { $0 }
-        let preferred = UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en"
+        let preferred = AppLanguage.current.rawValue
         value = translations[preferred]
             ?? translations["en"]
             ?? translations.sorted { $0.key < $1.key }.first(where: { !$0.value.isEmpty })?.value

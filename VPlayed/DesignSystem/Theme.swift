@@ -2,40 +2,35 @@ import SwiftUI
 
 /// Design tokens from the VPlayed prototype (dark theme, `vp-ds-tokens.css`).
 enum Theme {
+    /// Colours live in `Assets.xcassets/Colors`; these refer to them through Xcode's generated
+    /// asset symbols, so a renamed or missing asset fails the build. Most have a light value and
+    /// a Dark appearance and follow the system theme; the exceptions are noted below.
     enum Palette {
-        static let background = Color(hex: 0x0A0A0B)
-        static let surface = Color(hex: 0x131316)
-        static let raised = Color(hex: 0x1B1C21)
-        static let neutral700 = Color(hex: 0x26282E)
-        static let sunken = Color(hex: 0x0C0C0E)
+        static let background = Color(.background)
+        static let surface = Color(.surface)
+        static let raised = Color(.raised)
+        static let neutral700 = Color(.neutral700)
+        static let sunken = Color(.sunken)
 
-        static let textPrimary = Color(hex: 0xF6F7F9)
-        static let textSecondary = Color(hex: 0xB7BCC4)
-        static let textTertiary = Color(hex: 0x646A75)
-        static let muted = Color(hex: 0x8B919C)
+        static let textPrimary = Color(.textPrimary)
+        static let textSecondary = Color(.textSecondary)
+        static let textTertiary = Color(.textTertiary)
+        static let muted = Color(.muted)
 
-        static let brand = Color(hex: 0xFF0935)
-        static let brandPressed = Color(hex: 0xB0071F)
-        static let accent = Color(hex: 0xFFD119)
-        static let teal = Color(hex: 0x0DCEA6)
-        static let amber = Color(hex: 0xF5A623)
-        static let onLight = Color(hex: 0x131316)
+        /// The brand reds are the same in both themes.
+        static let brand = Color(.brand)
+        static let brandPressed = Color(.brandPressed)
+        /// Secondary yellow highlight. The app's main accent is the red `AccentColor` asset.
+        static let accent = Color(.accentYellow)
+        static let teal = Color(.accentTeal)
+        static let amber = Color(.amber)
+        /// Dark text for light fills, in both themes.
+        static let onLight = Color(.onLight)
 
-        static let line = Color.white.opacity(0.08)
-        static let line2 = Color.white.opacity(0.15)
-        static let scrim = Color(hex: 0x0A0A0B)
-
-        /// The 140° logo gradient used for brand accents.
-        static let logoGradient = LinearGradient(
-            stops: [
-                .init(color: brand, location: 0),
-                .init(color: amber, location: 0.34),
-                .init(color: accent, location: 0.66),
-                .init(color: Color(hex: 0x00C9A7), location: 1),
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        static let line = Color(.line)
+        static let line2 = Color(.line2)
+        /// Always dark: backs chips and labels drawn on artwork, which stay dark in both themes.
+        static let scrim = Color(.scrim)
     }
 
     enum Radius {
@@ -51,7 +46,7 @@ enum Theme {
     }
 
     enum Layout {
-        static let headerHeight: CGFloat = 56
+        static let headerLogoHeight: CGFloat = 26
     }
 }
 

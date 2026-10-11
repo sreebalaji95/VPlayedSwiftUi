@@ -116,10 +116,10 @@ struct PromoCard: View {
             if item.viewCount != nil || item.likeCount != nil {
                 HStack(spacing: 10) {
                     if let views = item.viewCount {
-                        Label("\(views.formatted(.number.notation(.compactName)))", systemImage: "eye")
+                        Label(views.formatted(.number.notation(.compactName)), systemImage: "eye")
                     }
                     if let likes = item.likeCount {
-                        Label("\(likes.formatted(.number.notation(.compactName)))", systemImage: "hand.thumbsup")
+                        Label(likes.formatted(.number.notation(.compactName)), systemImage: "hand.thumbsup")
                     }
                 }
                 .labelStyle(CompactLabelStyle())

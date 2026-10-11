@@ -49,9 +49,9 @@ struct HomeLoadingView: View {
 /// Centered message with an icon tile and one call to action (empty feed / load failure).
 struct HomeMessageView: View {
     let symbol: String
-    let title: String
+    let title: LocalizedStringKey
     let message: String
-    let actionTitle: String
+    let actionTitle: LocalizedStringKey
     let action: () async -> Void
 
     @State private var isWorking = false
@@ -86,11 +86,12 @@ struct HomeMessageView: View {
                 }
                 .font(.system(size: 14, weight: .bold))
                 .foregroundStyle(.white)
-                .padding(.horizontal, 24)
-                .frame(height: 46)
-                .background(Theme.Palette.brand, in: .rect(cornerRadius: Theme.Radius.control))
+                .padding(.horizontal, 12)
             }
-            .buttonStyle(PressableButtonStyle())
+            .glassButtonStyle(.prominent)
+            .tint(Theme.Palette.brand)
+            .buttonBorderShape(.capsule)
+            .controlSize(.large)
             .disabled(isWorking)
             .padding(.top, 24)
         }
@@ -113,9 +114,10 @@ struct LoadMoreFooter: View {
                     Label("Couldn't load more. Tap to retry.", systemImage: "arrow.clockwise")
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(Theme.Palette.textSecondary)
-                        .frame(maxWidth: .infinity, minHeight: 44)
                 }
-                .buttonStyle(PressableButtonStyle())
+                .glassButtonStyle()
+                .buttonBorderShape(.capsule)
+                .frame(maxWidth: .infinity)
             } else {
                 ProgressView()
                     .tint(Theme.Palette.textSecondary)

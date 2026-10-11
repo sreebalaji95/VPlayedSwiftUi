@@ -27,6 +27,8 @@ struct LiveNowCard: View {
                     }
                     .overlay(alignment: .topLeading) { badge.padding(14) }
                     .overlay(alignment: .bottomLeading) { caption }
+                    // Badge and caption sit on artwork, so they stay dark in both themes.
+                    .environment(\.colorScheme, .dark)
             }
             .buttonStyle(PressableButtonStyle(scale: 0.99))
 
@@ -45,10 +47,10 @@ struct LiveNowCard: View {
             if item.isLive {
                 PulsingDot(color: .white, size: 7)
             }
-            Text(item.isLive ? "LIVE" : "UPCOMING")
+            item.isLive ? Text("LIVE") : Text("UPCOMING")
         }
         .font(.system(size: 11, weight: .bold))
-        .tracking(0.6)
+        .letterSpacing(0.6)
         .foregroundStyle(.white)
         .padding(.horizontal, 11)
         .padding(.vertical, 6)
@@ -90,24 +92,31 @@ struct LiveNowCard: View {
                     .font(.system(size: 11, weight: .heavy))
                     .foregroundStyle(Theme.Palette.background)
                     .frame(width: 32, height: 32)
-                    .background(.white, in: .rect(cornerRadius: Theme.Radius.control))
+                    .background(Theme.Palette.textPrimary, in: .rect(cornerRadius: Theme.Radius.control))
                 Text(channel)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(Theme.Palette.textPrimary)
                     .lineLimit(1)
             }
             Spacer(minLength: 8)
-            if item.isLive {
-                Button(action: onWatch) {
-                    Label("Watch Live", systemImage: "play.fill")
+            Group {
+                if item.isLive {
+                    Button(action: onWatch) {
+                        Label("Watch Live", systemImage: "play.fill")
+                            .foregroundStyle(.white)
+                    }
+                    .glassButtonStyle(.prominent)
+                    .tint(Theme.Palette.brand)
+                } else {
+                    Button(action: onRemind) {
+                        Label("Set reminder", systemImage: "bell")
+                    }
+                    .glassButtonStyle()
                 }
-                .buttonStyle(FooterButtonStyle(fill: Theme.Palette.brand, foreground: .white))
-            } else {
-                Button(action: onRemind) {
-                    Label("Set reminder", systemImage: "bell")
-                }
-                .buttonStyle(FooterButtonStyle(fill: .white, foreground: Theme.Palette.background))
             }
+            .font(.system(size: 14, weight: .bold))
+            .lineLimit(1)
+            .buttonBorderShape(.capsule)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 11)
@@ -118,22 +127,6 @@ struct LiveNowCard: View {
         let words = name.split(separator: " ").prefix(2)
         let letters = words.count > 1 ? words.compactMap(\.first) : Array(name.prefix(2))
         return String(letters).uppercased()
-    }
-}
-
-private struct FooterButtonStyle: ButtonStyle {
-    let fill: Color
-    let foreground: Color
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.system(size: 14, weight: .bold))
-            .foregroundStyle(foreground)
-            .padding(.horizontal, 14)
-            .frame(height: 44)
-            .background(fill, in: .rect(cornerRadius: Theme.Radius.control))
-            .scaleEffect(configuration.isPressed ? 0.96 : 1)
-            .animation(.easeOut(duration: 0.16), value: configuration.isPressed)
     }
 }
 
@@ -167,13 +160,15 @@ struct ChannelCard: View {
                 .frame(width: 104, height: 104)
                 .background(.white, in: .circle)
                 .clipShape(.circle)
+                .overlay { Circle().strokeBorder(Theme.Palette.line, lineWidth: 1) }
                 .padding(.bottom, 16)
             Text(item.name)
                 .font(.system(size: 16, weight: .bold))
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .lineLimit(1)
             if let followers = item.followCount {
-                Text("\(followers.formatted(.number.notation(.compactName))) \(followers == 1 ? "follower" : "followers")")
+                // Plural forms come from the catalog (Arabic has six); the count reads compactly, e.g. 1.2K.
+                Text("\(followers.formatted(.number.notation(.compactName))) followers \(followers)")
                     .font(.system(size: 12.5, weight: .medium))
                     .foregroundStyle(Theme.Palette.textTertiary)
                     .padding(.top, 4)
@@ -207,7 +202,7 @@ struct BulkPlanCard: View {
                 if let label = plan.label {
                     Text(label.uppercased())
                         .font(.system(size: 11, weight: .bold))
-                        .tracking(1.5)
+                        .letterSpacing(1.5)
                         .foregroundStyle(tint)
                         .lineLimit(1)
                 }
@@ -240,12 +235,11 @@ struct BulkPlanCard: View {
             Button(action: onExplore) {
                 Text("Explore bundles")
                     .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(Theme.Palette.onLight)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 46)
-                    .background(.white, in: .rect(cornerRadius: Theme.Radius.control))
+                    .frame(maxWidth: .infinity, minHeight: 32)
             }
-            .buttonStyle(PressableButtonStyle())
+            .glassButtonStyle()
+            .buttonBorderShape(.capsule)
+            .controlSize(.large)
         }
         .padding(.horizontal, 26)
         .padding(.vertical, 24)

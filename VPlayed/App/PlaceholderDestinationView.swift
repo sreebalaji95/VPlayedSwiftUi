@@ -60,15 +60,16 @@ struct PlaceholderDestinationView: View {
 
     private static func navigationTitle(for route: AppRoute) -> String {
         switch route {
-        case .content: "Details"
-        case .channel: "Channel"
-        case .bulkPlan: "Bulk purchase"
-        case .viewAll: "View all"
-        case .search: "Search"
-        case .voiceSearch: "Voice search"
-        case .notifications: "Notifications"
-        case .menu: "Menu"
-        case .signInRequired: "Sign in"
+        case .content: String(localized: "Details", bundle: .localized)
+        case .channel: String(localized: "Channel", bundle: .localized)
+        case .bulkPlan: String(localized: "Bulk purchase", bundle: .localized)
+        case .viewAll: String(localized: "View all", bundle: .localized)
+        case .search: String(localized: "Search", bundle: .localized)
+        case .voiceSearch: String(localized: "Voice search", bundle: .localized)
+        case .notifications: String(localized: "Notifications", bundle: .localized)
+        case .menu: String(localized: "Menu", bundle: .localized)
+        case .language: String(localized: "Language", bundle: .localized)
+        case .signInRequired: String(localized: "Sign in", bundle: .localized)
         }
     }
 
@@ -78,7 +79,7 @@ struct PlaceholderDestinationView: View {
         case .channel(_, let name): name
         case .bulkPlan(_, let name): name
         case .viewAll(_, let title): title
-        case .signInRequired(let action): "Sign in to \(action.lowercased())"
+        case .signInRequired(let prompt): prompt
         default: navigationTitle(for: route)
         }
     }
@@ -86,13 +87,14 @@ struct PlaceholderDestinationView: View {
     private static func details(for route: AppRoute) -> [String] {
         switch route {
         case .content(let slug, _, let kind):
-            ["\(kind.displayName) detail", slug.map { "slug: \($0)" }].compactMap { $0 }
+            // Slugs and rail ids are debugging aids, so they stay unlocalized.
+            [String(localized: "\(kind.displayName) detail", bundle: .localized), slug.map { "slug: \($0)" }].compactMap { $0 }
         case .channel(let slug, _), .bulkPlan(let slug, _):
             [slug.map { "slug: \($0)" }].compactMap { $0 }
         case .viewAll(let sectionID, _):
             ["rail id: \(sectionID)"]
         case .signInRequired:
-            ["Sign-in isn't available in this build."]
+            [String(localized: "Sign-in isn't available in this build.", bundle: .localized)]
         default:
             []
         }
@@ -113,6 +115,7 @@ struct PlaceholderDestinationView: View {
         case .voiceSearch: "mic"
         case .notifications: "bell"
         case .menu: "line.3.horizontal"
+        case .language: "globe"
         case .signInRequired: "person.badge.key"
         }
     }

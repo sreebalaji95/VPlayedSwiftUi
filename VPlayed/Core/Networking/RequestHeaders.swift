@@ -6,10 +6,7 @@ nonisolated struct RequestHeaders: Sendable {
     var session: SessionStore = .shared
     var deviceID: String = DeviceID.current
     var appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0"
-    /// Same `UserDefaults` key the UIKit app uses for the chosen content language.
-    var languageCode: @Sendable () -> String = {
-        UserDefaults.standard.string(forKey: "selectedLanguage") ?? "en"
-    }
+    var languageCode: @Sendable () -> String = { AppLanguage.current.rawValue }
 
     func values() async -> [String: String] {
         let credentials = await session.current()

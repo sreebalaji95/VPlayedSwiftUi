@@ -1,25 +1,25 @@
 import SwiftUI
 
-/// The mobile Home screen: header, hero carousel and API-driven rails. The tab bar belongs to
-/// `RootView`.
+/// The mobile Home screen: a Liquid Glass top bar (`HomeToolbar`) over the hero carousel and
+/// API-driven rails. The hero runs up behind the bar. The tab bar belongs to `RootView`.
 struct HomeView: View {
     let model: HomeViewModel
 
+    @Environment(\.openRoute) private var openRoute
+
     var body: some View {
-        VStack(spacing: 0) {
-            HomeHeaderView()
-            content
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .overlay(alignment: .bottom) {
-                    if let notice = model.notice {
-                        ToastView(message: notice)
-                            .padding(.bottom, Theme.Spacing.gutter)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
+        content
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .bottom) {
+                if let notice = model.notice {
+                    ToastView(message: notice)
+                        .padding(.bottom, Theme.Spacing.gutter)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-                .animation(.easeOut(duration: 0.22), value: model.notice)
-        }
-        .background(Theme.Palette.background.ignoresSafeArea())
+            }
+            .animation(.easeOut(duration: 0.22), value: model.notice)
+            .background(Theme.Palette.background.ignoresSafeArea())
+            .toolbar { HomeToolbar(openRoute: openRoute) }
         .task { await model.loadIfNeeded() }
         .task(id: model.notice) {
             guard model.notice != nil else { return }
@@ -27,7 +27,7 @@ struct HomeView: View {
             if !Task.isCancelled { model.notice = nil }
         }
         #if os(iOS)
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationBarTitleDisplayMode(.inline)
         #endif
     }
 
@@ -48,7 +48,7 @@ struct HomeView: View {
             HomeMessageView(
                 symbol: "film",
                 title: "Your home feed is empty",
-                message: "There's nothing to show yet. Check back soon.",
+                message: String(localized: "There's nothing to show yet. Check back soon.", bundle: .localized),
                 actionTitle: "Refresh",
                 action: model.retry
             )
@@ -76,6 +76,9 @@ struct HomeView: View {
             }
         }
         .scrollIndicators(.hidden)
+        // The hero starts at the top of the screen, behind the glass bar.
+        .ignoresSafeArea(edges: .top)
+        .softTopScrollEdge()
         .refreshable { await model.refresh() }
     }
 }

@@ -16,17 +16,17 @@ nonisolated enum APIError: Error, Sendable, Equatable {
         switch self {
         case .network(let code) where code == URLError.notConnectedToInternet.rawValue
             || code == URLError.networkConnectionLost.rawValue:
-            "You appear to be offline. Check your connection and try again."
+            String(localized: "You appear to be offline. Check your connection and try again.", bundle: .localized)
         case .network(let code) where code == URLError.timedOut.rawValue:
-            "The server took too long to respond. Please try again."
+            String(localized: "The server took too long to respond. Please try again.", bundle: .localized)
         case .network:
-            "We couldn't reach VPlayed. Please try again."
+            String(localized: "We couldn't reach VPlayed. Please try again.", bundle: .localized)
         case .api(_, let message?) where !message.isEmpty:
             message
         case .unauthorized:
-            "Your session has expired. Please sign in again."
+            String(localized: "Your session has expired. Please sign in again.", bundle: .localized)
         case .invalidURL, .http, .api, .decoding:
-            "Something went wrong while loading. Please try again."
+            String(localized: "Something went wrong while loading. Please try again.", bundle: .localized)
         }
     }
 }

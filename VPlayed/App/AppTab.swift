@@ -4,30 +4,27 @@ import SwiftUI
 /// show `PlaceholderDestinationView` until their screens exist.
 enum AppTab: Hashable, CaseIterable, Identifiable {
     case home
-    case search
     case promos
     case subscription
-    case rewards
+    case search
 
     var id: Self { self }
 
     var title: String {
         switch self {
-        case .home: "Home"
-        case .search: "Search"
-        case .promos: "Promos"
-        case .subscription: "Subscription"
-        case .rewards: "Rewards"
+        case .home: String(localized: "Home", bundle: .localized)
+        case .promos: String(localized: "Promos", bundle: .localized)
+        case .subscription: String(localized: "Subscription", bundle: .localized)
+        case .search: String(localized: "Search", bundle: .localized)
         }
     }
 
     var symbol: String {
         switch self {
         case .home: "house.fill"
-        case .search: "magnifyingglass"
         case .promos: "megaphone.fill"
         case .subscription: "crown.fill"
-        case .rewards: "gift.fill"
+        case .search: "magnifyingglass"
         }
     }
 }
