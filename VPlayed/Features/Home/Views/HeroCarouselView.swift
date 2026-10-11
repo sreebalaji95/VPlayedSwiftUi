@@ -248,27 +248,52 @@ private struct TitleImageLoader: View {
     }
 }
 
+/// Page dots for the hero. Some environments return dozens of banners, so at most `maxVisible`
+/// dots show at once: the window slides to keep the current one in view, and the dots at an
+/// edge with more slides beyond it shrink, like the system page control.
 private struct HeroPageDots: View {
     let count: Int
     let current: Int
     let animates: Bool
 
+    static let maxVisible = 7
+
     var body: some View {
+        let window = visibleWindow
         HStack(spacing: 6) {
-            ForEach(0..<count, id: \.self) { index in
+            ForEach(window, id: \.self) { index in
                 if index == current {
                     ActiveDot(animates: animates).id(current)
                 } else {
+                    let size = dotSize(for: index, in: window)
                     Circle()
                         .fill(Theme.Palette.textPrimary.opacity(0.28))
+                        .frame(width: size, height: size)
                         .frame(width: 7, height: 7)
                 }
             }
         }
-        .frame(maxWidth: 120)
-        .clipped()
+        .animation(.easeInOut(duration: 0.25), value: current)
         .accessibilityElement()
         .accessibilityLabel("Slide \(current + 1) of \(count)")
+    }
+
+    /// `maxVisible` consecutive slides around the current one, clamped to the ends.
+    private var visibleWindow: Range<Int> {
+        guard count > Self.maxVisible else { return 0..<count }
+        let start = min(max(current - Self.maxVisible / 2, 0), count - Self.maxVisible)
+        return start..<(start + Self.maxVisible)
+    }
+
+    /// Full size, except the last two dots towards an edge that has more slides beyond it.
+    private func dotSize(for index: Int, in window: Range<Int>) -> CGFloat {
+        let fromStart = window.lowerBound > 0 ? index - window.lowerBound : .max
+        let fromEnd = window.upperBound < count ? window.upperBound - 1 - index : .max
+        switch min(fromStart, fromEnd) {
+        case 0: return 3.5
+        case 1: return 5
+        default: return 7
+        }
     }
 
     private struct ActiveDot: View {
