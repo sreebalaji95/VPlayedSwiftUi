@@ -28,8 +28,8 @@ struct HeroCarouselView: View {
         .scrollTargetBehavior(.paging)
         .scrollPosition(id: $currentID)
         .containerRelativeFrame(.vertical) { height, _ in
-            // Prototype: clamp(460px, 72vh, 600px).
-            min(max(height * 0.72, 460), 600)
+            // Prototype's clamp(460px, 72vh, 600px), 50pt shorter.
+            min(max(height * 0.72, 460), 600) - 50
         }
         .overlay(alignment: .bottom) {
             if banners.count > 1 {
