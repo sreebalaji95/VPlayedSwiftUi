@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home, Menu, Language and Movies are the only real screens so far; every other destination is a placeholder.
 
+Service teams fork it to ship white-label brands; [`WHITE_LABEL.md`](WHITE_LABEL.md) lists what a rebrand edits (`Config/Brand.xcconfig`, `Brand/Brand.swift`, the colorsets, `SplashLogo`, `AppIcon.icon`, brand copy keys) and what it must not. Keep it in step when those files or tokens change.
+
 It is a native rewrite of the existing UIKit app at `/Users/balaji/Desktop/GSVplayed/Vplayed New`. Its source (`GudSho/`) is the reference for endpoints, headers, JSON keys and business rules, but nothing there compiles standalone (Alamofire, ObjectMapper, UIKit globals). Port logic into new Swift 6 code; never modify that project.
 
 ## Commits
