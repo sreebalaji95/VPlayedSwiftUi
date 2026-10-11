@@ -13,6 +13,7 @@ struct RootView: View {
     @State private var languageStore = LanguageStore()
     @State private var selectedTab: AppTab = .home
     @State private var paths: [AppTab: [AppRoute]] = [:]
+    @State private var showsMenu = false
     @State private var showsSplash = true
 
     var body: some View {
@@ -31,14 +32,18 @@ struct RootView: View {
             // Colours the selected tab; the stacks reset it so their content stays white.
             .tint(Color(.accent))
             .id(languageStore.language)
-            .environment(\.openRoute, RouteAction(open))
-            .accessibilityHidden(showsSplash)
+            .accessibilityHidden(showsSplash || showsMenu)
+
+            // Above the tab bar, like a side menu.
+            MenuDrawer(isPresented: $showsMenu)
+                .zIndex(1)
 
             if showsSplash {
                 SplashView { showsSplash = false }
-                    .zIndex(1)
+                    .zIndex(2)
             }
         }
+        .environment(\.openRoute, RouteAction(open))
         .tint(Theme.Palette.textPrimary)
         .environment(languageStore)
         .environment(\.locale, languageStore.language.locale)
@@ -52,7 +57,6 @@ struct RootView: View {
     @ViewBuilder
     private func destination(for route: AppRoute) -> some View {
         switch route {
-        case .menu: MenuView()
         case .language: LanguageView()
         case .movies: MoviesView()
         default: PlaceholderDestinationView(route: route)
@@ -74,11 +78,17 @@ struct RootView: View {
         )
     }
 
-    /// Search has its own tab, so a search request switches to it instead of pushing a screen.
+    /// The menu is a drawer over the tabs, and Search has its own tab, so neither pushes a
+    /// screen. Anything opened from the menu pushes onto the current tab as the drawer closes.
     private func open(_ route: AppRoute) {
-        if case .search = route {
+        switch route {
+        case .menu:
+            withAnimation(.snappy) { showsMenu = true }
+        case .search:
+            showsMenu = false
             selectedTab = .search
-        } else {
+        default:
+            withAnimation(.snappy) { showsMenu = false }
             paths[selectedTab, default: []].append(route)
         }
     }

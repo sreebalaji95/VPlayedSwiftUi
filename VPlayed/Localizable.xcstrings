@@ -390,6 +390,28 @@
         }
       }
     },
+    "Close menu": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إغلاق القائمة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fechar menu"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "மெனுவை மூடு"
+          }
+        }
+      }
+    },
     "Coming soon": {
       "localizations": {
         "ar": {

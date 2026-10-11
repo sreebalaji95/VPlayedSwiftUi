@@ -59,6 +59,7 @@ private struct HeroSlide: View {
     let banner: HomeBanner
 
     @Environment(\.openRoute) private var openRoute
+    @Environment(\.colorScheme) private var colorScheme
 
     private var openDetail: AppRoute {
         .content(slug: banner.slug, title: banner.title, kind: banner.kind)
@@ -83,20 +84,22 @@ private struct HeroSlide: View {
     }
 
     private var scrims: some View {
-        ZStack {
+        let tone = ScrimTone(colorScheme)
+        return ZStack {
             LinearGradient(
                 stops: [
+                    // Fully opaque at the bottom edge either way, so the hero blends into the page.
                     .init(color: Theme.Palette.background, location: 0.02),
-                    .init(color: Theme.Palette.background.opacity(0.82), location: 0.20),
-                    .init(color: Theme.Palette.background.opacity(0.32), location: 0.46),
-                    .init(color: .clear, location: 0.68),
+                    .init(color: Theme.Palette.background.opacity(tone.bottomMid), location: 0.20),
+                    .init(color: Theme.Palette.background.opacity(tone.bottomHigh), location: 0.46),
+                    .init(color: .clear, location: tone.bottomEnd),
                 ],
                 startPoint: .bottom,
                 endPoint: .top
             )
             LinearGradient(
                 stops: [
-                    .init(color: Theme.Palette.background.opacity(0.45), location: 0),
+                    .init(color: Theme.Palette.background.opacity(tone.leading), location: 0),
                     .init(color: .clear, location: 0.6),
                 ],
                 startPoint: .leading,
@@ -107,7 +110,7 @@ private struct HeroSlide: View {
             // Behind the glass top bar: keeps the wordmark and bar buttons legible on bright art.
             LinearGradient(
                 stops: [
-                    .init(color: Theme.Palette.background.opacity(0.55), location: 0),
+                    .init(color: Theme.Palette.background.opacity(tone.top), location: 0),
                     .init(color: .clear, location: 0.25),
                 ],
                 startPoint: .top,
@@ -297,6 +300,24 @@ struct SpacedLabelStyle: LabelStyle {
         HStack(spacing: spacing) {
             configuration.icon
             configuration.title
+        }
+    }
+}
+
+/// Scrim opacities for the hero. They fade the art into the page background, which in light mode
+/// is near-white and washes the art out at the dark theme's strengths, so light mode uses less.
+private struct ScrimTone {
+    let bottomMid: Double
+    let bottomHigh: Double
+    let bottomEnd: Double
+    let leading: Double
+    let top: Double
+
+    init(_ colorScheme: ColorScheme) {
+        if colorScheme == .dark {
+            (bottomMid, bottomHigh, bottomEnd, leading, top) = (0.82, 0.32, 0.68, 0.45, 0.55)
+        } else {
+            (bottomMid, bottomHigh, bottomEnd, leading, top) = (0.6, 0.12, 0.58, 0.15, 0.2)
         }
     }
 }

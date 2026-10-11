@@ -6,18 +6,26 @@ struct HomeToolbar: ToolbarContent {
     let openRoute: RouteAction
 
     var body: some ToolbarContent {
-        ToolbarItem(placement: .navigation) {
+        ToolbarItem(placement: Self.leading) {
             Button { openRoute(.menu) } label: {
                 Label("Menu", systemImage: "line.3.horizontal")
             }
         }
         logo
-        ToolbarItem(placement: .primaryAction) {
+        ToolbarItem(placement: Self.trailing) {
             Button { openRoute(.notifications) } label: {
                 Label("Notifications", systemImage: "bell")
             }
         }
     }
+
+    #if os(macOS)
+    private static let leading = ToolbarItemPlacement.navigation
+    private static let trailing = ToolbarItemPlacement.primaryAction
+    #else
+    private static let leading = ToolbarItemPlacement.topBarLeading
+    private static let trailing = ToolbarItemPlacement.topBarTrailing
+    #endif
 
     /// The wordmark floats on its own, without the glass capsule toolbar items get by default.
     @ToolbarContentBuilder

@@ -1,5 +1,8 @@
 import Foundation
 import Observation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// The languages the app ships in. The choice is stored as the app's `AppleLanguages`, the same
 /// per-app setting iOS Settings → VPlayed → Language writes, so the in-app picker and Settings
@@ -47,10 +50,27 @@ nonisolated enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
 final class LanguageStore {
     private(set) var language = AppLanguage.current
 
+    init() {
+        Self.applyLayoutDirectionToUIKit(for: language)
+    }
+
     func select(_ language: AppLanguage) {
         guard language != self.language else { return }
         AppLanguage.select(language)
+        // Before `language` changes, so the views `RootView` rebuilds for it pick this up.
+        Self.applyLayoutDirectionToUIKit(for: language)
         self.language = language
+    }
+
+    /// UIKit lays out bars in the direction of the language the app launched in, not SwiftUI's
+    /// `layoutDirection`, so after switching between left-to-right and right-to-left languages
+    /// toolbar items land on the wrong side (Home's menu button must be on the right in Arabic).
+    /// Forcing the direction makes UIKit views created from now on follow `language`; `RootView`
+    /// rebuilds its tabs (`.id`) on every switch, so their bars are new.
+    private static func applyLayoutDirectionToUIKit(for language: AppLanguage) {
+        #if canImport(UIKit)
+        UIView.appearance().semanticContentAttribute = language.isRightToLeft ? .forceRightToLeft : .forceLeftToRight
+        #endif
     }
 }
 
