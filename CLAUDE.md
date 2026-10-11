@@ -58,7 +58,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
 - **`MemberImportVisibility` is enabled.** Each file must `import` every module whose members it uses; transitive imports don't count.
 - **File-system-synchronized groups.** Files added under `VPlayed/` are picked up by the target automatically, so `project.pbxproj` doesn't need editing to add sources or resources.
 - **The Info.plist is generated** (`GENERATE_INFOPLIST_FILE = YES`). Add keys such as usage descriptions as `INFOPLIST_KEY_*` build settings in `project.pbxproj` (in both Debug and Release target configs).
-  - The only exception is the launch screen. `VPlayed/Info.plist` holds just `UILaunchScreen` (the `SplashLogo` image on the `LaunchBackground` color; both have light and dark variants, the light logo being `SplashLogoLight.svg` with a dark wordmark), because there is no build setting for a launch image.
+  - The only exception is the launch screen. `VPlayed/Info.plist` holds just `UILaunchScreen` (the `SplashLogo` image on the `Background` color, the same colorset as the app's page background; both have light and dark variants, the light logo being `SplashLogoLight.svg` with a dark wordmark), because there is no build setting for a launch image.
   - That plist is merged via `INFOPLIST_FILE` and excluded from the synchronized folder by a `PBXFileSystemSynchronizedBuildFileExceptionSet`. Keep that exception, or the build fails with duplicate Info.plist outputs.
 - **Launch flow**:
   - The system launch screen shows the wordmark centered.

@@ -58,7 +58,7 @@ struct MenuView: View {
 
 /// The glass row used by Menu and Language.
 enum GlassRowStyle {
-    static let style = GlassCardButtonStyle(shape: RoundedRectangle(cornerRadius: 22), padding: 14)
+    static let style = GlassCardButtonStyle(shape: RoundedRectangle(cornerRadius: Theme.Radius.row), padding: 14)
 }
 
 /// Icon, title, trailing value and a forward chevron (mirrored in right-to-left languages).

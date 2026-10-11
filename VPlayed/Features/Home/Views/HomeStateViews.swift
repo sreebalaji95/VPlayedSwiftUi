@@ -24,6 +24,7 @@ struct HomeLoadingView: View {
         ZStack(alignment: .bottomLeading) {
             Rectangle().fill(Theme.Palette.surface)
             VStack(alignment: .leading, spacing: 0) {
+                // A capsule, like the category badge it stands in for.
                 SkeletonBlock(width: 104, height: 26, cornerRadius: 13)
                 SkeletonBlock(width: 230, height: 34, cornerRadius: Theme.Radius.control)
                     .padding(.top, 14)

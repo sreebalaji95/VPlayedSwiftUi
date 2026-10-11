@@ -39,8 +39,7 @@ Views never use raw colours. They read `Theme.Palette` ([`DesignSystem/Theme.swi
 | `AccentColor` *(one value)* | `primary` | The primary colour: selected tab, "Watch now", "Watch Live", retry buttons, the LIVE badge, the Language checkmark, the splash glow and the start of the splash bar, the fallback tint of bulk-purchase cards |
 | `Colors/OnPrimary` *(one value)* | `onPrimary` | Text and icons on the primary colour. White suits a dark primary. **If your primary is light, make this dark.** |
 | `Colors/Highlight` | `highlight` | Secondary highlight: crown and price tags on cards, the hero's category dot and active page dot, the end of the splash bar, the music-note icon |
-| `Colors/Background` | `background` | Page background; the hero artwork fades into it |
-| `LaunchBackground` | – | The launch screen's background. **Keep it identical to `Background`**, or the launch-to-app handoff flashes. |
+| `Colors/Background` | `background` | Page background, and the launch screen's; the hero artwork fades into it |
 | `Colors/Surface` | `surface` | Card backgrounds (Live, channel and bulk-purchase cards) |
 | `Colors/Raised` | `raised` | Image placeholders, skeleton loaders, toasts, icon tiles |
 | `Colors/FillStrong` | `fillStrong` | Failed-image fill; crown tag gradient |
@@ -151,5 +150,4 @@ Run these after every rebrand.
 
 - **A light primary colour** needs a dark `OnPrimary`. Glass buttons are tinted with the primary, so very pale or very saturated primaries can lose legibility. Check both themes.
 - **The hero's fades are tuned to `Background`.** A background with a very different lightness or hue may make the hero artwork look washed out or muddy. Raise it with the core team if so; the strengths live in `ScrimTone` in `HeroCarouselView.swift`.
-- **`LaunchBackground` must match `Background`.**
 - **Don't put hex colours or `.white` in views.** If a new colour is needed, add a colorset, give it a role in `Theme.Palette`, and give it a Dark appearance.

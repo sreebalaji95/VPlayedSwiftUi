@@ -108,6 +108,8 @@ enum Theme {
         static let control: CGFloat = 8
         static let card: CGFloat = 12
         static let panel: CGFloat = 16
+        /// Menu and Language rows.
+        static let row: CGFloat = 22
         static let popover: CGFloat = 24
     }
 
