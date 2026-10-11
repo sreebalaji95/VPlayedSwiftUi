@@ -1,8 +1,12 @@
 import Foundation
 
-/// Size variants returned by the API, e.g. `new_thumbnail_images.webp.tv`.
-/// The codes describe sizes, not shapes: for videos the `t*` variants are 16:9,
-/// for micro-series they are portrait (measured against the dev CDN).
+/// Size variants returned by the API, e.g. `new_thumbnail_images.default.tc`.
+/// The codes describe sizes, not shapes. Measured on the dev and QA CDNs:
+/// - Videos, series, promos and live (16:9): `tc` ≈ 1280–1567 px wide, the sharpest sensible size;
+///   `tl` / `to` reach 1920–3840 px, `tv` ≈ 889, `tp` 420, `tm` 300.
+/// - Micro-series (portrait): `tp` / `to` 700×922 (3:4) are the largest, `tl` 524×932 (9:16),
+///   `tm` 340×450, and `tc` / `tv` only 231×307.
+/// - `web` / `Key` sets (banners, posters, 2:3 thumbnails): `web` = `Key` is the full size, `mobile` smaller.
 nonisolated enum ImageVariant: String, Sendable {
     case tv, tp, tm, tl, tc, to, ts, ta
     case mobile, web
@@ -14,9 +18,10 @@ nonisolated struct ImageSet: Decodable, Sendable, Hashable {
     /// format → variant → relative CDN path
     let formats: [String: [String: String]]
 
-    /// WebP first (smaller, decodable everywhere we ship), then the JPEG/PNG originals.
+    /// The JPEG/PNG originals first: at the same pixel size the WebP copies are compressed much
+    /// harder (often a third of the bytes) and look visibly softer. WebP is the fallback.
     /// AVIF is skipped: it is the largest decode cost and not needed for parity.
-    private static let formatPreference = ["webp", "default"]
+    private static let formatPreference = ["default", "webp"]
 
     init(formats: [String: [String: String]]) {
         self.formats = formats

@@ -50,7 +50,7 @@ nonisolated struct HomeBanner: Decodable, Sendable, Identifiable, Hashable {
             ?? details.lenientString(.posterImage)
         backdropURL = ImageURL.resolve(backdrop)
 
-        let titleArt = details.lenient(ImageSet.self, .titleImages)?.path(preferring: [.mobile, .web, .key])
+        let titleArt = details.lenient(ImageSet.self, .titleImages)?.path(preferring: [.web, .key, .mobile])
             ?? details.lenientString(.titleImage)
         titleImageURL = ImageURL.resolve(titleArt)
     }

@@ -78,6 +78,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
 - **Images (`Core/Images`)**:
   - API image fields are relative keys joined to the CDN by `ImageURL.resolve`.
   - `ImageSet` variant codes (`tv`, `tp`, `tm`…) are sizes, not shapes. Video thumbnails are 16:9 but micro-series (`sho_type` 6) ones are 3:4, so each card picks its own variant order.
+  - Quality: `ImageSet` prefers the `default` (JPEG/PNG) originals over `webp`, whose copies are compressed much harder. 16:9 cards (videos, series, promos, live) use `tc` first (≈1280–1567 px wide; `tl`/`to` go up to 3840). Micro-series portrait cards use `tp` first (700×922); their `tc` is only 231×307. Banners, posters and 2:3 thumbnails use `web` (= `Key`, the full size). Measured sizes are in the `ImageVariant` doc comment.
   - `RemoteImage` loads through `ImagePipeline`, an actor that de-duplicates requests, caches on disk and in memory, and downsamples with ImageIO.
   - Use `RemoteImage`, not `AsyncImage`.
 - **Home (`Features/Home`)**:

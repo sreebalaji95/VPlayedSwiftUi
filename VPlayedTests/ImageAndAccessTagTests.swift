@@ -20,14 +20,15 @@ struct ImageURLTests {
         #expect(ImageURL.resolve(path, imageBaseURL: cdn) == nil)
     }
 
-    @Test func imageSetPrefersVariantOrderThenWebP() throws {
+    @Test func imageSetPrefersVariantOrderThenTheOriginalOverWebP() throws {
         let json = #"""
-        {"webp":{"tp":"p.webp"},"default":{"tv":"v.jpg","tp":"p.jpg"},"avif":null}
+        {"webp":{"tp":"p.webp","tm":"m.webp"},"default":{"tv":"v.jpg","tp":"p.jpg"},"avif":null}
         """#
         let set = try JSONDecoder().decode(ImageSet.self, from: Data(json.utf8))
         #expect(set.path(preferring: [.tv, .tp]) == "v.jpg")
-        #expect(set.path(preferring: [.tp]) == "p.webp")
-        #expect(set.path(preferring: [.tm]) == nil)
+        #expect(set.path(preferring: [.tp]) == "p.jpg")
+        #expect(set.path(preferring: [.tm]) == "m.webp")
+        #expect(set.path(preferring: [.tc]) == nil)
     }
 
     @Test func malformedImageSetDecodesEmpty() throws {

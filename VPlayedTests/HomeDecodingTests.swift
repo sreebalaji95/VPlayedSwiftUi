@@ -25,7 +25,9 @@ struct HomeDecodingTests {
         #expect(item.shoType == 1)
         #expect(item.videoDuration == 267.72)
         #expect(item.landscapeImageURL?.host() == "gsvp-dev.s3.ap-south-1.amazonaws.com")
-        #expect(item.landscapeImageURL?.lastPathComponent.contains("-tv-") == true)
+        // The sharpest 16:9 variant, as the original rather than WebP.
+        #expect(item.landscapeImageURL?.lastPathComponent.contains("-tc-") == true)
+        #expect(item.landscapeImageURL?.pathExtension != "webp")
         #expect(item.portraitImageURL?.path().contains("thumbnail-images") == true)
     }
 
@@ -60,6 +62,8 @@ struct HomeDecodingTests {
         #expect(streams.first?.channelName == "VplayedDev")
         #expect(streams.first?.isLive == false)
         #expect(micro.allSatisfy { $0.isMicroSeries })
+        // Micro-series `tc` is tiny; `tp` is their largest 3:4 variant.
+        #expect(micro.first?.portraitImageURL?.lastPathComponent.contains("-tp-") == true)
         #expect(page.sections[2].showsViewAll == false)
     }
 

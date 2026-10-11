@@ -177,15 +177,16 @@ nonisolated struct ContentItem: Decodable, Sendable, Identifiable, Hashable {
     var landscapeImageURL: URL? {
         let path = isMicroSeries
             ? mobilePosterImage ?? posterImage ?? newThumbnailImages?.path(preferring: [.tl, .tp])
-            : newThumbnailImages?.path(preferring: [.tv, .tp, .tc, .tl, .to, .tm, .mobile, .web]) ?? posterImage ?? thumbnailImage
+            : newThumbnailImages?.path(preferring: [.tc, .tl, .to, .tv, .tp, .tm, .mobile, .web]) ?? posterImage ?? thumbnailImage
         return ImageURL.resolve(path)
     }
 
-    /// Portrait artwork: micro-series 3:4 `new_thumbnail_images`, otherwise the 2:3 `thumbnail_images`.
+    /// Portrait artwork: micro-series 3:4 `new_thumbnail_images` (`tp` is the largest; their `tc` is
+    /// tiny), otherwise the 2:3 `thumbnail_images`.
     var portraitImageURL: URL? {
         let path = isMicroSeries
-            ? newThumbnailImages?.path(preferring: [.tm, .tp, .to, .tc, .tv]) ?? thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage
-            : thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage ?? newThumbnailImages?.path(preferring: [.tv, .tp])
+            ? newThumbnailImages?.path(preferring: [.tp, .to, .tl, .tm, .tc, .tv]) ?? thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage
+            : thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage ?? newThumbnailImages?.path(preferring: [.tc, .tv, .tp])
         return ImageURL.resolve(path)
     }
 
@@ -324,7 +325,7 @@ nonisolated struct LiveItem: Decodable, Sendable, Identifiable, Hashable {
         publishStatus = container.lenientInt(.publishStatus)
         startsAt = (container.lenientString(.streamStartTime) ?? container.lenientString(.scheduledAt)).flatMap(Self.parseDate)
         imageURL = ImageURL.resolve(
-            container.lenient(ImageSet.self, .newThumbnailImages)?.path(preferring: [.tv, .tp, .tc, .tl, .tm])
+            container.lenient(ImageSet.self, .newThumbnailImages)?.path(preferring: [.tc, .tl, .to, .tv, .tp, .tm])
                 ?? container.lenientString(.thumbnailImage)
         )
     }
