@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home, Menu and Language are the only real screens so far; every other destination is a placeholder.
+VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home, Menu, Language and Movies are the only real screens so far; every other destination is a placeholder.
 
 It is a native rewrite of the existing UIKit app at `/Users/balaji/Desktop/GSVplayed/Vplayed New`. Its source (`GudSho/`) is the reference for endpoints, headers, JSON keys and business rules, but nothing there compiles standalone (Alamofire, ObjectMapper, UIKit globals). Port logic into new Swift 6 code; never modify that project.
 
@@ -70,6 +70,11 @@ xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platfor
   - `HomeSection.layout` maps type + `is_top_ten` + micro-series to a prototype card style. Unknown types and empty rails are dropped.
   - `AccessTag` ports the UIKit card badge rules (`SeriesCollectionViewCell`).
   - `HomeViewModel` (`@Observable`) owns phases, refresh and de-duplicated pagination. It is held by `RootView` so Home doesn't reload after navigation.
+- **Movies (`Features/Movies`)**, opened from Menu → Movies:
+  - Data comes from `GET mediaview/api/v1/sho-details/media/1?page=N&limit=10&is_promo=true` (`Endpoint.media(shoType:page:)`; 2 is series, 6 micro-series). It is paged by top-level `next`, and `total` feeds the "N films" subtitle.
+  - Items decode as `ContentItem` (`genre` comes from `default_genre.title`). `MoviesViewModel` mirrors `HomeViewModel`'s phases, refresh and de-duplicated paging.
+  - The UI is an adaptive grid (two columns on iPhone) of `CardArtwork(url:aspectRatio:)` cards with the access tag, title and "Genre • duration".
+  - The prototype's Genre / Language / Access / Sort chips are intentionally omitted, because the API has no filter or sort parameters.
 - **Navigation**:
   - `RootView` hosts a system `TabView` (tabs in `AppTab`: Home, Promos, Subscription, then Search on the right as in the App Store), which gets the Liquid Glass tab bar on iOS 26+. Only Home is built; the other tabs show `PlaceholderDestinationView(tab:)`.
   - Each tab has its own `NavigationStack`. Views call `@Environment(\.openRoute)` with an `AppRoute`; `RootView` pushes it onto the selected tab's stack, except `.search`, which switches to the Search tab.

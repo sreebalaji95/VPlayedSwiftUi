@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The hamburger menu, opened from the Home toolbar. For now it holds app settings: Language.
+/// The hamburger menu, opened from the Home toolbar: browse destinations, then app settings.
 struct MenuView: View {
     @Environment(\.openRoute) private var openRoute
     @Environment(LanguageStore.self) private var languageStore
@@ -9,6 +9,12 @@ struct MenuView: View {
         ScrollView {
             GlassGroup {
                 VStack(spacing: 10) {
+                    Button { openRoute(.movies) } label: {
+                        MenuRow(symbol: "film", title: "Movies") { EmptyView() }
+                    }
+                    .buttonStyle(GlassRowStyle.style)
+                    .padding(.bottom, 14)
+
                     Button { openRoute(.language) } label: {
                         MenuRow(symbol: "globe", title: "Language") {
                             Text(verbatim: languageStore.language.nativeName)

@@ -54,6 +54,7 @@ struct RootView: View {
         switch route {
         case .menu: MenuView()
         case .language: LanguageView()
+        case .movies: MoviesView()
         default: PlaceholderDestinationView(route: route)
         }
     }

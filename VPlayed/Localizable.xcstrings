@@ -173,6 +173,113 @@
     "%lld": {
       "shouldTranslate": false
     },
+    "**%lld** films · curated from across the world": {
+      "comment": "Subtitle under the Movies title. %lld is the number of films in the catalogue.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** film · curated from across the world"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** films · curated from across the world"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** فيلم · مختارة من حول العالم"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** فيلم · مختارة من حول العالم"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** فيلمان · مختارة من حول العالم"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** أفلام · مختارة من حول العالم"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** فيلمًا · مختارة من حول العالم"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** فيلم · مختارة من حول العالم"
+                }
+              }
+            }
+          }
+        },
+        "pt": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** filme · selecionado do mundo todo"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** filmes · selecionados do mundo todo"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** filmes · selecionados do mundo todo"
+                }
+              }
+            }
+          }
+        },
+        "ta": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** திரைப்படம் · உலகெங்கிலும் இருந்து தேர்ந்தெடுக்கப்பட்டது"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "**%lld** திரைப்படங்கள் · உலகெங்கிலும் இருந்து தேர்ந்தெடுக்கப்பட்டவை"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Add %@ to watchlist": {
       "localizations": {
         "ar": {
@@ -345,6 +452,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "மேலும் ஏற்ற முடியவில்லை. மீண்டும் முயல தட்டவும்."
+          }
+        }
+      }
+    },
+    "Couldn't load movies": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر تحميل الأفلام"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível carregar os filmes"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "திரைப்படங்களை ஏற்ற முடியவில்லை"
           }
         }
       }
@@ -547,6 +676,28 @@
         }
       }
     },
+    "Loading movies": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ تحميل الأفلام"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carregando filmes"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "திரைப்படங்கள் ஏற்றப்படுகின்றன"
+          }
+        }
+      }
+    },
     "Menu": {
       "localizations": {
         "ar": {
@@ -587,6 +738,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "குறுந்தொடர்"
+          }
+        }
+      }
+    },
+    "Movies": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأفلام"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filmes"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "திரைப்படங்கள்"
+          }
+        }
+      }
+    },
+    "No movies yet": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد أفلام بعد"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não há filmes"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இன்னும் திரைப்படங்கள் இல்லை"
           }
         }
       }

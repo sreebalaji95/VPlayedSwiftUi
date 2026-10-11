@@ -125,6 +125,8 @@ nonisolated struct ContentItem: Decodable, Sendable, Identifiable, Hashable {
     let isScheduled: Bool?
     let viewCount: Int?
     let likeCount: Int?
+    /// `default_genre.title`, e.g. "Drama" (catalogue items such as Movies).
+    let genre: String?
 
     private enum CodingKeys: String, CodingKey {
         case id = "_id", title, slug, monetization, prices, scheduled
@@ -140,6 +142,7 @@ nonisolated struct ContentItem: Decodable, Sendable, Identifiable, Hashable {
         case isUserSubscribed = "is_user_subscribed"
         case viewCount = "view_count"
         case likeCount = "guds_count"
+        case defaultGenre = "default_genre"
     }
 
     init(from decoder: any Decoder) throws {
@@ -165,6 +168,7 @@ nonisolated struct ContentItem: Decodable, Sendable, Identifiable, Hashable {
         isScheduled = container.lenientBool(.scheduled)
         viewCount = container.lenientInt(.viewCount)
         likeCount = container.lenientInt(.likeCount)
+        genre = container.lenient(Genre.self, .defaultGenre)?.title
     }
 
     var isMicroSeries: Bool { shoType == 6 }

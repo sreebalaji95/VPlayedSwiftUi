@@ -35,4 +35,18 @@ extension Endpoint {
             ]
         )
     }
+
+    /// Paged catalogue of one content type, as the UIKit Movies / Micro-series screens request it
+    /// (`HomeViewModel.getMoviesListAPI`). `shoType`: 1 movies, 2 series, 6 micro-series.
+    /// `GET mediaview/api/v1/sho-details/media/{shoType}?page=&limit=&is_promo=true`
+    static func media(shoType: Int, page: Int, limit: Int = 10) -> Endpoint {
+        Endpoint(
+            path: mediaView + "sho-details/media/\(shoType)",
+            queryItems: [
+                URLQueryItem(name: "page", value: String(page)),
+                URLQueryItem(name: "limit", value: String(limit)),
+                URLQueryItem(name: "is_promo", value: "true"),
+            ]
+        )
+    }
 }

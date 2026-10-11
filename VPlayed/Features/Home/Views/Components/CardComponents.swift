@@ -1,18 +1,46 @@
 import SwiftUI
 
-/// Artwork frame shared by rail cards: raised fill, 1pt hairline, rounded corners and the
-/// bottom fade the prototype draws over every card image.
+/// Artwork frame shared by rail and grid cards: raised fill, 1pt hairline, rounded corners and
+/// the bottom fade the prototype draws over every card image.
 struct CardArtwork: View {
     let url: URL?
-    let width: CGFloat
-    let height: CGFloat
-    var cornerRadius: CGFloat = Theme.Radius.control
+    /// Fixed size for rail cards; nil fills the offered width at `aspectRatio` (grid cards).
+    private let size: CGSize?
+    private let aspectRatio: CGFloat
+    private let cornerRadius: CGFloat
     /// Bottom fade: opacity at the bottom edge and where it reaches transparent (0…1 from the bottom).
-    var fade: (opacity: Double, end: Double)? = (0.75, 0.48)
+    private let fade: (opacity: Double, end: Double)?
+
+    init(
+        url: URL?,
+        width: CGFloat,
+        height: CGFloat,
+        cornerRadius: CGFloat = Theme.Radius.control,
+        fade: (opacity: Double, end: Double)? = (0.75, 0.48)
+    ) {
+        self.url = url
+        size = CGSize(width: width, height: height)
+        aspectRatio = height > 0 ? width / height : 16 / 9
+        self.cornerRadius = cornerRadius
+        self.fade = fade
+    }
+
+    /// Fills the offered width, e.g. a grid column, at `aspectRatio` (width / height).
+    init(
+        url: URL?,
+        aspectRatio: CGFloat,
+        cornerRadius: CGFloat = Theme.Radius.control,
+        fade: (opacity: Double, end: Double)? = (0.75, 0.48)
+    ) {
+        self.url = url
+        size = nil
+        self.aspectRatio = aspectRatio
+        self.cornerRadius = cornerRadius
+        self.fade = fade
+    }
 
     var body: some View {
-        RemoteImage(url: url)
-            .frame(width: width, height: height)
+        sized(RemoteImage(url: url))
             .background(Theme.Palette.raised)
             .overlay {
                 if let fade {
@@ -31,6 +59,17 @@ struct CardArtwork: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .strokeBorder(Theme.Palette.line, lineWidth: 1)
             }
+    }
+
+    @ViewBuilder
+    private func sized(_ image: RemoteImage) -> some View {
+        if let size {
+            image.frame(width: size.width, height: size.height)
+        } else {
+            Color.clear
+                .aspectRatio(aspectRatio, contentMode: .fit)
+                .overlay { image }
+        }
     }
 }
 

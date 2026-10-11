@@ -69,6 +69,7 @@ struct PlaceholderDestinationView: View {
         case .notifications: String(localized: "Notifications", bundle: .localized)
         case .menu: String(localized: "Menu", bundle: .localized)
         case .language: String(localized: "Language", bundle: .localized)
+        case .movies: String(localized: "Movies", bundle: .localized)
         case .signInRequired: String(localized: "Sign in", bundle: .localized)
         }
     }
@@ -116,6 +117,7 @@ struct PlaceholderDestinationView: View {
         case .notifications: "bell"
         case .menu: "line.3.horizontal"
         case .language: "globe"
+        case .movies: "film"
         case .signInRequired: "person.badge.key"
         }
     }

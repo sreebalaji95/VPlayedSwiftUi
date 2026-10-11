@@ -12,6 +12,7 @@ enum AppRoute: Hashable {
     case notifications
     case menu
     case language
+    case movies
     /// Actions that need a signed-in user (watchlist, reminders) — there is no sign-in yet.
     /// `prompt` is the localized title to show, e.g. "Sign in to add to your watchlist".
     case signInRequired(prompt: String)
