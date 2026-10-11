@@ -14,23 +14,39 @@ Do not add a `Co-Authored-By: Claude …` trailer or any other Claude attributio
 
 ## Build
 
-The app target and shared scheme are both named `VPlayed`; the `VPlayedTests` target (Swift Testing) runs from the same scheme. Build per platform:
+The app target is `VPlayed`. There is one shared scheme per environment (`Dev`, `Qa`, `Stage`, `Demo`; see Environments), and each also runs the `VPlayedTests` target (Swift Testing). Use `Dev` day to day. Build per platform:
 
 ```bash
-xcodebuild -project VPlayed.xcodeproj -scheme VPlayed -destination 'generic/platform=iOS Simulator' build
-xcodebuild -project VPlayed.xcodeproj -scheme VPlayed -destination 'generic/platform=macOS' build
-xcodebuild -project VPlayed.xcodeproj -scheme VPlayed -destination 'generic/platform=visionOS Simulator' build
+xcodebuild -project VPlayed.xcodeproj -scheme Dev -destination 'generic/platform=iOS Simulator' build
+xcodebuild -project VPlayed.xcodeproj -scheme Dev -destination 'generic/platform=macOS' build
+xcodebuild -project VPlayed.xcodeproj -scheme Dev -destination 'generic/platform=visionOS Simulator' build
 ```
 
 Run the tests, or a single suite or test:
 
 ```bash
-xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platform=iOS Simulator,name=iPhone 17'
-xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:VPlayedTests/HomeViewModelTests
-xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platform=iOS Simulator,name=iPhone 17' '-only-testing:VPlayedTests/HomeViewModelTests/loadMoreAppendsDedupesAndStops()'
+xcodebuild test -project VPlayed.xcodeproj -scheme Dev -destination 'platform=iOS Simulator,name=iPhone 17'
+xcodebuild test -project VPlayed.xcodeproj -scheme Dev -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:VPlayedTests/HomeViewModelTests
+xcodebuild test -project VPlayed.xcodeproj -scheme Dev -destination 'platform=iOS Simulator,name=iPhone 17' '-only-testing:VPlayedTests/HomeViewModelTests/loadMoreAppendsDedupesAndStops()'
 ```
 
 `VPlayedTests/` is also a synchronized folder; JSON in `VPlayedTests/Fixtures/` is real dev-API output, trimmed to two items per rail and stripped of studio contact/KYC fields.
+
+## Environments
+
+Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's environments. Each uses its own `Debug<Env>` / `Release<Env>` build configurations (`DebugDev`, `ReleaseDev`, …), which set:
+
+| Scheme | Compilation condition | Bundle ID | Home-screen name | API host | Image bucket |
+|---|---|---|---|---|---|
+| `Dev` | `DEV` | `com.contus.vplayed.dev` | DevVPlayed | `api-devgs.vplayed.com` | `gsvp-dev` |
+| `Qa` | `QA` | `com.contus.vplayed.qa` | QaVPlayed | `api-qags.vplayed.com` | `gsvp-qa` |
+| `Stage` | `STAGE` | `com.contus.vplayed.stage` | StageVPlayed | `api-stagings.vplayed.com` | `gsvp-qa` (as in the UIKit app) |
+| `Demo` | `DEMO` | `com.contus.vplayed` | VPlayed | `api-demogs.vplayed.com` | `gsvp-demo` |
+
+- The condition is set at project level (`SWIFT_ACTIVE_COMPILATION_CONDITIONS`), and `APIEnvironment.current` picks the hosts with `#if`. Demo is the UIKit app's PROD build, which points at the demo hosts.
+- There are no plain `Debug` / `Release` configurations. Building without a scheme uses `ReleaseDemo`. Code built with no condition falls back to Dev.
+- To add a setting per environment, set it in all eight configurations of the right target (project, `VPlayed` or `VPlayedTests`); new configurations must exist in all three configuration lists.
+- Stage's Home API currently returns only empty rails for a guest, so Stage's Home shows the hero and pages through ~39 empty pages.
 
 ## Project configuration that affects code
 
@@ -53,7 +69,7 @@ xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platfor
 - **Networking (`Core/Networking`)**:
   - `APIClient.get(_:as:)` is a `@concurrent` URLSession GET that decodes the `{statusCode, message, response}` envelope.
   - Success means the JSON `statusCode == 200`, not the HTTP status, matching the UIKit app.
-  - Endpoints live in `Endpoint.swift`; hosts in `APIEnvironment` (dev only for now).
+  - Endpoints live in `Endpoint.swift`; hosts in `APIEnvironment` (see Environments).
   - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them; nothing sets them yet because there is no sign-in.
   - Home APIs work as an anonymous guest.
 - **Decoding**:
