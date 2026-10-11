@@ -143,11 +143,9 @@ private struct HeroSlide: View {
                         Label("Watch now", systemImage: "play.fill")
                             .font(.system(size: 16, weight: .bold))
                             .labelStyle(SpacedLabelStyle(spacing: 9))
-                            .foregroundStyle(Theme.Palette.onPrimary)
                             .frame(maxWidth: .infinity)
                     }
-                    .glassButtonStyle(.prominent)
-                    .tint(Theme.Palette.primary)
+                    .glassButtonStyle(.primary)
 
                     Button { openRoute(.signInRequired(prompt: String(localized: "Sign in to add to your watchlist", bundle: .localized))) } label: {
                         Image(systemName: "plus")

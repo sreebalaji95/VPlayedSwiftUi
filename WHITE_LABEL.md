@@ -91,7 +91,7 @@ This file holds the API host and image bucket per environment. Edit it only if y
 These are owned by the core team. Brands get their look from the tokens above, so don't edit these files to rebrand.
 
 - [`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift): palette, corner radii, spacing.
-- [`DesignSystem/Glass.swift`](VPlayed/DesignSystem/Glass.swift): Liquid Glass buttons and surfaces, with all the iOS 17–18 and visionOS fallbacks. Primary actions use `glassButtonStyle(.prominent)` tinted with `primary`, with `onPrimary` labels.
+- [`DesignSystem/Glass.swift`](VPlayed/DesignSystem/Glass.swift): Liquid Glass buttons and surfaces, with all the iOS 17–18 and visionOS fallbacks. Primary actions use `glassButtonStyle(.primary)`, which alone sets their `primary` tint and `onPrimary` label.
 - [`DesignSystem/BrandWordmark.swift`](VPlayed/DesignSystem/BrandWordmark.swift), [`Skeleton.swift`](VPlayed/DesignSystem/Skeleton.swift), [`LetterSpacing.swift`](VPlayed/DesignSystem/LetterSpacing.swift).
 - Card layouts in `Features/**/Views`. Card sizes and aspect ratios match the API's image variants (`Core/Images/ImageSet.swift`), so don't change them.
 

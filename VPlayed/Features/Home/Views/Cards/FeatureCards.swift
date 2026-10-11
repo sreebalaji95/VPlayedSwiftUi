@@ -104,10 +104,8 @@ struct LiveNowCard: View {
                 if item.isLive {
                     Button(action: onWatch) {
                         Label("Watch Live", systemImage: "play.fill")
-                            .foregroundStyle(Theme.Palette.onPrimary)
                     }
-                    .glassButtonStyle(.prominent)
-                    .tint(Theme.Palette.primary)
+                    .glassButtonStyle(.primary)
                 } else {
                     Button(action: onRemind) {
                         Label("Set reminder", systemImage: "bell")

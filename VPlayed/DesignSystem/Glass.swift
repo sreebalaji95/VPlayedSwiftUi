@@ -7,30 +7,32 @@ import SwiftUI
 enum GlassProminence {
     /// Neutral glass, for most controls.
     case regular
-    /// Tinted glass for the primary action. Set the colour with `.tint(_:)` on the button.
+    /// Tinted glass. Set the colour with `.tint(_:)` on the button.
     case prominent
+    /// The primary action: tinted glass in `Theme.Palette.primary` with an `onPrimary` label.
+    case primary
 }
 
 extension View {
     /// Liquid Glass button style for controls (calls to action, icon buttons, retry, skip…).
     @ViewBuilder
     func glassButtonStyle(_ prominence: GlassProminence = .regular) -> some View {
-        #if os(visionOS)
         switch prominence {
-        case .regular: buttonStyle(.bordered)
-        case .prominent: buttonStyle(.borderedProminent)
+        case .regular: systemGlassButtonStyle(prominent: false)
+        case .prominent: systemGlassButtonStyle(prominent: true)
+        case .primary: buttonStyle(PrimaryGlassButtonStyle())
         }
+    }
+
+    @ViewBuilder
+    private func systemGlassButtonStyle(prominent: Bool) -> some View {
+        #if os(visionOS)
+        if prominent { buttonStyle(.borderedProminent) } else { buttonStyle(.bordered) }
         #else
         if #available(iOS 26, macOS 26, *) {
-            switch prominence {
-            case .regular: buttonStyle(.glass)
-            case .prominent: buttonStyle(.glassProminent)
-            }
+            if prominent { buttonStyle(.glassProminent) } else { buttonStyle(.glass) }
         } else {
-            switch prominence {
-            case .regular: buttonStyle(.bordered)
-            case .prominent: buttonStyle(.borderedProminent)
-            }
+            if prominent { buttonStyle(.borderedProminent) } else { buttonStyle(.bordered) }
         }
         #endif
     }
@@ -62,6 +64,20 @@ extension View {
             background(.ultraThinMaterial, in: shape)
         }
         #endif
+    }
+}
+
+/// The primary action's colours, in one place for every brand. The label is coloured on the
+/// label itself (spinners included), because the prominent system styles colour it otherwise.
+private struct PrimaryGlassButtonStyle: PrimitiveButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button(role: configuration.role, action: configuration.trigger) {
+            configuration.label
+                .foregroundStyle(Theme.Palette.onPrimary)
+                .tint(Theme.Palette.onPrimary)
+        }
+        .glassButtonStyle(.prominent)
+        .tint(Theme.Palette.primary)
     }
 }
 
