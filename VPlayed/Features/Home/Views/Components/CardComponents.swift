@@ -106,7 +106,7 @@ struct CornerTag: View {
                     )
             case .comingSoon, .price:
                 Text(label)
-                    .font(.system(size: 11, weight: .bold))
+                    .font(Theme.Typography.badge)
                     .letterSpacing(0.66)
                     .monospacedDigit()
                     .foregroundStyle(Theme.Palette.highlight)
@@ -160,7 +160,7 @@ struct RankNumeral: View {
     private var fontSize: CGFloat { height * 1.38 }
 
     var body: some View {
-        let digits = Text("\(rank)").font(.system(size: fontSize, weight: .heavy))
+        let digits = Text("\(rank)").font(Theme.Typography.rankNumeral(size: fontSize))
         ZStack {
             ForEach(Self.offsets.indices, id: \.self) { index in
                 digits

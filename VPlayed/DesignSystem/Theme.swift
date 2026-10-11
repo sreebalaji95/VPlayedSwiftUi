@@ -41,6 +41,62 @@ enum Theme {
         static let shimmer = Color(.shimmerHighlight)
     }
 
+    /// Text styles by role, with the prototype's sizes and weights. Views use these for text;
+    /// SF Symbol sizes are icon metrics and stay in the views.
+    enum Typography {
+        /// The hero's title.
+        static let heroTitle = font(37, .bold)
+        /// Large screen title (placeholder screens).
+        static let pageTitle = font(22, .bold)
+        /// Message titles, bulk-purchase names and prices.
+        static let title = font(20, .bold)
+        /// Home rail headers.
+        static let railTitle = font(19.5, .bold)
+        /// Channel names on channel cards.
+        static let headline = font(16, .bold)
+        /// The hero's "Watch now".
+        static let buttonLarge = font(16, .bold)
+        /// Menu and Language row titles.
+        static let rowTitle = font(16, .medium)
+        /// The value at the end of a menu row.
+        static let rowValue = font(15, .regular)
+        /// Titles under top-10 landscape cards.
+        static let rankedTitleLarge = font(15, .bold)
+        /// Titles under top-10 portrait cards.
+        static let rankedTitle = font(14, .bold)
+        /// Text buttons: retry, Watch Live, Set reminder, Explore bundles.
+        static let button = font(14, .bold)
+        /// Titles on and under cards.
+        static let cardTitle = font(14, .semibold)
+        /// Secondary controls and toasts: Skip intro, load-more retry, notices.
+        static let controlLabel = font(14, .semibold)
+        /// Messages and summaries.
+        static let body = font(14, .regular)
+        /// Synopses, bundle descriptions, the splash tagline, secondary row text.
+        static let bodySmall = font(13, .regular)
+        /// Emphasized short notes.
+        static let note = font(13, .semibold)
+        /// Explanatory footnotes; scales with Dynamic Type.
+        static let footnote = Font.footnote
+        /// Metadata lines: genre and duration, views and likes, dates, artists.
+        static let caption = font(12, .regular)
+        /// Follower counts.
+        static let captionMedium = font(12.5, .medium)
+        /// Small capitals on badges and tags: LIVE, categories, prices, durations.
+        static let badge = font(11, .bold)
+        /// Initials standing in for a logo.
+        static let monogram = font(11, .heavy)
+
+        /// Outline numerals on top-10 rails, sized to the card.
+        static func rankNumeral(size: CGFloat) -> Font {
+            font(size, .heavy)
+        }
+
+        private static func font(_ size: CGFloat, _ weight: Font.Weight) -> Font {
+            .system(size: size, weight: weight)
+        }
+    }
+
     enum Radius {
         static let badge: CGFloat = 4
         static let control: CGFloat = 8

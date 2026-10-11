@@ -31,21 +31,21 @@ struct PlaceholderDestinationView: View {
                 .background(Theme.Palette.raised, in: .rect(cornerRadius: Theme.Radius.popover))
 
             Text(title)
-                .font(.system(size: 22, weight: .bold))
+                .font(Theme.Typography.pageTitle)
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .multilineTextAlignment(.center)
 
             VStack(spacing: 6) {
                 ForEach(details, id: \.self) { line in
                     Text(line)
-                        .font(.system(size: 14))
+                        .font(Theme.Typography.body)
                         .foregroundStyle(Theme.Palette.textSecondary)
                         .multilineTextAlignment(.center)
                 }
             }
 
             Text("This screen isn't built yet.")
-                .font(.system(size: 13, weight: .semibold))
+                .font(Theme.Typography.note)
                 .foregroundStyle(Theme.Palette.textTertiary)
                 .padding(.top, 8)
         }

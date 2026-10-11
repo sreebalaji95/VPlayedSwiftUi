@@ -62,7 +62,7 @@ struct MoviesView: View {
             VStack(alignment: .leading, spacing: 20) {
                 if let total = model.total {
                     Text(Self.filmCount(total))
-                        .font(.system(size: 14))
+                        .font(Theme.Typography.body)
                         .foregroundStyle(Theme.Palette.textSecondary)
                 }
                 LazyVGrid(columns: Self.columns, alignment: .leading, spacing: 20) {
@@ -119,13 +119,13 @@ private struct MovieCard: View {
                     if let tag = AccessTag.resolve(for: item) { CornerTag(tag: tag) }
                 }
             Text(item.title)
-                .font(.system(size: 14, weight: .semibold))
+                .font(Theme.Typography.cardTitle)
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .lineLimit(1)
                 .padding(.top, 10)
             if let details {
                 Text(details)
-                    .font(.system(size: 12))
+                    .font(Theme.Typography.caption)
                     .foregroundStyle(Theme.Palette.textTertiary)
                     .lineLimit(1)
                     .padding(.top, 3)

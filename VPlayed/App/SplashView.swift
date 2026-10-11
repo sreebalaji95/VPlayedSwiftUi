@@ -32,7 +32,7 @@ struct SplashView: View {
                     VStack(spacing: 28) {
                         loadingBar
                         Text("Stream the experience")
-                            .font(.system(size: 13))
+                            .font(Theme.Typography.bodySmall)
                             .letterSpacing(3.6)
                             .textCase(.uppercase)
                             .foregroundStyle(Theme.Palette.textPrimary.opacity(0.62))
@@ -93,7 +93,7 @@ struct SplashView: View {
                 Text("Skip intro")
                 Image(systemName: "arrow.forward").font(.system(size: 12, weight: .semibold))
             }
-            .font(.system(size: 14, weight: .semibold))
+            .font(Theme.Typography.controlLabel)
             .foregroundStyle(Theme.Palette.textPrimary.opacity(0.72))
             .padding(.horizontal, 4)
         }

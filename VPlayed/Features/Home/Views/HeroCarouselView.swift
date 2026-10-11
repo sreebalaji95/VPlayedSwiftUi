@@ -130,7 +130,7 @@ private struct HeroSlide: View {
 
             if let synopsis = banner.synopsis {
                 Text(synopsis)
-                    .font(.system(size: 13))
+                    .font(Theme.Typography.bodySmall)
                     .lineSpacing(3)
                     .foregroundStyle(Theme.Palette.textSecondary)
                     .lineLimit(2)
@@ -141,7 +141,7 @@ private struct HeroSlide: View {
                 HStack(spacing: 10) {
                     Button { openRoute(openDetail) } label: {
                         Label("Watch now", systemImage: "play.fill")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(Theme.Typography.buttonLarge)
                             .labelStyle(SpacedLabelStyle(spacing: 9))
                             .frame(maxWidth: .infinity)
                     }
@@ -171,7 +171,7 @@ private struct HeroSlide: View {
                 .frame(width: 7, height: 7)
                 .shadow(color: Theme.Palette.highlight, radius: 4)
             Text(banner.kind.displayName.uppercased())
-                .font(.system(size: 11, weight: .bold))
+                .font(Theme.Typography.badge)
                 .letterSpacing(1.5)
                 .foregroundStyle(Theme.Palette.textPrimary)
         }
@@ -183,7 +183,7 @@ private struct HeroSlide: View {
     @ViewBuilder
     private var titleView: some View {
         let textTitle = Text(banner.title)
-            .font(.system(size: 37, weight: .bold))
+            .font(Theme.Typography.heroTitle)
             .letterSpacing(-1.3)
             .foregroundStyle(Theme.Palette.textPrimary)
             .lineLimit(2)

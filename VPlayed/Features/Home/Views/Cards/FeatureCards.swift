@@ -49,7 +49,7 @@ struct LiveNowCard: View {
             }
             item.isLive ? Text("LIVE") : Text("UPCOMING")
         }
-        .font(.system(size: 11, weight: .bold))
+        .font(Theme.Typography.badge)
         .letterSpacing(0.6)
         // LIVE sits on the brand colour; UPCOMING on a dark scrim.
         .foregroundStyle(item.isLive ? Theme.Palette.onPrimary : .white)
@@ -69,7 +69,7 @@ struct LiveNowCard: View {
     private var caption: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(item.title)
-                .font(.system(size: 14, weight: .semibold))
+                .font(Theme.Typography.cardTitle)
                 .foregroundStyle(.white)
                 .lineLimit(1)
             if let startsAt = item.startsAt {
@@ -78,7 +78,7 @@ struct LiveNowCard: View {
                 } icon: {
                     Image(systemName: "clock").font(.system(size: 11))
                 }
-                .font(.system(size: 12))
+                .font(Theme.Typography.caption)
                 .foregroundStyle(Theme.Palette.textSecondary)
             }
         }
@@ -90,12 +90,12 @@ struct LiveNowCard: View {
         HStack(spacing: 10) {
             if let channel = item.channelName {
                 Text(Self.initials(of: channel))
-                    .font(.system(size: 11, weight: .heavy))
+                    .font(Theme.Typography.monogram)
                     .foregroundStyle(Theme.Palette.background)
                     .frame(width: 32, height: 32)
                     .background(Theme.Palette.textPrimary, in: .rect(cornerRadius: Theme.Radius.control))
                 Text(channel)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(Theme.Typography.cardTitle)
                     .foregroundStyle(Theme.Palette.textPrimary)
                     .lineLimit(1)
             }
@@ -113,7 +113,7 @@ struct LiveNowCard: View {
                     .glassButtonStyle()
                 }
             }
-            .font(.system(size: 14, weight: .bold))
+            .font(Theme.Typography.button)
             .lineLimit(1)
             .buttonBorderShape(.capsule)
         }
@@ -162,13 +162,13 @@ struct ChannelCard: View {
                 .overlay { Circle().strokeBorder(Theme.Palette.line, lineWidth: 1) }
                 .padding(.bottom, 16)
             Text(item.name)
-                .font(.system(size: 16, weight: .bold))
+                .font(Theme.Typography.headline)
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .lineLimit(1)
             if let followers = item.followCount {
                 // Plural forms come from the catalog (Arabic has six); the count reads compactly, e.g. 1.2K.
                 Text("\(followers.formatted(.number.notation(.compactName))) followers \(followers)")
-                    .font(.system(size: 12.5, weight: .medium))
+                    .font(Theme.Typography.captionMedium)
                     .foregroundStyle(Theme.Palette.textTertiary)
                     .padding(.top, 4)
             }
@@ -201,18 +201,18 @@ struct BulkPlanCard: View {
             VStack(alignment: .leading, spacing: 6) {
                 if let label = plan.label {
                     Text(label.uppercased())
-                        .font(.system(size: 11, weight: .bold))
+                        .font(Theme.Typography.badge)
                         .letterSpacing(1.5)
                         .foregroundStyle(tint)
                         .lineLimit(1)
                 }
                 Text(plan.name)
-                    .font(.system(size: 20, weight: .bold))
+                    .font(Theme.Typography.title)
                     .foregroundStyle(Theme.Palette.textPrimary)
                     .lineLimit(2)
                 if let summary = plan.summary {
                     Text(summary)
-                        .font(.system(size: 13))
+                        .font(Theme.Typography.bodySmall)
                         .lineSpacing(3)
                         .foregroundStyle(Theme.Palette.textSecondary)
                         .lineLimit(2)
@@ -222,11 +222,11 @@ struct BulkPlanCard: View {
             if let price = plan.price, let amount = price.formatted {
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                     Text(amount)
-                        .font(.system(size: 20, weight: .bold))
+                        .font(Theme.Typography.title)
                         .foregroundStyle(Theme.Palette.textPrimary)
                     if let saving = price.discountedPercentage, saving > 0 {
                         Text("· Save up to \(Int(saving))%")
-                            .font(.system(size: 12))
+                            .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Palette.textSecondary)
                     }
                 }
@@ -234,7 +234,7 @@ struct BulkPlanCard: View {
 
             Button(action: onExplore) {
                 Text("Explore bundles")
-                    .font(.system(size: 14, weight: .bold))
+                    .font(Theme.Typography.button)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 4)
             }
@@ -291,7 +291,7 @@ struct AudioCard: View {
             .frame(width: size, height: size)
 
             Text(item.title)
-                .font(.system(size: 14, weight: .semibold))
+                .font(Theme.Typography.cardTitle)
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
@@ -302,7 +302,7 @@ struct AudioCard: View {
                 } icon: {
                     Image(systemName: "music.note").foregroundStyle(Theme.Palette.highlight)
                 }
-                .font(.system(size: 12))
+                .font(Theme.Typography.caption)
                 .foregroundStyle(Theme.Palette.textTertiary)
                 .lineLimit(1)
                 .padding(.top, 3)

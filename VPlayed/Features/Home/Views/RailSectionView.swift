@@ -20,7 +20,7 @@ struct RailSectionView: View {
     @ViewBuilder
     private var header: some View {
         let title = Text(section.title)
-            .font(.system(size: 19.5, weight: .bold))
+            .font(Theme.Typography.railTitle)
             .letterSpacing(-0.2)
             .foregroundStyle(Theme.Palette.textPrimary)
             .lineLimit(1)

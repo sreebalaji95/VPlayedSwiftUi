@@ -85,11 +85,11 @@ struct HomeMessageView: View {
                 .background(Theme.Palette.raised, in: .rect(cornerRadius: Theme.Radius.popover))
                 .padding(.bottom, 20)
             Text(title)
-                .font(.system(size: 20, weight: .bold))
+                .font(Theme.Typography.title)
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .multilineTextAlignment(.center)
             Text(message)
-                .font(.system(size: 14))
+                .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Palette.textSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.top, 8)
@@ -104,7 +104,7 @@ struct HomeMessageView: View {
                     Text(actionTitle).opacity(isWorking ? 0 : 1)
                     if isWorking { ProgressView() }
                 }
-                .font(.system(size: 14, weight: .bold))
+                .font(Theme.Typography.button)
                 .padding(.horizontal, 12)
             }
             .glassButtonStyle(.primary)
@@ -130,7 +130,7 @@ struct LoadMoreFooter: View {
                     Task { await retry() }
                 } label: {
                     Label("Couldn't load more. Tap to retry.", systemImage: "arrow.clockwise")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(Theme.Typography.controlLabel)
                         .foregroundStyle(Theme.Palette.textSecondary)
                 }
                 .glassButtonStyle()
@@ -153,7 +153,7 @@ struct ToastView: View {
 
     var body: some View {
         Text(message)
-            .font(.system(size: 14, weight: .semibold))
+            .font(Theme.Typography.controlLabel)
             .foregroundStyle(Theme.Palette.textPrimary)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 18)

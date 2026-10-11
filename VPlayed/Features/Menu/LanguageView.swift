@@ -21,7 +21,7 @@ struct LanguageView: View {
                     }
                 }
                 Text("Titles and descriptions from \(Brand.name) also switch when they're available in that language.")
-                    .font(.footnote)
+                    .font(Theme.Typography.footnote)
                     .foregroundStyle(Theme.Palette.textTertiary)
                     .padding(.horizontal, 14)
             }
@@ -38,12 +38,12 @@ struct LanguageView: View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(verbatim: language.nativeName)
-                    .font(.system(size: 16, weight: .medium))
+                    .font(Theme.Typography.rowTitle)
                     .foregroundStyle(Theme.Palette.textPrimary)
                 if let localizedName = locale.localizedString(forLanguageCode: language.rawValue),
                    localizedName != language.nativeName {
                     Text(verbatim: localizedName)
-                        .font(.system(size: 13))
+                        .font(Theme.Typography.bodySmall)
                         .foregroundStyle(Theme.Palette.textTertiary)
                 }
             }

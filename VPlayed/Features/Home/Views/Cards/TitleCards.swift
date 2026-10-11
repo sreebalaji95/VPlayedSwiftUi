@@ -53,7 +53,7 @@ struct RankedPortraitCard: View {
                     }
             }
             Text(item.title)
-                .font(.system(size: 14, weight: .bold))
+                .font(Theme.Typography.rankedTitle)
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .lineLimit(2)
                 .frame(width: posterWidth, alignment: .leading)
@@ -79,7 +79,7 @@ struct RankedLandscapeCard: View {
                     }
             }
             Text(item.title)
-                .font(.system(size: 15, weight: .bold))
+                .font(Theme.Typography.rankedTitleLarge)
                 .foregroundStyle(Theme.Palette.textPrimary)
                 .lineLimit(2)
                 .frame(width: 171, alignment: .leading)
@@ -104,7 +104,7 @@ struct PromoCard: View {
                             Image(systemName: "play.fill").font(.system(size: 8, weight: .bold))
                             Text(duration).monospacedDigit()
                         }
-                        .font(.system(size: 11, weight: .bold))
+                        .font(Theme.Typography.badge)
                         .foregroundStyle(.white)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
@@ -123,7 +123,7 @@ struct PromoCard: View {
                     }
                 }
                 .labelStyle(CompactLabelStyle())
-                .font(.system(size: 12))
+                .font(Theme.Typography.caption)
                 .foregroundStyle(Theme.Palette.textTertiary)
                 .padding(.top, 4)
             }
@@ -137,7 +137,7 @@ struct CardTitle: View {
 
     var body: some View {
         Text(text)
-            .font(.system(size: 14, weight: .semibold))
+            .font(Theme.Typography.cardTitle)
             .foregroundStyle(Theme.Palette.textPrimary)
             .lineLimit(2)
             .lineSpacing(1)
