@@ -38,13 +38,7 @@ struct MenuView: View {
 
     private var header: some View {
         HStack {
-            // Same asset as the splash and the Home toolbar, so it has the light and dark variants.
-            Image(.splashLogo)
-                .resizable()
-                .scaledToFit()
-                .frame(height: Theme.Layout.headerLogoHeight)
-                .accessibilityLabel("VPlayed")
-                .accessibilityAddTraits(.isHeader)
+            BrandWordmark()
             Spacer(minLength: 8)
             Button(action: onClose) {
                 Label("Close menu", systemImage: "xmark")

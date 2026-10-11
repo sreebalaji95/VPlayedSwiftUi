@@ -26,7 +26,7 @@ struct SplashView: View {
             glow
 
             Image(.splashLogo)
-                .accessibilityLabel("VPlayed")
+                .accessibilityLabel(Text(verbatim: Brand.name))
                 .overlay(alignment: .top) {
                     VStack(spacing: 28) {
                         loadingBar

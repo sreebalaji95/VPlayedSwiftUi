@@ -20,7 +20,7 @@ nonisolated enum APIError: Error, Sendable, Equatable {
         case .network(let code) where code == URLError.timedOut.rawValue:
             String(localized: "The server took too long to respond. Please try again.", bundle: .localized)
         case .network:
-            String(localized: "We couldn't reach VPlayed. Please try again.", bundle: .localized)
+            String(localized: "We couldn't reach \(Brand.name). Please try again.", bundle: .localized)
         case .api(_, let message?) where !message.isEmpty:
             message
         case .unauthorized:

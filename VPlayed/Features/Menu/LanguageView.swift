@@ -20,7 +20,7 @@ struct LanguageView: View {
                         }
                     }
                 }
-                Text("Titles and descriptions from VPlayed also switch when they're available in that language.")
+                Text("Titles and descriptions from \(Brand.name) also switch when they're available in that language.")
                     .font(.footnote)
                     .foregroundStyle(Theme.Palette.textTertiary)
                     .padding(.horizontal, 14)

@@ -1314,24 +1314,24 @@
         }
       }
     },
-    "Titles and descriptions from VPlayed also switch when they're available in that language.": {
+    "Titles and descriptions from %@ also switch when they're available in that language.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تتغيّر أيضًا العناوين والأوصاف من VPlayed عندما تكون متاحة بتلك اللغة."
+            "value": "تتغيّر أيضًا العناوين والأوصاف من %@ عندما تكون متاحة بتلك اللغة."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Títulos e descrições do VPlayed também mudam quando estiverem disponíveis nesse idioma."
+            "value": "Títulos e descrições do %@ também mudam quando estiverem disponíveis nesse idioma."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "VPlayed-இன் தலைப்புகளும் விளக்கங்களும் அந்த மொழியில் கிடைக்கும்போது அவையும் மாறும்."
+            "value": "%@-இன் தலைப்புகளும் விளக்கங்களும் அந்த மொழியில் கிடைக்கும்போது அவையும் மாறும்."
           }
         }
       }
@@ -1379,9 +1379,6 @@
           }
         }
       }
-    },
-    "VPlayed": {
-      "shouldTranslate": false
     },
     "Video": {
       "localizations": {
@@ -1493,24 +1490,24 @@
         }
       }
     },
-    "We couldn't reach VPlayed. Please try again.": {
+    "We couldn't reach %@. Please try again.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تعذّر الاتصال بـ VPlayed. يُرجى المحاولة مرة أخرى."
+            "value": "تعذّر الاتصال بـ %@. يُرجى المحاولة مرة أخرى."
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não foi possível conectar ao VPlayed. Tente novamente."
+            "value": "Não foi possível conectar ao %@. Tente novamente."
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "VPlayed-ஐ அணுக முடியவில்லை. மீண்டும் முயலவும்."
+            "value": "%@-ஐ அணுக முடியவில்லை. மீண்டும் முயலவும்."
           }
         }
       }
