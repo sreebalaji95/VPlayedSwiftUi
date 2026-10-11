@@ -111,7 +111,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
 - **Liquid Glass (always)**:
   - Bars are system bars. Home's top bar is `HomeToolbar` (`HomeChrome.swift`): system toolbar items for the menu, the `SplashLogo` wordmark (`.sharedBackgroundVisibility(.hidden)`) and the bell. The feed `ScrollView` ignores the top safe area so the hero runs behind the glass bar (and the status bar), with `.softTopScrollEdge()` and a top fade in the hero scrims for legibility. The scrims are weaker in light mode (`ScrimTone`), where the near-white page colour would wash the art out.
   - Controls are glass, through `DesignSystem/Glass.swift`, never custom filled styles:
-    - `glassButtonStyle()` for controls, and `glassButtonStyle(.prominent)` + `.tint(Theme.Palette.brand)` for the primary action;
+    - `glassButtonStyle()` for controls, and `glassButtonStyle(.prominent)` + `.tint(Theme.Palette.brand)` for the primary action, with `Theme.Palette.onPrimary` (never `.white`) for its label;
     - `GlassCardButtonStyle(shape:padding:)` for Menu/Language rows;
     - `glassSurface(in:)` for floating chips;
     - `GlassGroup` to blend neighbouring glass.

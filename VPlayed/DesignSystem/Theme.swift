@@ -18,6 +18,9 @@ enum Theme {
         /// The brand red, from the `AccentColor` asset and the same in both themes: the selected
         /// tab, primary actions, the LIVE badge. Rebrand the primary colour there and nowhere else.
         static let brand = Color(.accent)
+        /// Text and icons drawn on `brand` fills, in both themes. Keep it readable against `brand`
+        /// (white for a dark primary, `onLight`-style dark for a light one).
+        static let onPrimary = Color(.onPrimary)
         /// Secondary yellow highlight. The app's main accent is the red `brand`.
         static let accent = Color(.accentYellow)
         /// Dark text for light fills, in both themes.

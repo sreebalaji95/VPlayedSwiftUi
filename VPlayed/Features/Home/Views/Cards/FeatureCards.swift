@@ -45,13 +45,14 @@ struct LiveNowCard: View {
     private var badge: some View {
         HStack(spacing: 6) {
             if item.isLive {
-                PulsingDot(color: .white, size: 7)
+                PulsingDot(color: Theme.Palette.onPrimary, size: 7)
             }
             item.isLive ? Text("LIVE") : Text("UPCOMING")
         }
         .font(.system(size: 11, weight: .bold))
         .letterSpacing(0.6)
-        .foregroundStyle(.white)
+        // LIVE sits on the brand colour; UPCOMING on a dark scrim.
+        .foregroundStyle(item.isLive ? Theme.Palette.onPrimary : .white)
         .padding(.horizontal, 11)
         .padding(.vertical, 6)
         .background(
@@ -103,7 +104,7 @@ struct LiveNowCard: View {
                 if item.isLive {
                     Button(action: onWatch) {
                         Label("Watch Live", systemImage: "play.fill")
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Theme.Palette.onPrimary)
                     }
                     .glassButtonStyle(.prominent)
                     .tint(Theme.Palette.brand)

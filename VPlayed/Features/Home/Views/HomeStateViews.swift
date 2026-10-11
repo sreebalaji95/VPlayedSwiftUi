@@ -102,10 +102,10 @@ struct HomeMessageView: View {
             } label: {
                 ZStack {
                     Text(actionTitle).opacity(isWorking ? 0 : 1)
-                    if isWorking { ProgressView().tint(.white) }
+                    if isWorking { ProgressView().tint(Theme.Palette.onPrimary) }
                 }
                 .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(Theme.Palette.onPrimary)
                 .padding(.horizontal, 12)
             }
             .glassButtonStyle(.prominent)

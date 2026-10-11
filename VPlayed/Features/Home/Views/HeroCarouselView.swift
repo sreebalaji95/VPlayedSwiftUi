@@ -142,7 +142,7 @@ private struct HeroSlide: View {
                         Label("Watch now", systemImage: "play.fill")
                             .font(.system(size: 16, weight: .bold))
                             .labelStyle(SpacedLabelStyle(spacing: 9))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(Theme.Palette.onPrimary)
                             .frame(maxWidth: .infinity)
                     }
                     .glassButtonStyle(.prominent)
