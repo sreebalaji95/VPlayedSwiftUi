@@ -235,11 +235,11 @@ struct BulkPlanCard: View {
             Button(action: onExplore) {
                 Text("Explore bundles")
                     .font(.system(size: 14, weight: .bold))
-                    .frame(maxWidth: .infinity, minHeight: 32)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 4)
             }
             .glassButtonStyle()
             .buttonBorderShape(.capsule)
-            .controlSize(.large)
         }
         .padding(.horizontal, 26)
         .padding(.vertical, 24)
