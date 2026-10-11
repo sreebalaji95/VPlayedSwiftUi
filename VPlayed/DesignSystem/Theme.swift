@@ -10,20 +10,15 @@ enum Theme {
         static let surface = Color(.surface)
         static let raised = Color(.raised)
         static let neutral700 = Color(.neutral700)
-        static let sunken = Color(.sunken)
 
         static let textPrimary = Color(.textPrimary)
         static let textSecondary = Color(.textSecondary)
         static let textTertiary = Color(.textTertiary)
-        static let muted = Color(.muted)
 
-        /// The brand reds are the same in both themes.
+        /// The brand red is the same in both themes.
         static let brand = Color(.brand)
-        static let brandPressed = Color(.brandPressed)
         /// Secondary yellow highlight. The app's main accent is the red `AccentColor` asset.
         static let accent = Color(.accentYellow)
-        static let teal = Color(.accentTeal)
-        static let amber = Color(.amber)
         /// Dark text for light fills, in both themes.
         static let onLight = Color(.onLight)
 

@@ -121,8 +121,8 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
     - The hero's full-bleed background image tap stays plain, since an edge-to-edge photo has no shape for glass. "Watch now" is its glass action.
 - **Design**:
   - `DesignSystem/Theme.swift` holds the tokens from the HTML prototype (`~/Downloads/VPlayed Complete Prototype (offline) (9).html`, page "VPlayed Home Mobile"): SF Pro, Material Symbols mapped to SF Symbols. The prototype is dark-only; the light values are our own.
-  - Colours are colorsets in `Assets.xcassets/Colors`; `Theme.Palette` refers to them through generated asset symbols (`Color(.textPrimary)`). Add a colour as an asset first, and avoid names that collide with SwiftUI's own `Color` members (hence `AccentTeal`, not `Teal`).
-  - The app follows the system Light/Dark setting. Each colorset has a light base value plus a Dark appearance; give new colours both. `Brand`, `BrandPressed`, `AccentColor`, `OnLight` and `Scrim` are deliberately the same in both themes.
+  - Colours are colorsets in `Assets.xcassets/Colors`; `Theme.Palette` refers to them through generated asset symbols (`Color(.textPrimary)`). Add a colour as an asset first, and avoid names that collide with SwiftUI's own `Color` members (hence `AccentYellow`, not `Yellow`).
+  - The app follows the system Light/Dark setting. Each colorset has a light base value plus a Dark appearance; give new colours both. `Brand`, `AccentColor`, `OnLight` and `Scrim` are deliberately the same in both themes.
   - Chips and labels drawn on artwork (`CornerTag`, the Live card's badge and caption) apply `.environment(\.colorScheme, .dark)` so they stay dark on photos. The hero is the exception: it fades into the page background in both themes.
   - On page surfaces use `Theme.Palette.textPrimary.opacity(x)` rather than `Color.white.opacity(x)`, so it inverts in light mode.
   - The app's main accent is the red `AccentColor` asset (the selected tab uses it). `Theme.Palette.accent` is a secondary yellow highlight (asset `AccentYellow`).
