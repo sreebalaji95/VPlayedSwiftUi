@@ -10,7 +10,7 @@ The app is SwiftUI only: no storyboards, no XIBs, no third-party dependencies. I
 2. Recolour the colorsets in [`VPlayed/Assets.xcassets`](VPlayed/Assets.xcassets).
 3. Replace the wordmark SVGs in `VPlayed/Assets.xcassets/SplashLogo.imageset`.
 4. Replace the app icon, [`VPlayed/AppIcon.icon`](VPlayed/AppIcon.icon), in Icon Composer.
-5. Set the product name in [`VPlayed/Brand/Brand.swift`](VPlayed/Brand/Brand.swift), and the tagline in the string catalog.
+5. Set the product name and, optionally, a typeface in [`VPlayed/Brand/Brand.swift`](VPlayed/Brand/Brand.swift). Set the tagline in the string catalog.
 6. Point [`APIEnvironment.swift`](VPlayed/Core/Networking/APIEnvironment.swift) at your backend, but only if your brand has its own API tenant.
 7. Validate: see [Validation](#validation).
 
@@ -71,6 +71,20 @@ This is an Icon Composer (Liquid Glass) document with two glass groups, `Play` (
   ```
   Other renditions: `Dark`, `ClearLight`, `TintedDark`.
 
+### Typeface
+
+Text uses SF Pro unless you set a brand typeface:
+
+1. Put the font files (`.ttf`, `.otf` or `.ttc`) in `VPlayed/Brand/Fonts/`. Use one file per weight, or a variable font. The folder is part of the app target automatically, so you don't need to edit the project or Info.plist; the app registers every bundled font at launch.
+2. Set `Brand.fontFamily` to the typeface's **family name** as it appears in Font Book, for example `"Inter"`, not a file name or PostScript name.
+
+Every text style then uses that family. Each style picks the face nearest to its weight (regular, medium, semibold, bold, heavy), so ship at least regular and bold. The sizes and weights themselves are the core team's, in `Theme.Typography`.
+
+- **Scripts:** characters the typeface lacks fall back to the system font automatically. A Latin-only typeface therefore shows Arabic and Tamil in SF, which is usually what you want. Check those languages if your typeface covers them.
+- **System bars:** the tab bar and navigation titles stay in the system font.
+- **Licence:** make sure the font's licence allows embedding in an app.
+- `BrandTests/brandTypefaceIsAvailable()` fails if the family named in `Brand.fontFamily` isn't installed.
+
 ### Brand name and copy
 
 - `Brand.name` in [`VPlayed/Brand/Brand.swift`](VPlayed/Brand/Brand.swift) is the product name people see. It is the wordmark's VoiceOver label, and it fills the `%@` in the messages below. It is not translated.
@@ -90,7 +104,7 @@ This file holds the API host and image bucket per environment. Edit it only if y
 
 These are owned by the core team. Brands get their look from the tokens above, so don't edit these files to rebrand.
 
-- [`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift): palette, corner radii, spacing.
+- [`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift): palette, typography roles (sizes and weights), corner radii, spacing.
 - [`DesignSystem/Glass.swift`](VPlayed/DesignSystem/Glass.swift): Liquid Glass buttons and surfaces, with all the iOS 17–18 and visionOS fallbacks. Primary actions use `glassButtonStyle(.primary)`, which alone sets their `primary` tint and `onPrimary` label.
 - [`DesignSystem/BrandWordmark.swift`](VPlayed/DesignSystem/BrandWordmark.swift), [`Skeleton.swift`](VPlayed/DesignSystem/Skeleton.swift), [`LetterSpacing.swift`](VPlayed/DesignSystem/LetterSpacing.swift).
 - Card layouts in `Features/**/Views`. Card sizes and aspect ratios match the API's image variants (`Core/Images/ImageSet.swift`), so don't change them.
@@ -139,4 +153,3 @@ Run these after every rebrand.
 - **The hero's fades are tuned to `Background`.** A background with a very different lightness or hue may make the hero artwork look washed out or muddy. Raise it with the core team if so; the strengths live in `ScrimTone` in `HeroCarouselView.swift`.
 - **`LaunchBackground` must match `Background`.**
 - **Don't put hex colours or `.white` in views.** If a new colour is needed, add a colorset, give it a role in `Theme.Palette`, and give it a Dark appearance.
-- **Fonts aren't customizable yet.** Text uses the system font (SF Pro) at sizes set in the views. Named text styles and a brand-font hook are planned.

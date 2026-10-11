@@ -41,8 +41,9 @@ enum Theme {
         static let shimmer = Color(.shimmerHighlight)
     }
 
-    /// Text styles by role, with the prototype's sizes and weights. Views use these for text;
-    /// SF Symbol sizes are icon metrics and stay in the views.
+    /// Text styles by role, with the prototype's sizes and weights, in the brand typeface
+    /// (`Brand.fontFamily`, else SF Pro). Views use these for text; SF Symbol sizes are icon
+    /// metrics and stay in the views.
     enum Typography {
         /// The hero's title.
         static let heroTitle = font(37, .bold)
@@ -77,7 +78,7 @@ enum Theme {
         /// Emphasized short notes.
         static let note = font(13, .semibold)
         /// Explanatory footnotes; scales with Dynamic Type.
-        static let footnote = Font.footnote
+        static let footnote = Brand.fontFamily.map { Font.custom($0, size: 13, relativeTo: .footnote) } ?? .footnote
         /// Metadata lines: genre and duration, views and likes, dates, artists.
         static let caption = font(12, .regular)
         /// Follower counts.
@@ -93,7 +94,12 @@ enum Theme {
         }
 
         private static func font(_ size: CGFloat, _ weight: Font.Weight) -> Font {
-            .system(size: size, weight: weight)
+            if let family = Brand.fontFamily {
+                // The family's face nearest to `weight`, at a fixed size like the system styles.
+                .custom(family, fixedSize: size).weight(weight)
+            } else {
+                .system(size: size, weight: weight)
+            }
         }
     }
 
