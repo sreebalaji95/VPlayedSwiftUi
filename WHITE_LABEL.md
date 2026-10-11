@@ -6,10 +6,12 @@ The app is SwiftUI only: no storyboards, no XIBs, no third-party dependencies. I
 
 ## Quick start
 
+Almost everything a rebrand replaces is in one folder, [`VPlayed/Brand/`](VPlayed/Brand), plus [`Config/Brand.xcconfig`](Config/Brand.xcconfig) and a few keys in the string catalog. The `Brand` folder holds `Brand.swift`, `Assets.xcassets` (colours and wordmark), `AppIcon.icon` and, if you add a typeface, `Fonts/`.
+
 1. Set your identity in [`Config/Brand.xcconfig`](Config/Brand.xcconfig).
-2. Recolour the colorsets in [`VPlayed/Assets.xcassets`](VPlayed/Assets.xcassets).
-3. Replace the wordmark SVGs in `VPlayed/Assets.xcassets/SplashLogo.imageset`.
-4. Replace the app icon, [`VPlayed/AppIcon.icon`](VPlayed/AppIcon.icon), in Icon Composer.
+2. Recolour the colorsets in [`VPlayed/Brand/Assets.xcassets`](VPlayed/Brand/Assets.xcassets).
+3. Replace the wordmark SVGs in `VPlayed/Brand/Assets.xcassets/SplashLogo.imageset`.
+4. Replace the app icon, [`VPlayed/Brand/AppIcon.icon`](VPlayed/Brand/AppIcon.icon), in Icon Composer.
 5. Set the product name and, optionally, a typeface in [`VPlayed/Brand/Brand.swift`](VPlayed/Brand/Brand.swift). Set the tagline in the string catalog.
 6. Point [`APIEnvironment.swift`](VPlayed/Core/Networking/APIEnvironment.swift) at your backend, but only if your brand has its own API tenant.
 7. Validate: see [Validation](#validation).
@@ -27,7 +29,7 @@ Every scheme and both targets read this file. Don't set these keys in the projec
 | `DEVELOPMENT_TEAM` | `G44VFA67ZG` | Signing team for all configurations |
 | `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` | `1.0.0` / `1` | Version and build number |
 
-### Colours: `VPlayed/Assets.xcassets`
+### Colours: `VPlayed/Brand/Assets.xcassets`
 
 Views never use raw colours. They read `Theme.Palette` ([`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift)), which reads these colorsets through Xcode's generated asset symbols. So:
 
@@ -51,7 +53,7 @@ Views never use raw colours. They read `Theme.Palette` ([`DesignSystem/Theme.swi
 
 Chips drawn on artwork (card corner tags, the Live card's badge and caption) always use the **Dark** values of their colours (`Highlight`, `Scrim`, `FillStrong`, `Background`, `TextSecondary`, `LineStrong`), even in light mode. Check those Dark values over bright artwork.
 
-### Wordmark: `VPlayed/Assets.xcassets/SplashLogo.imageset`
+### Wordmark: `VPlayed/Brand/Assets.xcassets/SplashLogo.imageset`
 
 One asset serves the launch screen, the animated splash, the Home toolbar and the menu header.
 
@@ -59,14 +61,14 @@ One asset serves the launch screen, the animated splash, the Home toolbar and th
 - **Declare `width` and `height` on the root `<svg>`.** The launch screen draws the logo at exactly that size in points, centred on the screen. Today's is 288 × 75.43. The splash re-draws it at the same size and hangs its progress bar and tagline 28pt below it, so a logo of any shape works without code changes.
 - The toolbar and menu scale it to 26pt high (`Theme.Layout.headerLogoHeight`).
 
-### App icon: `VPlayed/AppIcon.icon`
+### App icon: `VPlayed/Brand/AppIcon.icon`
 
 This is an Icon Composer (Liquid Glass) document with two glass groups, `Play` (front) and `V` (back). Each group is an SVG in `Assets/` drawn on the same 1024 × 1024 canvas, and `icon.json` sets the light and dark background fill. Edit it with `/Applications/Xcode.app/Contents/Applications/Icon Composer.app`. Xcode generates the flat icons for iOS 17–18 itself.
 
 - Icon Composer ignores `clip-rule="evenodd"`. Build cut-outs by layering shapes in paint order.
 - To preview a rendition:
   ```bash
-  "/Applications/Xcode.app/Contents/Applications/Icon Composer.app/Contents/Executables/ictool" VPlayed/AppIcon.icon --export-image --output-file /tmp/icon.png --platform iOS --rendition Default --width 1024 --height 1024 --scale 1
+  "/Applications/Xcode.app/Contents/Applications/Icon Composer.app/Contents/Executables/ictool" VPlayed/Brand/AppIcon.icon --export-image --output-file /tmp/icon.png --platform iOS --rendition Default --width 1024 --height 1024 --scale 1
   ```
   Other renditions: `Dark`, `ClearLight`, `TintedDark`.
 

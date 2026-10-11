@@ -1,7 +1,8 @@
 import Foundation
 
-/// The product's identity in code. A rebrand edits this file together with the colours and
-/// images in `Assets.xcassets`, `AppIcon.icon` and the copy keys listed in WHITE_LABEL.md.
+/// The product's identity in code. Everything a rebrand replaces lives in this `Brand` folder
+/// (this file, the colours and wordmark in `Assets.xcassets`, `AppIcon.icon`, any `Fonts`), plus
+/// `Config/Brand.xcconfig` and the copy keys listed in WHITE_LABEL.md.
 nonisolated enum Brand {
     /// The product name people see: the wordmark's accessibility label and the messages that
     /// name the app. It is not translated.

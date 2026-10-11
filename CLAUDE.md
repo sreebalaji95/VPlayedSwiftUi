@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home, Menu, Language and Movies are the only real screens so far; every other destination is a placeholder.
 
-Service teams fork it to ship white-label brands; [`WHITE_LABEL.md`](WHITE_LABEL.md) lists what a rebrand edits (`Config/Brand.xcconfig`, `Brand/Brand.swift`, the colorsets, `SplashLogo`, `AppIcon.icon`, brand copy keys) and what it must not. Keep it in step when those files or tokens change.
+Service teams fork it to ship white-label brands; [`WHITE_LABEL.md`](WHITE_LABEL.md) lists what a rebrand edits (`Config/Brand.xcconfig`, everything in `VPlayed/Brand/` (`Brand.swift`, `Assets.xcassets` with the colorsets and `SplashLogo`, `AppIcon.icon`, `Fonts/`), brand copy keys) and what it must not. Put new brand-replaceable files in `VPlayed/Brand/` and core code elsewhere. Keep it in step when those files or tokens change.
 
 It is a native rewrite of the existing UIKit app at `/Users/balaji/Desktop/GSVplayed/Vplayed New`. Its source (`GudSho/`) is the reference for endpoints, headers, JSON keys and business rules, but nothing there compiles standalone (Alamofire, ObjectMapper, UIKit globals). Port logic into new Swift 6 code; never modify that project.
 
@@ -126,7 +126,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - `DesignSystem/Theme.swift` holds the tokens from the HTML prototype (`~/Downloads/VPlayed Complete Prototype (offline) (9).html`, page "VPlayed Home Mobile"): SF Pro, Material Symbols mapped to SF Symbols. The prototype is dark-only; the light values are our own.
   - Text styles are `Theme.Typography` roles (`.font(Theme.Typography.cardTitle)`), never `.font(.system(size:…))`; pick the role by meaning, not by size, and add a role rather than an inline size. SF Symbol sizes (`Image(systemName:).font(.system(size:))`) are icon metrics and stay in the views.
   - The roles use SF Pro unless `Brand.fontFamily` (`Brand/Brand.swift`) names a typeface; then they use `.custom(family, fixedSize:).weight(_:)`. `BrandFonts.registerBundledFonts()` (called from `MyApp.init`) registers every `.ttf`/`.otf`/`.ttc` in the app's resources through CoreText, so fonts need no `UIAppFonts` / `ATSApplicationFontsPath` entries. `BrandTests` checks that the named family is installed.
-  - Colours are colorsets in `Assets.xcassets/Colors`; `Theme.Palette` refers to them through generated asset symbols (`Color(.textPrimary)`). Palette members are named by role (`primary`, `highlight`, `fillStrong`, `lineStrong`…), and so are their colorsets, so a white-label brand can recolour them without the names lying. Add a colour as a role-named asset first, and avoid names that collide with SwiftUI's own `Color` members (hence the primary colour stays in `AccentColor`, since `Primary` would clash with `Color.primary`).
+  - Colours are colorsets in `Brand/Assets.xcassets/Colors`; `Theme.Palette` refers to them through generated asset symbols (`Color(.textPrimary)`). Palette members are named by role (`primary`, `highlight`, `fillStrong`, `lineStrong`…), and so are their colorsets, so a white-label brand can recolour them without the names lying. Add a colour as a role-named asset first, and avoid names that collide with SwiftUI's own `Color` members (hence the primary colour stays in `AccentColor`, since `Primary` would clash with `Color.primary`).
   - The app follows the system Light/Dark setting. Each colorset has a light base value plus a Dark appearance; give new colours both. `AccentColor`, `OnLight` and `Scrim` are deliberately the same in both themes.
   - Chips and labels drawn on artwork (`CornerTag`, the Live card's badge and caption) apply `.environment(\.colorScheme, .dark)` so they stay dark on photos. The hero is the exception: it fades into the page background in both themes.
   - On page surfaces use `Theme.Palette.textPrimary.opacity(x)` rather than `Color.white.opacity(x)`, so it inverts in light mode.
@@ -136,12 +136,12 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
 
 ## App icon
 
-`VPlayed/AppIcon.icon` is an Icon Composer (Liquid Glass) document, referenced by `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon`. It has two glass groups: `Play` (front, the yellow/green play triangle) and `V` (back, the red V with a darker fold). Both are vector SVGs in `Assets/`, all drawn on the same 1024×1024 canvas. Xcode builds flat fallback icons for iOS 17–18 automatically.
+`VPlayed/Brand/AppIcon.icon` is an Icon Composer (Liquid Glass) document, referenced by `ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon`. It has two glass groups: `Play` (front, the yellow/green play triangle) and `V` (back, the red V with a darker fold). Both are vector SVGs in `Assets/`, all drawn on the same 1024×1024 canvas. Xcode builds flat fallback icons for iOS 17–18 automatically.
 
 - Edit it in Icon Composer (`/Applications/Xcode.app/Contents/Applications/Icon Composer.app`) or directly via `icon.json`.
 - Render a preview to check changes:
   ```bash
-  "/Applications/Xcode.app/Contents/Applications/Icon Composer.app/Contents/Executables/ictool" VPlayed/AppIcon.icon --export-image --output-file /tmp/icon.png --platform iOS --rendition Default --width 1024 --height 1024 --scale 1
+  "/Applications/Xcode.app/Contents/Applications/Icon Composer.app/Contents/Executables/ictool" VPlayed/Brand/AppIcon.icon --export-image --output-file /tmp/icon.png --platform iOS --rendition Default --width 1024 --height 1024 --scale 1
   ```
   Other renditions include `Dark`, `ClearLight` and `TintedDark`.
 - Icon Composer's SVG renderer ignores `clip-rule="evenodd"`. Build cut-outs by layering shapes in paint order, not with even-odd clip paths.

@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Design tokens from the VPlayed prototype (dark theme, `vp-ds-tokens.css`).
 enum Theme {
-    /// Colours by role. They live in `Assets.xcassets/Colors` (named after the role) and are read
+    /// Colours by role. They live in `Brand/Assets.xcassets/Colors` (named after the role) and are read
     /// through Xcode's generated asset symbols, so a renamed or missing asset fails the build.
     /// Most have a light value and a Dark appearance and follow the system theme; the exceptions
     /// are noted below.
