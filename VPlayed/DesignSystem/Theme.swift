@@ -31,6 +31,8 @@ enum Theme {
         static let line2 = Color(.line2)
         /// Always dark: backs chips and labels drawn on artwork, which stay dark in both themes.
         static let scrim = Color(.scrim)
+        /// The highlight that sweeps across skeleton placeholders while content loads.
+        static let shimmer = Color(.shimmerHighlight)
     }
 
     enum Radius {

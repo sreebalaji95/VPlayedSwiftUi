@@ -140,37 +140,33 @@ private struct MovieCard: View {
     }
 }
 
-/// Placeholder grid while the first page loads.
+/// Skeleton while the first page loads, laid out like the grid: the subtitle line, then cards
+/// with their title and genre / duration lines.
 private struct MoviesLoadingView: View {
-    @State private var dimmed = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                RoundedRectangle(cornerRadius: Theme.Radius.badge)
-                    .frame(width: 220, height: 14)
+                SkeletonBlock(width: 240, height: 14)
                 LazyVGrid(columns: MoviesView.columns, alignment: .leading, spacing: 20) {
-                    ForEach(0..<8, id: \.self) { _ in
-                        VStack(alignment: .leading, spacing: 8) {
+                    ForEach(0..<10, id: \.self) { _ in
+                        VStack(alignment: .leading, spacing: 0) {
                             RoundedRectangle(cornerRadius: Theme.Radius.control)
+                                .fill(Theme.Palette.raised)
                                 .aspectRatio(16 / 9, contentMode: .fit)
-                            RoundedRectangle(cornerRadius: Theme.Radius.badge)
-                                .frame(width: 110, height: 12)
+                            SkeletonBlock(width: 120, height: 13)
+                                .padding(.top, 11)
+                            SkeletonBlock(width: 80, height: 10)
+                                .padding(.top, 7)
                         }
                     }
                 }
             }
-            .foregroundStyle(Theme.Palette.raised)
             .padding(.horizontal, Theme.Spacing.gutter)
-            .opacity(dimmed ? 0.5 : 1)
+            .shimmering()
         }
         .scrollDisabled(true)
         .scrollIndicators(.hidden)
-        .onAppear {
-            guard !reduceMotion else { return }
-            withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { dimmed = true }
-        }
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("Loading movies")
     }
 }

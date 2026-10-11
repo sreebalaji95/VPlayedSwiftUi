@@ -7,6 +7,12 @@ struct HeroCarouselView: View {
 
     static let slideInterval: Duration = .seconds(6)
 
+    /// Hero height for a feed of the given visible height: the prototype's
+    /// clamp(460px, 72vh, 600px), 50pt shorter. Shared with the Home skeleton.
+    static func height(inContainer height: CGFloat) -> CGFloat {
+        min(max(height * 0.72, 460), 600) - 50
+    }
+
     @State private var currentID: HomeBanner.ID?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -27,10 +33,7 @@ struct HeroCarouselView: View {
         .scrollIndicators(.hidden)
         .scrollTargetBehavior(.paging)
         .scrollPosition(id: $currentID)
-        .containerRelativeFrame(.vertical) { height, _ in
-            // Prototype's clamp(460px, 72vh, 600px), 50pt shorter.
-            min(max(height * 0.72, 460), 600) - 50
-        }
+        .containerRelativeFrame(.vertical) { height, _ in Self.height(inContainer: height) }
         .overlay(alignment: .bottom) {
             if banners.count > 1 {
                 HeroPageDots(count: banners.count, current: currentIndex, animates: !reduceMotion)

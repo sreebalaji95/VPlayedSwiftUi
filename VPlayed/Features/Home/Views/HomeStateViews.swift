@@ -1,48 +1,68 @@
 import SwiftUI
 
-/// Skeleton shown during the first load: a hero block and two rails of card placeholders.
+/// Skeleton shown during the first load, laid out like the feed: the hero (behind the glass bar,
+/// with its badge, title, synopsis and buttons) and three rails of cards with titles.
 struct HomeLoadingView: View {
-    @State private var dimmed = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Rectangle()
-                    .fill(Theme.Palette.surface)
-                    .containerRelativeFrame(.vertical) { height, _ in min(max(height * 0.72, 460), 600) }
-                ForEach(0..<2, id: \.self) { _ in
-                    VStack(alignment: .leading, spacing: 14) {
-                        RoundedRectangle(cornerRadius: Theme.Radius.badge)
-                            .frame(width: 150, height: 18)
-                        // The row is wider than a phone; a disabled scroll view takes exactly the
-                        // offered width, so it can't widen the screen.
-                        ScrollView(.horizontal) {
-                            HStack(spacing: 8) {
-                                ForEach(0..<3, id: \.self) { _ in
-                                    RoundedRectangle(cornerRadius: Theme.Radius.control)
-                                        .frame(width: 158, height: 89)
-                                }
-                            }
-                        }
-                        .scrollDisabled(true)
-                        .scrollIndicators(.hidden)
-                    }
-                    .foregroundStyle(Theme.Palette.raised)
-                    .padding(.leading, Theme.Spacing.gutter)
-                    .padding(.top, 26)
-                }
+                hero
+                ForEach(0..<3, id: \.self) { _ in rail }
             }
-            .opacity(dimmed ? 0.5 : 1)
+            .shimmering()
         }
         .scrollDisabled(true)
         .scrollIndicators(.hidden)
-        .onAppear {
-            guard !reduceMotion else { return }
-            withAnimation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true)) { dimmed = true }
-        }
-        .accessibilityElement()
+        // Like the feed, the hero starts at the top of the screen, behind the glass bar.
+        .ignoresSafeArea(edges: .top)
+        .softTopScrollEdge()
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("Loading home")
+    }
+
+    private var hero: some View {
+        ZStack(alignment: .bottomLeading) {
+            Rectangle().fill(Theme.Palette.surface)
+            VStack(alignment: .leading, spacing: 0) {
+                SkeletonBlock(width: 104, height: 26, cornerRadius: 13)
+                SkeletonBlock(width: 230, height: 34, cornerRadius: Theme.Radius.control)
+                    .padding(.top, 14)
+                SkeletonBlock(height: 12)
+                    .padding(.top, 18)
+                SkeletonBlock(width: 220, height: 12)
+                    .padding(.top, 8)
+                HStack(spacing: 10) {
+                    Capsule().fill(Theme.Palette.raised).frame(height: 50)
+                    Circle().fill(Theme.Palette.raised).frame(width: 50, height: 50)
+                }
+                .padding(.top, 18)
+            }
+            .padding(.horizontal, Theme.Spacing.gutter)
+            .padding(.bottom, 44)
+        }
+        .containerRelativeFrame(.vertical) { height, _ in HeroCarouselView.height(inContainer: height) }
+    }
+
+    private var rail: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            SkeletonBlock(width: 150, height: 18)
+            // The row is wider than a phone; a disabled scroll view takes exactly the offered
+            // width, so it can't widen the screen.
+            ScrollView(.horizontal) {
+                HStack(alignment: .top, spacing: 8) {
+                    ForEach(0..<3, id: \.self) { _ in
+                        VStack(alignment: .leading, spacing: 10) {
+                            SkeletonBlock(width: 158, height: 89, cornerRadius: Theme.Radius.control)
+                            SkeletonBlock(width: 110, height: 12)
+                        }
+                    }
+                }
+            }
+            .scrollDisabled(true)
+            .scrollIndicators(.hidden)
+        }
+        .padding(.leading, Theme.Spacing.gutter)
+        .padding(.top, 26)
     }
 }
 

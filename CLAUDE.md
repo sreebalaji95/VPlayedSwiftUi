@@ -106,6 +106,7 @@ xcodebuild test -project VPlayed.xcodeproj -scheme VPlayed -destination 'platfor
   - Chips and labels drawn on artwork (`CornerTag`, the Live card's badge and caption) apply `.environment(\.colorScheme, .dark)` so they stay dark on photos. The hero is the exception: it fades into the page background in both themes.
   - On page surfaces use `Theme.Palette.textPrimary.opacity(x)` rather than `Color.white.opacity(x)`, so it inverts in light mode.
   - The app's main accent is the red `AccentColor` asset (the selected tab uses it). `Theme.Palette.accent` is a secondary yellow highlight (asset `AccentYellow`).
+  - Loading states are shimmer skeletons that mirror the real layout (`HomeLoadingView`, `MoviesLoadingView`), built from `SkeletonBlock` and `.shimmering()` in `DesignSystem/Skeleton.swift`. The hero skeleton shares `HeroCarouselView.height(inContainer:)` with the real hero.
   - To render a prototype page for comparison, open the file in headless Chrome with the page name as the URL hash, e.g. `…(9).html#VPlayed%20Home%20Mobile.html`. Chrome may not exit on its own because the page keeps animating.
 
 ## App icon
