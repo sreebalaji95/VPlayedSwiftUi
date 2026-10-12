@@ -120,6 +120,10 @@ private struct HeroSlide: View {
         }
     }
 
+    /// "Watch now" and "+" are 45pt tall: this label height plus the regular control size's
+    /// 7pt top and bottom padding.
+    private static let actionLabelHeight: CGFloat = 31
+
     private var content: some View {
         VStack(alignment: .leading, spacing: 0) {
             if banner.kind != .unknown {
@@ -143,7 +147,7 @@ private struct HeroSlide: View {
                         Label("Watch now", systemImage: "play.fill")
                             .font(Theme.Typography.buttonLarge)
                             .labelStyle(SpacedLabelStyle(spacing: 9))
-                            .frame(maxWidth: .infinity)
+                            .frame(maxWidth: .infinity, minHeight: Self.actionLabelHeight)
                     }
                     .glassButtonStyle(.primary)
 
@@ -151,13 +155,13 @@ private struct HeroSlide: View {
                         Image(systemName: "plus")
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundStyle(Theme.Palette.textPrimary)
-                            .frame(width: 22, height: 22)
+                            .frame(width: Self.actionLabelHeight, height: Self.actionLabelHeight)
                     }
                     .glassButtonStyle()
                     .buttonBorderShape(.circle)
                     .accessibilityLabel("Add \(banner.title) to watchlist")
                 }
-                .controlSize(.large)
+                .controlSize(.regular)
                 .buttonBorderShape(.capsule)
             }
             .padding(.top, 14)
