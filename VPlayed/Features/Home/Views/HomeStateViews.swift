@@ -45,7 +45,7 @@ struct HomeLoadingView: View {
     }
 
     private var rail: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: Theme.Spacing.railTitleGap) {
             SkeletonBlock(width: 150, height: 18)
             // The row is wider than a phone; a disabled scroll view takes exactly the offered
             // width, so it can't widen the screen.
@@ -63,7 +63,7 @@ struct HomeLoadingView: View {
             .scrollIndicators(.hidden)
         }
         .padding(.leading, Theme.Spacing.gutter)
-        .padding(.top, 26)
+        .padding(.top, Theme.Spacing.railGap)
     }
 }
 

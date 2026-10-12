@@ -12,8 +12,7 @@ struct RailSectionView: View {
                 header
                 rail(layout)
             }
-            .padding(.top, 22)
-            .padding(.bottom, 4)
+            .padding(.top, Theme.Spacing.railGap)
         }
     }
 
@@ -24,7 +23,6 @@ struct RailSectionView: View {
             .letterSpacing(-0.2)
             .foregroundStyle(Theme.Palette.textPrimary)
             .lineLimit(1)
-            .frame(minHeight: 44, alignment: .leading)
 
         Group {
             if section.showsViewAll {
@@ -40,7 +38,7 @@ struct RailSectionView: View {
             }
         }
         .padding(.horizontal, Theme.Spacing.gutter)
-        .padding(.bottom, 2)
+        .padding(.bottom, Theme.Spacing.railTitleGap)
     }
 
     @ViewBuilder
@@ -55,11 +53,11 @@ struct RailSectionView: View {
                 cardButton(item) { PortraitCard(item: item) }
             }
         case (.rankedPortrait, .titles(let items)):
-            HorizontalRail(items: Array(items.prefix(10)), spacing: 4, topInset: 18, bottomInset: 22) { item in
+            HorizontalRail(items: Array(items.prefix(10)), spacing: 4) { item in
                 cardButton(item) { RankedPortraitCard(item: item, rank: rank(of: item, in: items)) }
             }
         case (.rankedLandscape, .titles(let items)):
-            HorizontalRail(items: Array(items.prefix(10)), spacing: 4, topInset: 18) { item in
+            HorizontalRail(items: Array(items.prefix(10)), spacing: 4) { item in
                 cardButton(item) { RankedLandscapeCard(item: item, rank: rank(of: item, in: items)) }
             }
         case (.promos, .promos(let items)):
@@ -124,8 +122,6 @@ struct RailSectionView: View {
 struct HorizontalRail<Item: Identifiable, Card: View>: View {
     let items: [Item]
     var spacing: CGFloat = 8
-    var topInset: CGFloat = 4
-    var bottomInset: CGFloat = 18
     @ViewBuilder let card: (Item) -> Card
 
     var body: some View {
@@ -136,8 +132,6 @@ struct HorizontalRail<Item: Identifiable, Card: View>: View {
                 }
             }
             .scrollTargetLayout()
-            .padding(.top, topInset)
-            .padding(.bottom, bottomInset)
         }
         .scrollIndicators(.hidden)
         .contentMargins(.horizontal, Theme.Spacing.gutter, for: .scrollContent)

@@ -74,6 +74,7 @@ struct HomeView: View {
                         }
                 }
             }
+            .padding(.bottom, Theme.Spacing.railGap)
         }
         .scrollIndicators(.hidden)
         // The hero starts at the top of the screen, behind the glass bar.

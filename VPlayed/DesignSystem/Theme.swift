@@ -115,6 +115,10 @@ enum Theme {
 
     enum Spacing {
         static let gutter: CGFloat = 16
+        /// The equal gap between Home rows (the hero and each rail), and below the last one.
+        static let railGap: CGFloat = 20
+        /// Between a rail's title and its cards.
+        static let railTitleGap: CGFloat = 8
     }
 
     enum Layout {
