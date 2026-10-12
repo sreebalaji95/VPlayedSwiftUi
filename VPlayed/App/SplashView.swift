@@ -12,6 +12,8 @@ struct SplashView: View {
 
     static let duration: Duration = .seconds(3)
     private static let exitDuration = 0.48
+    /// "Skip intro" is hidden for now; set to true to bring it back.
+    private static let showsSkipButton = false
 
     @State private var glowVisible = false
     @State private var detailsVisible = false
@@ -45,7 +47,9 @@ struct SplashView: View {
                 .scaleEffect(isLeaving ? 1.04 : 1)
         }
         .ignoresSafeArea()
-        .overlay(alignment: .bottom) { skipButton }
+        .overlay(alignment: .bottom) {
+            if Self.showsSkipButton { skipButton }
+        }
         .opacity(isLeaving ? 0 : 1)
         .task { await run() }
     }

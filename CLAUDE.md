@@ -62,7 +62,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - That plist is merged via `INFOPLIST_FILE` and excluded from the synchronized folder by a `PBXFileSystemSynchronizedBuildFileExceptionSet`. Keep that exception, or the build fails with duplicate Info.plist outputs.
 - **Launch flow**:
   - The system launch screen shows the wordmark centered.
-  - `App/SplashView.swift` then draws the same `SplashLogo` at the same spot (full-screen center, at the SVG's natural `width`/`height`, 288pt), adds the prototype's glow, progress bar, tagline and "Skip intro", and fades out after 3s. The bar and tagline hang 28pt below the logo by alignment guide, so a logo of another size needs no code change.
+  - `App/SplashView.swift` then draws the same `SplashLogo` at the same spot (full-screen center, at the SVG's natural `width`/`height`, 288pt), adds the prototype's glow, progress bar and tagline, and fades out after 3s. Its "Skip intro" button is hidden for now (`SplashView.showsSkipButton = false`); the code stays for later. The bar and tagline hang 28pt below the logo by alignment guide, so a logo of another size needs no code change.
   - Home loads underneath meanwhile. If you change the logo size or position, change both.
 - **The macOS build is sandboxed** with outgoing network access (`ENABLE_OUTGOING_NETWORK_CONNECTIONS`) and read-only access to user-selected files. Writing files or incoming connections need more entitlements.
 - **Shapes and other SwiftUI protocol conformances used off the main actor** (e.g. `Shape`) must be declared `nonisolated struct`, or the build fails with a `ConformanceIsolation` error.
