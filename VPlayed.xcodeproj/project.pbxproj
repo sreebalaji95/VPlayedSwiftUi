@@ -212,6 +212,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = .dev;
+				APP_ENV_NAME_PREFIX = Dev;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -283,6 +285,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = .dev;
+				APP_ENV_NAME_PREFIX = Dev;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -347,6 +351,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = .qa;
+				APP_ENV_NAME_PREFIX = Qa;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -418,6 +424,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = .qa;
+				APP_ENV_NAME_PREFIX = Qa;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -482,6 +490,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = .stage;
+				APP_ENV_NAME_PREFIX = Stage;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -553,6 +563,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = .stage;
+				APP_ENV_NAME_PREFIX = Stage;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -617,6 +629,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = "";
+				APP_ENV_NAME_PREFIX = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -688,6 +702,8 @@
 			baseConfigurationReference = 000000000000000000000030 /* Brand.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ENV_BUNDLE_SUFFIX = "";
+				APP_ENV_NAME_PREFIX = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -759,7 +775,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Dev$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -772,7 +788,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID).dev";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -800,7 +816,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Dev$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -813,7 +829,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID).dev";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -841,7 +857,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Qa$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -854,7 +870,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID).qa";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -882,7 +898,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Qa$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -895,7 +911,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID).qa";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -923,7 +939,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Stage$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -936,7 +952,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID).stage";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -964,7 +980,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Stage$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -977,7 +993,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID).stage";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -1005,7 +1021,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -1018,7 +1034,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -1046,7 +1062,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -1059,7 +1075,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BRAND_BUNDLE_ID)$(APP_ENV_BUNDLE_SUFFIX)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
