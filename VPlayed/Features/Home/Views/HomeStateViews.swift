@@ -53,7 +53,7 @@ struct HomeLoadingView: View {
                 HStack(alignment: .top, spacing: 8) {
                     ForEach(0..<3, id: \.self) { _ in
                         VStack(alignment: .leading, spacing: 10) {
-                            SkeletonBlock(width: 158, height: 89, cornerRadius: Theme.Radius.control)
+                            SkeletonBlock(width: 172, height: 97, cornerRadius: Theme.Radius.control)
                             SkeletonBlock(width: 110, height: 12)
                         }
                     }

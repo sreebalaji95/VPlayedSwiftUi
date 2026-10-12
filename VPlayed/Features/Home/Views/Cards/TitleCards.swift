@@ -1,9 +1,9 @@
 import SwiftUI
 
-/// 16:9 card, 158pt wide (prototype `hcard`).
+/// 16:9 card, 172pt wide (the prototype's `hcard` is 158pt).
 struct LandscapeCard: View {
     let item: ContentItem
-    var width: CGFloat = 158
+    var width: CGFloat = 172
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -93,7 +93,7 @@ struct RankedLandscapeCard: View {
 /// Promo clip card: 16:9 with a duration pill and a views · likes line.
 struct PromoCard: View {
     let item: ContentItem
-    var width: CGFloat = 158
+    var width: CGFloat = 172
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
