@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import Testing
 @testable import VPlayed
 
@@ -130,5 +131,22 @@ struct MoviesViewModelTests {
         await model.loadIfNeeded()
 
         #expect(model.phase == .empty)
+    }
+}
+
+struct MoviesViewTests {
+    @Test @MainActor func catalogueGridUsesAdaptiveCardWidth() {
+        let columns = MoviesView.columns
+
+        #expect(columns.count == 1)
+        #expect(columns[0].spacing == 12)
+
+        switch columns[0].size {
+        case let .adaptive(minimum: minimum, maximum: maximum):
+            #expect(minimum == 160)
+            #expect(maximum == .infinity)
+        default:
+            Issue.record("MoviesView should use an adaptive grid.")
+        }
     }
 }
