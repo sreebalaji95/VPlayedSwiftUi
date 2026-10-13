@@ -61,6 +61,7 @@ struct RootView: View {
         }
         .environment(\.openRoute, RouteAction(open))
         .tint(Theme.Palette.textPrimary)
+        .font(Theme.Typography.standard)
         .environment(languageStore)
         .environment(startup)
         .environment(account)
@@ -76,6 +77,7 @@ struct RootView: View {
         }
         .loginPresentation(isPresented: $showsLogin) {
             LoginView(account: account)
+                .font(Theme.Typography.standard)
                 .environment(startup)
                 .environment(\.locale, languageStore.language.locale)
                 .environment(\.layoutDirection, languageStore.isRightToLeft ? .rightToLeft : .leftToRight)

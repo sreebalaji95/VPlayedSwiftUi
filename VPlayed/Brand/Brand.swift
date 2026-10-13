@@ -12,5 +12,5 @@ nonisolated enum Brand {
     /// Put its font files (.ttf, .otf or .ttc, one per weight or a variable font) in `Brand/Fonts`;
     /// they are registered at launch. Characters the typeface lacks (Arabic or Tamil, often) fall
     /// back to the system font.
-    static let fontFamily: String? = nil
+    static let fontFamily: String? = "Inter"
 }

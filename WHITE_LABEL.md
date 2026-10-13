@@ -83,7 +83,7 @@ Text uses SF Pro unless you set a brand typeface:
 Every text style then uses that family. Each style picks the face nearest to its weight (regular, medium, semibold, bold, heavy), so ship at least regular and bold. The sizes and weights themselves are the core team's, in `Theme.Typography`.
 
 - **Scripts:** characters the typeface lacks fall back to the system font automatically. A Latin-only typeface therefore shows Arabic and Tamil in SF, which is usually what you want. Check those languages if your typeface covers them.
-- **System bars:** the tab bar and navigation titles stay in the system font.
+- **System bars:** navigation titles and tab bar labels use the typeface too, at the system sizes (iOS and iPadOS; macOS and visionOS bars stay in the system font).
 - **Licence:** make sure the font's licence allows embedding in an app.
 - `BrandTests/brandTypefaceIsAvailable()` fails if the family named in `Brand.fontFamily` isn't installed.
 

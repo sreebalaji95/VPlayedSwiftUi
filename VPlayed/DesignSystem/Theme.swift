@@ -45,6 +45,9 @@ enum Theme {
     /// (`Brand.fontFamily`, else SF Pro). Views use these for text; SF Symbol sizes are icon
     /// metrics and stay in the views.
     enum Typography {
+        /// The default for text without a role (set at the root): the system body size, in the
+        /// brand typeface; scales with Dynamic Type.
+        static let standard = Brand.fontFamily.map { Font.custom($0, size: 17, relativeTo: .body) } ?? .body
         /// The hero's title.
         static let heroTitle = font(37, .bold)
         /// Large screen title (placeholder screens).
