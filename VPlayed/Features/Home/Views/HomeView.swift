@@ -64,7 +64,7 @@ struct HomeView: View {
                     HeroCarouselView(banners: model.banners)
                 }
                 ForEach(model.sections) { section in
-                    RailSectionView(section: section)
+                    RailSectionView(section: section, model: model)
                 }
                 if model.hasMorePages {
                     LoadMoreFooter(failed: model.loadMoreFailed, retry: model.loadMoreIfNeeded)

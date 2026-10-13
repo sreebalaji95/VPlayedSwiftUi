@@ -3,8 +3,10 @@ import SwiftUI
 /// One home rail: a tappable title (opens "view all") above a horizontally snapping row of cards.
 struct RailSectionView: View {
     let section: HomeSection
+    let model: HomeViewModel
 
     @Environment(\.openRoute) private var openRoute
+    @Environment(AccountStore.self) private var account
 
     var body: some View {
         if let layout = section.layout {
@@ -75,12 +77,15 @@ struct RailSectionView: View {
             }
         case (.channels, .channels(let items)):
             HorizontalRail(items: items, spacing: 12) { item in
-                Button {
-                    openRoute(.channel(slug: item.slug, name: item.name))
-                } label: {
-                    ChannelCard(item: item)
-                }
-                .buttonStyle(PressableButtonStyle())
+                ChannelCard(
+                    item: item,
+                    isFollowing: model.isFollowing(item),
+                    followers: model.followerCount(of: item),
+                    isUpdating: model.isUpdatingFollow(item),
+                    onOpen: { openRoute(.channel(slug: item.slug, name: item.name)) },
+                    onFollow: { follow(item) },
+                    onUnfollow: { Task { await model.setFollowing(false, channel: item) } }
+                )
             }
         case (.live, .live(let items)):
             HorizontalRail(items: items, spacing: 12) { item in
@@ -102,6 +107,15 @@ struct RailSectionView: View {
         default:
             EmptyView()
         }
+    }
+
+    /// Following needs a real account; guests and signed-out users are sent to sign in, as in UIKit.
+    private func follow(_ channel: ChannelItem) {
+        guard account.isSignedIn else {
+            openRoute(.signInRequired(prompt: String(localized: "Sign in to follow channels", bundle: .localized)))
+            return
+        }
+        Task { await model.setFollowing(true, channel: channel) }
     }
 
     private func cardButton<Card: View>(_ item: ContentItem, @ViewBuilder card: () -> Card) -> some View {

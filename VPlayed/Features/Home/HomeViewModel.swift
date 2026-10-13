@@ -1,6 +1,12 @@
 import Foundation
 import Observation
 
+/// A channel's follow state after the user changed it.
+struct ChannelFollowState: Equatable {
+    var isFollowed: Bool
+    var followers: Int
+}
+
 /// Drives the Home feed: hero banners plus paged rails.
 @Observable
 final class HomeViewModel {
@@ -20,7 +26,34 @@ final class HomeViewModel {
     /// A non-blocking error to surface as a toast (e.g. a refresh failed but older content is still shown).
     var notice: String?
 
+    /// What the user changed on a channel since the feed loaded; the feed's own value applies until then.
+    private(set) var followStates: [String: ChannelFollowState] = [:]
+    private var updatingChannels: Set<String> = []
+
     var hasMorePages: Bool { nextPage != nil }
+
+    func isFollowing(_ channel: ChannelItem) -> Bool { followStates[channel.id]?.isFollowed ?? channel.isFollowed }
+    func followerCount(of channel: ChannelItem) -> Int? { followStates[channel.id]?.followers ?? channel.followCount }
+    func isUpdatingFollow(_ channel: ChannelItem) -> Bool { updatingChannels.contains(channel.id) }
+
+    /// Follows or unfollows a channel, then shows the new state. Like UIKit it waits for the
+    /// server, so a failed request leaves the card as it was and shows a toast.
+    func setFollowing(_ follow: Bool, channel: ChannelItem) async {
+        guard let slug = channel.slug, updatingChannels.insert(channel.id).inserted else { return }
+        defer { updatingChannels.remove(channel.id) }
+        do {
+            try await service.setFollowing(follow, channelSlug: slug)
+            let current = followerCount(of: channel) ?? 0
+            followStates[channel.id] = ChannelFollowState(isFollowed: follow, followers: max(0, current + (follow ? 1 : -1)))
+            notice = follow
+                ? String(localized: "You have started following this channel", bundle: .localized)
+                : String(localized: "You have unfollowed this channel", bundle: .localized)
+        } catch is CancellationError {
+            return
+        } catch {
+            notice = (error as? APIError)?.userMessage ?? APIError.network(code: 0).userMessage
+        }
+    }
 
     private let service: any HomeServicing
     /// Awaited once before the first load (`RootView` waits for the geo token here).
@@ -102,6 +135,7 @@ final class HomeViewModel {
                 banners = []
             }
             sections = []
+            followStates = [:]
             _ = appendSections(page.sections)
             nextPage = page.nextPage
             phase = sections.isEmpty && banners.isEmpty && nextPage == nil ? .empty : .loaded

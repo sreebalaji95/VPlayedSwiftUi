@@ -20,6 +20,7 @@ nonisolated struct Endpoint: Sendable, Hashable {
 extension Endpoint {
     private static let mediaView = "mediaview/api/v1/"
     private static let users = "users/api/v1/"
+    private static let studios = "studios/api/v1/"
 
     /// App-wide feature flags, payment switches and update settings, fetched at launch
     /// (`ProfileTabViewModel.getCommonKeys`). `GET mediaview/api/v1/common`
@@ -33,6 +34,10 @@ extension Endpoint {
 
     /// Hero banners. `GET mediaview/api/v1/homebanners`
     static let homeBanners = Endpoint(path: mediaView + "homebanners")
+
+    /// Follows or unfollows a channel (`StudioRepository.studioFollowRequest`).
+    /// `POST studios/api/v1/follow_studio` with `{"studio": slug, "follow": "1" | "0"}`.
+    static let followChannel = Endpoint(path: studios + "follow_studio")
 
     /// Paged home rails, as requested by the iOS app (`ShocialViewModel.getHomeDynamicShocialListAPI`).
     /// `limit` is the number of rails per page; `insideLimit` the number of items per rail.

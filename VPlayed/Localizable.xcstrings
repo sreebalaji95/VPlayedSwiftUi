@@ -764,6 +764,50 @@
         }
       }
     },
+    "Follow": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متابعة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguir"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "பின்தொடர்"
+          }
+        }
+      }
+    },
+    "Following": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تتم المتابعة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seguindo"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "பின்தொடர்கிறீர்கள்"
+          }
+        }
+      }
+    },
     "Home": {
       "localizations": {
         "ar": {
@@ -1402,6 +1446,28 @@
         }
       }
     },
+    "Sign in to follow channels": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سجّل الدخول لمتابعة القنوات"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entre para seguir canais"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "சேனல்களைப் பின்தொடர உள்நுழையவும்"
+          }
+        }
+      }
+    },
     "Sign in to set a reminder": {
       "localizations": {
         "ar": {
@@ -1886,6 +1952,50 @@
         }
       }
     },
+    "Unfollow": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلغاء المتابعة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deixar de seguir"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "பின்தொடர்வதை நிறுத்து"
+          }
+        }
+      }
+    },
+    "Unfollow %@?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل تريد إلغاء متابعة %@؟"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deixar de seguir %@?"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ஐப் பின்தொடர்வதை நிறுத்தவா?"
+          }
+        }
+      }
+    },
     "UPCOMING": {
       "localizations": {
         "ar": {
@@ -2146,6 +2256,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "நீங்கள் ஆஃப்லைனில் இருப்பதாகத் தெரிகிறது. இணைப்பைச் சரிபார்த்து மீண்டும் முயலவும்."
+          }
+        }
+      }
+    },
+    "You have started following this channel": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لقد بدأت متابعة هذه القناة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você começou a seguir este canal"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இந்தச் சேனலைப் பின்தொடரத் தொடங்கிவிட்டீர்கள்"
+          }
+        }
+      }
+    },
+    "You have unfollowed this channel": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لقد ألغيت متابعة هذه القناة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você deixou de seguir este canal"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இந்தச் சேனலைப் பின்தொடர்வதை நிறுத்திவிட்டீர்கள்"
           }
         }
       }

@@ -148,37 +148,111 @@ struct PulsingDot: View {
     }
 }
 
-/// Channel card (Live TV style): 212pt wide, white circular logo, name and follower count.
+/// Channel card: 300pt wide plate tinted by the channel's brand colour, with a white logo well, name,
+/// followers pill and a full-width Follow button. The plate is dark in both
+/// themes, so its text is fixed white.
 struct ChannelCard: View {
     let item: ChannelItem
+    let isFollowing: Bool
+    let followers: Int?
+    let isUpdating: Bool
+    let onOpen: () -> Void
+    let onFollow: () -> Void
+    /// Called once the user confirms leaving a channel they follow.
+    let onUnfollow: () -> Void
+
+    @State private var confirmsUnfollow = false
+
+    private var brand: Color { Color(hexString: item.brandHex) ?? Theme.Palette.primary }
 
     var body: some View {
         VStack(spacing: 0) {
-            RemoteImage(url: item.logoURL, contentMode: .fit)
-                .padding(16)
-                .frame(width: 104, height: 104)
-                .background(.white, in: .circle)
-                .clipShape(.circle)
-                .overlay { Circle().strokeBorder(Theme.Palette.line, lineWidth: 1) }
-                .padding(.bottom, 16)
-            Text(item.name)
-                .font(Theme.Typography.headline)
-                .foregroundStyle(Theme.Palette.textPrimary)
-                .lineLimit(1)
-            if let followers = item.followCount {
-                // Plural forms come from the catalog (Arabic has six); the count reads compactly, e.g. 1.2K.
-                Text("\(followers.formatted(.number.notation(.compactName))) followers \(followers)")
-                    .font(Theme.Typography.captionMedium)
-                    .foregroundStyle(Theme.Palette.textTertiary)
-                    .padding(.top, 4)
+            Button(action: onOpen) {
+                VStack(alignment: .leading, spacing: 0) {
+                    logo
+                    Text(item.name)
+                        .font(Theme.Typography.title)
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .padding(.top, 16)
+                    if let followers {
+                        // Plural forms come from the catalog (Arabic has six); the count reads compactly, e.g. 1.2K.
+                        Text("\(followers.formatted(.number.notation(.compactName))) followers \(followers)")
+                            .font(Theme.Typography.captionMedium)
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 12)
+                            .frame(height: 26)
+                            .background(Theme.Palette.scrim.opacity(0.35), in: .capsule)
+                            .padding(.top, 10)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .contentShape(.rect)
+            }
+            .buttonStyle(PressableButtonStyle())
+            .padding(.bottom, 16)
+
+            Button {
+                if isFollowing { confirmsUnfollow = true } else { onFollow() }
+            } label: {
+                // Followed channels get a solid white button, as in the prototype.
+                Group {
+                    if isFollowing { Text("Following") } else { Text("Follow") }
+                }
+                .font(Theme.Typography.controlLabel)
+                .foregroundStyle(isFollowing ? Color.black : Color.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 28)
+            }
+            .glassButtonStyle(isFollowing ? .prominent : .regular)
+            .buttonBorderShape(.roundedRectangle(radius: Theme.Radius.control))
+            .tint(.white)
+            .disabled(isUpdating)
+            .confirmationDialog("Unfollow \(item.name)?", isPresented: $confirmsUnfollow, titleVisibility: .visible) {
+                Button("Unfollow", role: .destructive, action: onUnfollow)
             }
         }
-        .padding(EdgeInsets(top: 28, leading: 20, bottom: 22, trailing: 20))
-        .frame(width: 212)
-        .background(Theme.Palette.surface, in: .rect(cornerRadius: Theme.Radius.panel))
+        .padding(20)
+        .frame(width: 300)
+        .background(plate)
+        .clipShape(.rect(cornerRadius: Theme.Radius.card))
         .overlay {
-            RoundedRectangle(cornerRadius: Theme.Radius.panel).strokeBorder(Theme.Palette.line, lineWidth: 1)
+            RoundedRectangle(cornerRadius: Theme.Radius.card).strokeBorder(brand.opacity(0.26), lineWidth: 1)
         }
+        .environment(\.colorScheme, .dark)
+    }
+
+    /// The brand colour over near-black, stronger at the top leading corner.
+    private var plate: some View {
+        ZStack {
+            LinearGradient(
+                colors: [Color(white: 0.09), Color(white: 0.03)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            LinearGradient(
+                colors: [brand.opacity(0.46), brand.opacity(0.18)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+        .flipsForRightToLeftLayoutDirection(true)
+    }
+
+    private var logo: some View {
+        ZStack {
+            if let url = item.logoURL {
+                RemoteImage(url: url, contentMode: .fit).padding(10)
+            } else {
+                Text(String(item.name.prefix(1)).uppercased())
+                    .font(Theme.Typography.title)
+                    .foregroundStyle(brand)
+            }
+        }
+        .frame(width: 60, height: 60)
+        .background(.white, in: .rect(cornerRadius: Theme.Radius.panel))
+        .clipShape(.rect(cornerRadius: Theme.Radius.panel))
+        .shadow(color: Theme.Palette.scrim.opacity(0.25), radius: 4, y: 2)
     }
 }
 

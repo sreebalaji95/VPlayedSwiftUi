@@ -34,6 +34,20 @@ final class MockHomeService: HomeServicing, @unchecked Sendable {
         try lock.withLock { bannerResult }.get()
     }
 
+    private var followCalls: [(slug: String, follow: Bool)] = []
+    private var followError: (any Error)?
+
+    var follows: [(slug: String, follow: Bool)] { lock.withLock { followCalls } }
+
+    func failFollows(with error: (any Error)?) { lock.withLock { followError = error } }
+
+    func setFollowing(_ follow: Bool, channelSlug: String) async throws {
+        try lock.withLock {
+            if let followError { throw followError }
+            followCalls.append((channelSlug, follow))
+        }
+    }
+
     func homePage(_ page: Int) async throws -> HomeFeedPage {
         lock.withLock { calls.append(page) }
         if let pageDelay { try await Task.sleep(for: pageDelay) }
@@ -53,6 +67,52 @@ private func page(_ sections: [HomeSection], next: Int?) -> HomeFeedPage {
 
 @MainActor
 struct HomeViewModelTests {
+    private func channel(followed: Bool, count: Int = 4) throws -> ChannelItem {
+        try JSONDecoder().decode(
+            ChannelItem.self,
+            from: Data(#"{"_id":"c1","name":"Chan","slug":"chan","follow_count":\#(count),"is_followed":\#(followed ? 1 : 0)}"#.utf8)
+        )
+    }
+
+    @Test func followingAChannelUpdatesStateAndCount() async throws {
+        let service = MockHomeService(pages: [:])
+        let model = HomeViewModel(service: service)
+        let chan = try channel(followed: false)
+        #expect(!model.isFollowing(chan))
+
+        await model.setFollowing(true, channel: chan)
+
+        #expect(model.isFollowing(chan))
+        #expect(model.followerCount(of: chan) == 5)
+        #expect(service.follows.map(\.slug) == ["chan"])
+        #expect(service.follows.map(\.follow) == [true])
+        #expect(model.notice != nil)
+    }
+
+    @Test func unfollowingDropsTheCount() async throws {
+        let model = HomeViewModel(service: MockHomeService(pages: [:]))
+        let chan = try channel(followed: true)
+        #expect(model.isFollowing(chan))
+
+        await model.setFollowing(false, channel: chan)
+
+        #expect(!model.isFollowing(chan))
+        #expect(model.followerCount(of: chan) == 3)
+    }
+
+    @Test func failedFollowKeepsTheCardAsItWas() async throws {
+        let service = MockHomeService(pages: [:])
+        service.failFollows(with: APIError.http(statusCode: 500))
+        let model = HomeViewModel(service: service)
+        let chan = try channel(followed: false)
+
+        await model.setFollowing(true, channel: chan)
+
+        #expect(!model.isFollowing(chan))
+        #expect(model.followerCount(of: chan) == 4)
+        #expect(model.notice != nil)
+    }
+
     @Test func initialLoadShowsBannersAndRails() async throws {
         let banners = try Fixture.payload("home-banners", as: HomeBannerList.self).banners
         let service = MockHomeService(

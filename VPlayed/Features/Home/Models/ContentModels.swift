@@ -239,9 +239,15 @@ nonisolated struct ChannelItem: Decodable, Sendable, Identifiable, Hashable {
     let slug: String?
     let logoURL: URL?
     let followCount: Int?
+    /// The channel's brand colour (`bg_card_color`), a hex string such as `#A0E3FF`.
+    let brandHex: String?
+    /// Whether the signed-in account follows the channel (`is_followed`; false for guests).
+    let isFollowed: Bool
 
     private enum CodingKeys: String, CodingKey {
         case id = "_id", name, slug
+        case brandHex = "bg_card_color"
+        case isFollowed = "is_followed"
         case channelName = "channel_name"
         case profilePicture = "profile_picture"
         case channelLogo = "channel_logo"
@@ -258,6 +264,8 @@ nonisolated struct ChannelItem: Decodable, Sendable, Identifiable, Hashable {
         slug = container.lenientString(.slug)
         logoURL = ImageURL.resolve(container.lenientString(.profilePicture) ?? container.lenientString(.channelLogo))
         followCount = container.lenientInt(.followCount)
+        brandHex = container.lenientString(.brandHex)
+        isFollowed = container.lenientBool(.isFollowed) ?? false
     }
 }
 
