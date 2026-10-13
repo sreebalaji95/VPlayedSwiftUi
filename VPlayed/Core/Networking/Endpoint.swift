@@ -20,6 +20,16 @@ nonisolated struct Endpoint: Sendable, Hashable {
 extension Endpoint {
     private static let mediaView = "mediaview/api/v1/"
 
+    /// App-wide feature flags, payment switches and update settings, fetched at launch
+    /// (`ProfileTabViewModel.getCommonKeys`). `GET mediaview/api/v1/common`
+    static let common = Endpoint(path: mediaView + "common")
+
+    /// The geo token for a public IP address, sent back as `X-Bearer-Token`
+    /// (`ProfileRepository.getGeoRestrictToken`). `GET mediaview/api/v1/common/geo-data/{ip}`
+    static func geoData(ip: String) -> Endpoint {
+        Endpoint(path: mediaView + "common/geo-data/" + ip)
+    }
+
     /// Hero banners. `GET mediaview/api/v1/homebanners`
     static let homeBanners = Endpoint(path: mediaView + "homebanners")
 

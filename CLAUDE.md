@@ -73,11 +73,20 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - `APIClient.get(_:as:)` is a `@concurrent` URLSession GET that decodes the `{statusCode, message, response}` envelope.
   - Success means the JSON `statusCode == 200`, not the HTTP status, matching the UIKit app.
   - Endpoints live in `Endpoint.swift`; hosts in `APIEnvironment` (see Environments).
-  - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them; nothing sets them yet because there is no sign-in.
+  - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them. `AppStartup` sets the geo token (`X-Bearer-Token`) at launch; nothing sets the other two yet because there is no sign-in.
   - Home APIs work as an anonymous guest.
 - **Decoding**:
   - The API mixes types (`sho_type` Int or String, `video_duration` String, flags 0/1 or Bool, titles String or `{"en": …}`). Decode through the lenient helpers in `LenientDecoding.swift` (`lenientInt`, `lossyArray`, `LocalizedText`…) so one malformed item never fails a whole response.
   - Model structs are `nonisolated` so they decode off the main actor.
+- **Launch configuration (`Core/AppConfig`)**:
+  - `AppStartup` (`@Observable`) runs the UIKit app's two launch calls once per process. `MyApp` owns it and calls `start()` from its `init`, so view updates, navigation and language switches never fetch again. Don't trigger it from views.
+  - The calls are independent and run concurrently:
+    - `GET mediaview/api/v1/common` (`Endpoint.common`, from `SceneDelegate.getCommonKeys`) decodes into `CommonSettings`: feature flags, content library, OTP method, payment flags and the iOS `force_update_details`.
+    - The geo step looks up the public IP at `api.ipify.org`, then calls `GET mediaview/api/v1/common/geo-data/{ip}` (`Endpoint.geoData(ip:)`, from `SplashScreenViewController.getBearerToken`). It stores `geo_token` in `SessionStore` so every later request sends it as `X-Bearer-Token`. `GeoInfo` decodes the token's base64 JSON (country, currency…).
+  - Failures are logged (category `Startup`) and ignored, as in UIKit, and the defaults apply.
+  - Home's first load waits for the geo step through `HomeViewModel(prepare:)`, for at most `SplashView.duration`.
+  - `RootView` applies two UIKit rules. A drama catalogue (`content_library` 2) forces dark mode except in `QA` builds. `rtl: false` sets `LanguageStore.isRTLAllowed = false`, which lays the chosen language out left to right; use `languageStore.isRightToLeft`, not `language.isRightToLeft`, for layout.
+  - Not ported yet: guest login, the force/soft update prompt (the settings are stored), and re-fetching on foreground.
 - **Images (`Core/Images`)**:
   - API image fields are relative keys joined to the CDN by `ImageURL.resolve`.
   - `ImageSet` variant codes (`tv`, `tp`, `tm`…) are sizes, not shapes. Video thumbnails are 16:9 but micro-series (`sho_type` 6) ones are 3:4, so each card picks its own variant order.

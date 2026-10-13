@@ -8,13 +8,23 @@ import SwiftUI
 /// It also applies the language picked in Menu → Language: the locale and layout direction,
 /// plus a fresh view tree (`.id`) so strings built in code re-resolve. Navigation state lives
 /// here, so the user stays on the Language screen while the app switches around them.
+///
+/// It applies two rules from the launch-time common settings (`AppStartup`): drama catalogues
+/// force dark mode, and the server can turn right-to-left layout off.
 struct RootView: View {
-    @State private var homeModel = HomeViewModel()
+    let startup: AppStartup
+    @State private var homeModel: HomeViewModel
     @State private var languageStore = LanguageStore()
     @State private var selectedTab: AppTab = .home
     @State private var paths: [AppTab: [AppRoute]] = [:]
     @State private var showsMenu = false
     @State private var showsSplash = true
+
+    init(startup: AppStartup) {
+        self.startup = startup
+        // Home's first requests wait for the geo token (`X-Bearer-Token`), but no longer than the splash.
+        _homeModel = State(initialValue: HomeViewModel(prepare: { await startup.waitForGeoToken(upTo: SplashView.duration) }))
+    }
 
     var body: some View {
         ZStack {
@@ -31,7 +41,7 @@ struct RootView: View {
             }
             // Colours the selected tab; the stacks reset it so their content stays white.
             .tint(Theme.Palette.primary)
-            .id(languageStore.language)
+            .id(LayoutID(language: languageStore.language, isRightToLeft: languageStore.isRightToLeft))
             .accessibilityHidden(showsSplash || showsMenu)
 
             // Above the tab bar, like a side menu.
@@ -46,12 +56,23 @@ struct RootView: View {
         .environment(\.openRoute, RouteAction(open))
         .tint(Theme.Palette.textPrimary)
         .environment(languageStore)
+        .environment(startup)
         .environment(\.locale, languageStore.language.locale)
-        .environment(\.layoutDirection, languageStore.language.isRightToLeft ? .rightToLeft : .leftToRight)
+        .environment(\.layoutDirection, languageStore.isRightToLeft ? .rightToLeft : .leftToRight)
+        .preferredColorScheme(startup.forcesDarkMode ? .dark : nil)
+        .onChange(of: startup.isRTLAllowed, initial: true) { _, allowed in
+            languageStore.isRTLAllowed = allowed
+        }
         // API text (rail titles, synopses) is fetched in the chosen language, so fetch it again.
         .onChange(of: languageStore.language) {
             Task { await homeModel.refresh() }
         }
+    }
+
+    /// Rebuilds the tabs when the language or the layout direction changes.
+    private struct LayoutID: Hashable {
+        var language: AppLanguage
+        var isRightToLeft: Bool
     }
 
     @ViewBuilder
@@ -95,5 +116,5 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView()
+    RootView(startup: AppStartup())
 }

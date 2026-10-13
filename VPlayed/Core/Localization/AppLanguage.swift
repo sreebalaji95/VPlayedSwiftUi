@@ -50,16 +50,31 @@ nonisolated enum AppLanguage: String, CaseIterable, Identifiable, Sendable {
 final class LanguageStore {
     private(set) var language = AppLanguage.current
 
+    /// The common API can turn right-to-left layout off; the text stays in the chosen language.
+    var isRTLAllowed = true {
+        didSet {
+            guard isRTLAllowed != oldValue else { return }
+            Self.applyLayoutDirectionToUIKit(rightToLeft: isRightToLeft)
+        }
+    }
+
+    /// The layout direction to use: the language's, unless right-to-left is turned off.
+    var isRightToLeft: Bool { Self.isRightToLeft(language, allowed: isRTLAllowed) }
+
     init() {
-        Self.applyLayoutDirectionToUIKit(for: language)
+        Self.applyLayoutDirectionToUIKit(rightToLeft: isRightToLeft)
     }
 
     func select(_ language: AppLanguage) {
         guard language != self.language else { return }
         AppLanguage.select(language)
         // Before `language` changes, so the views `RootView` rebuilds for it pick this up.
-        Self.applyLayoutDirectionToUIKit(for: language)
+        Self.applyLayoutDirectionToUIKit(rightToLeft: Self.isRightToLeft(language, allowed: isRTLAllowed))
         self.language = language
+    }
+
+    private static func isRightToLeft(_ language: AppLanguage, allowed: Bool) -> Bool {
+        language.isRightToLeft && allowed
     }
 
     /// UIKit lays out bars in the direction of the language the app launched in, not SwiftUI's
@@ -67,9 +82,9 @@ final class LanguageStore {
     /// toolbar items land on the wrong side (Home's menu button must be on the right in Arabic).
     /// Forcing the direction makes UIKit views created from now on follow `language`; `RootView`
     /// rebuilds its tabs (`.id`) on every switch, so their bars are new.
-    private static func applyLayoutDirectionToUIKit(for language: AppLanguage) {
+    private static func applyLayoutDirectionToUIKit(rightToLeft: Bool) {
         #if canImport(UIKit)
-        UIView.appearance().semanticContentAttribute = language.isRightToLeft ? .forceRightToLeft : .forceLeftToRight
+        UIView.appearance().semanticContentAttribute = rightToLeft ? .forceRightToLeft : .forceLeftToRight
         #endif
     }
 }

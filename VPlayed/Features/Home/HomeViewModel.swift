@@ -23,6 +23,8 @@ final class HomeViewModel {
     var hasMorePages: Bool { nextPage != nil }
 
     private let service: any HomeServicing
+    /// Awaited once before the first load (`RootView` waits for the geo token here).
+    private let prepare: () async -> Void
     private var nextPage: Int?
     /// Bumped on every full reload so responses from superseded loads are discarded.
     private var generation = 0
@@ -30,14 +32,16 @@ final class HomeViewModel {
     /// Caps how many consecutive pages are fetched when a page yields no displayable rails.
     private let maxEmptyPagesInARow = 5
 
-    init(service: any HomeServicing = HomeService()) {
+    init(service: any HomeServicing = HomeService(), prepare: @escaping () async -> Void = {}) {
         self.service = service
+        self.prepare = prepare
     }
 
     /// Loads the feed the first time Home appears; later appearances keep the existing content.
     func loadIfNeeded() async {
         guard phase == .idle else { return }
         phase = .loading
+        await prepare()
         await reload(isInitial: true)
     }
 
