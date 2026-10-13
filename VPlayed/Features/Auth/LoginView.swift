@@ -199,6 +199,7 @@ struct LoginView: View {
         }
         .glassButtonStyle()
         .authButtonShape()
+        .disabled(true)
         .accessibilityHint(Text("Not available yet"))
     }
 
