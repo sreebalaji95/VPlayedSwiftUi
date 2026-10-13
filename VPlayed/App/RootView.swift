@@ -11,17 +11,23 @@ import SwiftUI
 ///
 /// It applies two rules from the launch-time common settings (`AppStartup`): drama catalogues
 /// force dark mode, and the server can turn right-to-left layout off.
+///
+/// Login (`AppRoute.signIn`) is presented over everything; when the session changes, Home
+/// reloads so its content matches the new account.
 struct RootView: View {
     let startup: AppStartup
+    let account: AccountStore
     @State private var homeModel: HomeViewModel
     @State private var languageStore = LanguageStore()
     @State private var selectedTab: AppTab = .home
     @State private var paths: [AppTab: [AppRoute]] = [:]
     @State private var showsMenu = false
     @State private var showsSplash = true
+    @State private var showsLogin = false
 
-    init(startup: AppStartup) {
+    init(startup: AppStartup, account: AccountStore) {
         self.startup = startup
+        self.account = account
         // Home's first requests wait for the geo token (`X-Bearer-Token`), but no longer than the splash.
         _homeModel = State(initialValue: HomeViewModel(prepare: { await startup.waitForGeoToken(upTo: SplashView.duration) }))
     }
@@ -57,11 +63,22 @@ struct RootView: View {
         .tint(Theme.Palette.textPrimary)
         .environment(languageStore)
         .environment(startup)
+        .environment(account)
         .environment(\.locale, languageStore.language.locale)
         .environment(\.layoutDirection, languageStore.isRightToLeft ? .rightToLeft : .leftToRight)
         .preferredColorScheme(startup.forcesDarkMode ? .dark : nil)
         .onChange(of: startup.isRTLAllowed, initial: true) { _, allowed in
             languageStore.isRTLAllowed = allowed
+        }
+        // Rails, prices and access tags depend on who is signed in.
+        .onChange(of: account.state) {
+            Task { await homeModel.refresh() }
+        }
+        .loginPresentation(isPresented: $showsLogin) {
+            LoginView(account: account)
+                .environment(startup)
+                .environment(\.locale, languageStore.language.locale)
+                .environment(\.layoutDirection, languageStore.isRightToLeft ? .rightToLeft : .leftToRight)
         }
         // API text (rail titles, synopses) is fetched in the chosen language, so fetch it again.
         .onChange(of: languageStore.language) {
@@ -108,6 +125,12 @@ struct RootView: View {
         case .search:
             showsMenu = false
             selectedTab = .search
+        case .signIn:
+            withAnimation(.snappy) { showsMenu = false }
+            showsLogin = true
+        case .signInRequired where !account.isSignedIn:
+            withAnimation(.snappy) { showsMenu = false }
+            showsLogin = true
         default:
             withAnimation(.snappy) { showsMenu = false }
             paths[selectedTab, default: []].append(route)
@@ -115,6 +138,19 @@ struct RootView: View {
     }
 }
 
+private extension View {
+    /// Full screen on iOS and visionOS; macOS has no full-screen cover, so a sheet there.
+    func loginPresentation<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View {
+        #if os(macOS)
+        sheet(isPresented: isPresented) {
+            content().frame(minWidth: 460, minHeight: 640)
+        }
+        #else
+        fullScreenCover(isPresented: isPresented, content: content)
+        #endif
+    }
+}
+
 #Preview {
-    RootView(startup: AppStartup())
+    RootView(startup: AppStartup(), account: AccountStore(saved: nil, session: SessionStore()))
 }

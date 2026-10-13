@@ -116,6 +116,39 @@ struct APIClientTests {
         }
     }
 
+    @Test func postSendsJSONAndReturnsAcceptedStatusCodes() async throws {
+        StubURLProtocol.stub(.init(body: body(#"{"statusCode":203,"message":"Not registered","response":null}"#)))
+
+        let result = try await makeClient().post(.emailLogin, body: ["data": "cipher"], as: IgnoredPayload.self, accepting: [200, 203])
+
+        #expect(result.statusCode == 203)
+        #expect(result.message == "Not registered")
+        let request = try #require(StubURLProtocol.capturedRequest)
+        #expect(request.httpMethod == "POST")
+        #expect(request.url?.path == "/users/api/v1/auth/email-login")
+        #expect(request.allHTTPHeaderFields?["Content-Type"] == "application/json")
+        let sent = try #require(request.httpBody ?? request.httpBodyStream.map(Self.read))
+        #expect(try JSONDecoder().decode([String: String].self, from: sent) == ["data": "cipher"])
+
+        StubURLProtocol.stub(.init(body: body(#"{"statusCode":202,"message":"Device limit"}"#)))
+        await #expect(throws: APIError.api(statusCode: 202, message: "Device limit")) {
+            try await makeClient().post(.emailLogin, body: EmptyBody(), as: IgnoredPayload.self)
+        }
+    }
+
+    private static func read(_ stream: InputStream) -> Data {
+        stream.open()
+        defer { stream.close() }
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 1024)
+        while stream.hasBytesAvailable {
+            let count = stream.read(&buffer, maxLength: buffer.count)
+            guard count > 0 else { break }
+            data.append(buffer, count: count)
+        }
+        return data
+    }
+
     @Test func nonJSONResponsesSurfaceTheHTTPStatus() async throws {
         StubURLProtocol.stub(.init(status: 502, body: body("<html>Bad gateway</html>")))
         await #expect(throws: APIError.http(statusCode: 502)) {

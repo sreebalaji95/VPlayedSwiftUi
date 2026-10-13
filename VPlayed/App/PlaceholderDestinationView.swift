@@ -70,7 +70,7 @@ struct PlaceholderDestinationView: View {
         case .menu: String(localized: "Menu", bundle: .localized)
         case .language: String(localized: "Language", bundle: .localized)
         case .movies: String(localized: "Movies", bundle: .localized)
-        case .signInRequired: String(localized: "Sign in", bundle: .localized)
+        case .signIn, .signInRequired: String(localized: "Sign in", bundle: .localized)
         }
     }
 
@@ -95,7 +95,7 @@ struct PlaceholderDestinationView: View {
         case .viewAll(let sectionID, _):
             ["rail id: \(sectionID)"]
         case .signInRequired:
-            [String(localized: "Sign-in isn't available in this build.", bundle: .localized)]
+            [String(localized: "This isn't available in this build yet.", bundle: .localized)]
         default:
             []
         }
@@ -118,7 +118,7 @@ struct PlaceholderDestinationView: View {
         case .menu: "line.3.horizontal"
         case .language: "globe"
         case .movies: "film"
-        case .signInRequired: "person.badge.key"
+        case .signIn, .signInRequired: "person.badge.key"
         }
     }
 }

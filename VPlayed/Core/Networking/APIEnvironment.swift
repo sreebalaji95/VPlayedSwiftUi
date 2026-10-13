@@ -6,27 +6,33 @@ import Foundation
 nonisolated struct APIEnvironment: Sendable {
     let apiBaseURL: URL
     let imageBaseURL: URL
+    /// The website, for pages the app links to (terms, privacy policy); UIKit's `BuildConfig.shareUrl`.
+    let webBaseURL: URL
 
     static let development = APIEnvironment(
         apiBaseURL: URL(string: "https://api-devgs.vplayed.com/")!,
-        imageBaseURL: URL(string: "https://gsvp-dev.s3.ap-south-1.amazonaws.com/")!
+        imageBaseURL: URL(string: "https://gsvp-dev.s3.ap-south-1.amazonaws.com/")!,
+        webBaseURL: URL(string: "https://devgs.vplayed.com/")!
     )
 
     static let qa = APIEnvironment(
         apiBaseURL: URL(string: "https://api-qags.vplayed.com/")!,
-        imageBaseURL: URL(string: "https://gsvp-qa.s3.ap-south-1.amazonaws.com/")!
+        imageBaseURL: URL(string: "https://gsvp-qa.s3.ap-south-1.amazonaws.com/")!,
+        webBaseURL: URL(string: "https://qags.vplayed.com/")!
     )
 
     /// Staging serves its images from the QA bucket, as in the UIKit app.
     static let staging = APIEnvironment(
         apiBaseURL: URL(string: "https://api-stagings.vplayed.com/")!,
-        imageBaseURL: URL(string: "https://gsvp-qa.s3.ap-south-1.amazonaws.com/")!
+        imageBaseURL: URL(string: "https://gsvp-qa.s3.ap-south-1.amazonaws.com/")!,
+        webBaseURL: URL(string: "https://staginggs.vplayed.com/")!
     )
 
     /// The UIKit app's PROD build, which points at the demo hosts.
     static let demo = APIEnvironment(
         apiBaseURL: URL(string: "https://api-demogs.vplayed.com/")!,
-        imageBaseURL: URL(string: "https://gsvp-demo.s3.ap-south-1.amazonaws.com/")!
+        imageBaseURL: URL(string: "https://gsvp-demo.s3.ap-south-1.amazonaws.com/")!,
+        webBaseURL: URL(string: "https://demogs.vplayed.com/")!
     )
 
     #if DEMO

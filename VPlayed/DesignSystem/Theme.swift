@@ -49,6 +49,20 @@ enum Theme {
         static let heroTitle = font(37, .bold)
         /// Large screen title (placeholder screens).
         static let pageTitle = font(22, .bold)
+        /// Login step headings ("Sign in or create your account") on phones.
+        static let authTitle = font(20, .bold)
+        /// Login step headings in regular width (iPad, Mac).
+        static let authTitleLarge = font(26, .bold)
+        /// Each digit of the sign-in code.
+        static let codeDigit = font(20, .bold)
+        /// Text typed into form fields.
+        static let fieldValue = font(16, .semibold)
+        /// Full-width form buttons: Continue, social sign-in, Continue as guest.
+        static let formButton = font(16, .semibold)
+        /// Labels above form fields.
+        static let fieldLabel = font(12, .semibold)
+        /// Small capitals above a step heading ("STEP 1 OF 3").
+        static let stepLabel = font(11, .bold)
         /// Message titles, bulk-purchase names and prices.
         static let title = font(20, .bold)
         /// Home rail headers.

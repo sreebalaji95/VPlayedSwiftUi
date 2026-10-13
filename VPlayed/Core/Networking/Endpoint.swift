@@ -19,6 +19,7 @@ nonisolated struct Endpoint: Sendable, Hashable {
 
 extension Endpoint {
     private static let mediaView = "mediaview/api/v1/"
+    private static let users = "users/api/v1/"
 
     /// App-wide feature flags, payment switches and update settings, fetched at launch
     /// (`ProfileTabViewModel.getCommonKeys`). `GET mediaview/api/v1/common`
@@ -59,4 +60,21 @@ extension Endpoint {
             ]
         )
     }
+
+    // MARK: Auth (POST)
+
+    /// Sends a sign-in code to an email address; the body is `{"data": <encrypted {"email"}>}`
+    /// (`LoginViewModel.loginEmailViaOTP`). `POST users/api/v1/auth/email-login`
+    static let emailLogin = Endpoint(path: users + "auth/email-login")
+
+    /// Checks the emailed code; the body is `{"data": <encrypted {"email","otp","deviceDetail"}>}`
+    /// (`LoginViewModel.verifyEmailViaOTP`). `POST users/api/v1/auth/verifyEmailOtp`
+    static let verifyEmailOTP = Endpoint(path: users + "auth/verifyEmailOtp")
+
+    /// Creates a guest session for this device; the body is `{"uuid": <device id>}`
+    /// (`ProfileTabViewModel.guestUserLogin`). `POST users/api/v1/auth/generate`
+    static let guestLogin = Endpoint(path: users + "auth/generate")
+
+    /// Ends the signed-in session (`ProfileTabViewModel.logout`). `POST users/api/v1/auth/logout`
+    static let logout = Endpoint(path: users + "auth/logout")
 }

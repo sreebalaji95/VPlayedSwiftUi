@@ -324,6 +324,28 @@
         }
       }
     },
+    "Back": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رجوع"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "பின்செல்"
+          }
+        }
+      }
+    },
     "Bulk purchase": {
       "localizations": {
         "ar": {
@@ -368,6 +390,50 @@
         }
       }
     },
+    "Cancel": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلغاء"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ரத்துசெய்"
+          }
+        }
+      }
+    },
+    "Change": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تغيير"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alterar"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "மாற்று"
+          }
+        }
+      }
+    },
     "Channel": {
       "localizations": {
         "ar": {
@@ -386,6 +452,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "சேனல்"
+          }
+        }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إغلاق"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fechar"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "மூடு"
           }
         }
       }
@@ -430,6 +518,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "விரைவில்"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متابعة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "தொடர்க"
+          }
+        }
+      }
+    },
+    "Continue as guest": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المتابعة كضيف"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar como convidado"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "விருந்தினராகத் தொடர்க"
           }
         }
       }
@@ -522,6 +654,72 @@
         }
       }
     },
+    "Didn't get the code?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يصلك الرمز؟"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não recebeu o código?"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "குறியீடு வரவில்லையா?"
+          }
+        }
+      }
+    },
+    "Email ID": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البريد الإلكتروني"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-mail"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "மின்னஞ்சல் முகவரி"
+          }
+        }
+      }
+    },
+    "Enter the 6-digit code we sent to %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل الرمز المكوّن من 6 أرقام الذي أرسلناه إلى %@"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Digite o código de 6 dígitos que enviamos para %@"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ க்கு நாங்கள் அனுப்பிய 6 இலக்கக் குறியீட்டை உள்ளிடவும்"
+          }
+        }
+      }
+    },
     "Explore bundles": {
       "localizations": {
         "ar": {
@@ -584,6 +782,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "முகப்பு"
+          }
+        }
+      }
+    },
+    "I am above 18 years of age and by proceeding I agree to the [Terms of use](terms) and [privacy policy](privacy).": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عمري أكثر من 18 عامًا، وبالمتابعة أوافق على [شروط الاستخدام](terms) و[سياسة الخصوصية](privacy)."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tenho mais de 18 anos e, ao continuar, concordo com os [Termos de uso](terms) e a [Política de privacidade](privacy)."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "எனக்கு 18 வயதுக்கு மேல் ஆகிறது, தொடர்வதன் மூலம் [பயன்பாட்டு விதிமுறைகள்](terms) மற்றும் [தனியுரிமைக் கொள்கை](privacy) ஆகியவற்றை ஏற்கிறேன்."
           }
         }
       }
@@ -808,6 +1028,28 @@
         }
       }
     },
+    "Not available yet": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير متاح بعد"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não disponível"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இன்னும் கிடைக்கவில்லை"
+          }
+        }
+      }
+    },
     "Notifications": {
       "localizations": {
         "ar": {
@@ -848,6 +1090,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "எண் %1$lld, %2$@"
+          }
+        }
+      }
+    },
+    "Please enter a valid email address": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُرجى إدخال بريد إلكتروني صالح"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Digite um endereço de e-mail válido"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்"
           }
         }
       }
@@ -936,6 +1200,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "புதுப்பி"
+          }
+        }
+      }
+    },
+    "Resend": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة الإرسال"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reenviar"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "மீண்டும் அனுப்பு"
+          }
+        }
+      }
+    },
+    "Resend in %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة الإرسال بعد %@"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reenviar em %@"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ இல் மீண்டும் அனுப்பலாம்"
           }
         }
       }
@@ -1050,6 +1358,28 @@
         }
       }
     },
+    "Sign in or create your account": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سجّل الدخول أو أنشئ حسابك"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entre ou crie sua conta"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "உள்நுழையவும் அல்லது கணக்கை உருவாக்கவும்"
+          }
+        }
+      }
+    },
     "Sign in to add to your watchlist": {
       "localizations": {
         "ar": {
@@ -1094,24 +1424,112 @@
         }
       }
     },
-    "Sign-in isn't available in this build.": {
+    "Sign out": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تسجيل الدخول غير متاح في هذا الإصدار."
+            "value": "تسجيل الخروج"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "O login não está disponível nesta versão."
+            "value": "Sair"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "இந்தப் பதிப்பில் உள்நுழைவு கிடைக்கவில்லை."
+            "value": "வெளியேறு"
+          }
+        }
+      }
+    },
+    "Sign out of %@?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل تريد تسجيل الخروج من %@؟"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sair do %@?"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ இலிருந்து வெளியேறவா?"
+          }
+        }
+      }
+    },
+    "Sign up with Apple": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التسجيل باستخدام Apple"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadastre-se com a Apple"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple மூலம் பதிவுசெய்க"
+          }
+        }
+      }
+    },
+    "Sign up with Google": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التسجيل باستخدام Google"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cadastre-se com o Google"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google மூலம் பதிவுசெய்க"
+          }
+        }
+      }
+    },
+    "Signed in as %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مسجّل الدخول باسم %@"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectado como %@"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ஆக உள்நுழைந்துள்ளீர்கள்"
           }
         }
       }
@@ -1182,6 +1600,28 @@
         }
       }
     },
+    "Step %lld of 3": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الخطوة %lld من 3"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etapa %lld de 3"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "படி %lld / 3"
+          }
+        }
+      }
+    },
     "Stream the experience": {
       "localizations": {
         "ar": {
@@ -1226,6 +1666,28 @@
         }
       }
     },
+    "Taking you in…": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ الدخول…"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrando…"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "உள்ளே அழைத்துச் செல்கிறோம்…"
+          }
+        }
+      }
+    },
     "The server took too long to respond. Please try again.": {
       "localizations": {
         "ar": {
@@ -1248,6 +1710,28 @@
         }
       }
     },
+    "There's no %@ account for this email yet.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد حساب %@ لهذا البريد الإلكتروني بعد."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não há uma conta %@ para este e-mail."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இந்த மின்னஞ்சலுக்கு இன்னும் %@ கணக்கு இல்லை."
+          }
+        }
+      }
+    },
     "There's nothing to show yet. Check back soon.": {
       "localizations": {
         "ar": {
@@ -1266,6 +1750,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "இன்னும் காட்ட எதுவும் இல்லை. விரைவில் மீண்டும் பாருங்கள்."
+          }
+        }
+      }
+    },
+    "This email isn't registered yet. Create your account on the %@ website, then sign in.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا البريد الإلكتروني غير مسجّل بعد. أنشئ حسابك على موقع %@، ثم سجّل الدخول."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este e-mail ainda não está cadastrado. Crie sua conta no site do %@ e depois entre."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இந்த மின்னஞ்சல் இன்னும் பதிவு செய்யப்படவில்லை. %@ இணையதளத்தில் கணக்கை உருவாக்கி, பின்னர் உள்நுழையவும்."
+          }
+        }
+      }
+    },
+    "This isn't available in this build yet.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه الميزة غير متاحة في هذا الإصدار بعد."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Isso ainda não está disponível nesta versão."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இது இந்தப் பதிப்பில் இன்னும் கிடைக்கவில்லை."
           }
         }
       }
@@ -1376,6 +1904,72 @@
           "stringUnit": {
             "state": "translated",
             "value": "வரவிருக்கிறது"
+          }
+        }
+      }
+    },
+    "Verification code": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رمز التحقق"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código de verificação"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "சரிபார்ப்புக் குறியீடு"
+          }
+        }
+      }
+    },
+    "Verify & continue": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحقّق وتابع"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verificar e continuar"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "சரிபார்த்துத் தொடர்க"
+          }
+        }
+      }
+    },
+    "Verify it's you": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحقّق من هويتك"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirme que é você"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இது நீங்கள்தான் என உறுதிசெய்யவும்"
           }
         }
       }
@@ -1512,6 +2106,28 @@
         }
       }
     },
+    "We'll send a 6-digit code to verify it's you.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سنرسل رمزًا مكوّنًا من 6 أرقام للتحقق من هويتك."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviaremos um código de 6 dígitos para confirmar que é você."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "இது நீங்கள்தான் என உறுதிசெய்ய 6 இலக்கக் குறியீட்டை அனுப்புவோம்."
+          }
+        }
+      }
+    },
     "You appear to be offline. Check your connection and try again.": {
       "localizations": {
         "ar": {
@@ -1530,6 +2146,72 @@
           "stringUnit": {
             "state": "translated",
             "value": "நீங்கள் ஆஃப்லைனில் இருப்பதாகத் தெரிகிறது. இணைப்பைச் சரிபார்த்து மீண்டும் முயலவும்."
+          }
+        }
+      }
+    },
+    "You're all set": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل شيء جاهز"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tudo pronto"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "எல்லாம் தயார்"
+          }
+        }
+      }
+    },
+    "You're signed in on the maximum number of devices. Sign out on another device, then try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لقد سجّلت الدخول على الحد الأقصى من الأجهزة. سجّل الخروج من جهاز آخر، ثم حاول مرة أخرى."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você está conectado no número máximo de dispositivos. Saia em outro dispositivo e tente novamente."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "அதிகபட்ச சாதனங்களில் உள்நுழைந்துள்ளீர்கள். வேறொரு சாதனத்தில் வெளியேறி, மீண்டும் முயலவும்."
+          }
+        }
+      }
+    },
+    "Your %@ account is ready.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حسابك على %@ جاهز."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua conta %@ está pronta."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "உங்கள் %@ கணக்கு தயார்."
           }
         }
       }
@@ -1574,6 +2256,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "உங்கள் அமர்வு காலாவதியானது. மீண்டும் உள்நுழையவும்."
+          }
+        }
+      }
+    },
+    "or continue with email": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أو تابع باستخدام البريد الإلكتروني"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ou continue com e-mail"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "அல்லது மின்னஞ்சல் மூலம் தொடர்க"
           }
         }
       }

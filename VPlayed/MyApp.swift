@@ -3,6 +3,8 @@ import SwiftUI
 @main struct MyApp: App {
     /// Launch-time configuration (common settings, geo token), fetched once per process.
     @State private var startup: AppStartup
+    /// The signed-in, guest or signed-out session, restored from the Keychain.
+    @State private var account = AccountStore()
 
     init() {
         BrandFonts.registerBundledFonts()
@@ -13,7 +15,7 @@ import SwiftUI
 
     var body: some Scene {
         WindowGroup {
-            RootView(startup: startup)
+            RootView(startup: startup, account: account)
         }
     }
 }

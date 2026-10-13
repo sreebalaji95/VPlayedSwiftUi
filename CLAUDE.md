@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home, Menu, Language and Movies are the only real screens so far; every other destination is a placeholder.
+VPlayed is a SwiftUI video app (App Store category `public.app-category.video`) with no third-party dependencies. `MyApp.swift` (`@main`) → `App/RootView.swift` → the Home screen. Home, Menu, Language, Movies and Login are the only real screens so far; every other destination is a placeholder.
 
 Service teams fork it to ship white-label brands; [`WHITE_LABEL.md`](WHITE_LABEL.md) lists what a rebrand edits (`Config/Brand.xcconfig`, everything in `VPlayed/Brand/` (`Brand.swift`, `Assets.xcassets` with the colorsets and `SplashLogo`, `AppIcon.icon`, `Fonts/`), brand copy keys) and what it must not. Put new brand-replaceable files in `VPlayed/Brand/` and core code elsewhere. Keep it in step when those files or tokens change.
 
@@ -73,7 +73,8 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - `APIClient.get(_:as:)` is a `@concurrent` URLSession GET that decodes the `{statusCode, message, response}` envelope.
   - Success means the JSON `statusCode == 200`, not the HTTP status, matching the UIKit app.
   - Endpoints live in `Endpoint.swift`; hosts in `APIEnvironment` (see Environments).
-  - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them. `AppStartup` sets the geo token (`X-Bearer-Token`) at launch; nothing sets the other two yet because there is no sign-in.
+  - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them. `AppStartup` sets the geo token (`X-Bearer-Token`) at launch; `AccountStore` sets the access token at sign-in (see Auth). Nothing sets `profile_id` yet (no profile selection).
+  - `APIClient.post(_:body:as:accepting:)` sends JSON and returns an `APIResult` (status code, message, optional payload), because some auth endpoints answer with several success codes the caller branches on.
   - Home APIs work as an anonymous guest.
 - **Decoding**:
   - The API mixes types (`sho_type` Int or String, `video_duration` String, flags 0/1 or Bool, titles String or `{"en": …}`). Decode through the lenient helpers in `LenientDecoding.swift` (`lenientInt`, `lossyArray`, `LocalizedText`…) so one malformed item never fails a whole response.
@@ -86,7 +87,14 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - Failures are logged (category `Startup`) and ignored, as in UIKit, and the defaults apply.
   - Home's first load waits for the geo step through `HomeViewModel(prepare:)`, for at most `SplashView.duration`.
   - `RootView` applies two UIKit rules. A drama catalogue (`content_library` 2) forces dark mode except in `QA` builds. `rtl: false` sets `LanguageStore.isRTLAllowed = false`, which lays the chosen language out left to right; use `languageStore.isRightToLeft`, not `language.isRightToLeft`, for layout.
-  - Not ported yet: guest login, the force/soft update prompt (the settings are stored), and re-fetching on foreground.
+  - Not ported yet: automatic guest login at launch, the force/soft update prompt (the settings are stored), and re-fetching on foreground.
+- **Auth (`Core/Auth`, `Features/Auth`)**:
+  - Login (`LoginView` / `LoginViewModel`) is the prototype's "VPlayed Sign Up" flow on the UIKit app's passwordless email sign-in. Step 1: `POST users/api/v1/auth/email-login` (200 sends a code; 203 means no account). Step 2: `POST users/api/v1/auth/verifyEmailOtp` (200 signs in; 202 is the device limit). Then "You're all set", which closes itself after 3s. UIKit rules kept: its email regex, a 50-character cap, a 60s resend wait, and an account with no phone and no Apple, Facebook or Google ID counts as not registered.
+  - Bodies are `{"data": <CryptoJS AES>}`: `CryptoJSAES` reproduces `CryptoJS.AES.encrypt(json, "vplayed@contus")` (OpenSSL `Salted__` format, MD5 key derivation, AES-256-CBC) with CommonCrypto.
+  - "Continue as guest" (`POST users/api/v1/auth/generate`, `{"uuid": DeviceID}`) only shows when the common API's `is_guest_user` is true. Guests still see "Sign in" in Menu.
+  - Device-limit and new-account responses show a message; the UIKit sign-out-devices and Register screens aren't ported. Phone sign-in isn't either, since UIKit verifies phone codes with Firebase. The Google and Apple buttons are UI only.
+  - `AccountStore` (`@Observable`, owned by `MyApp`) holds signed out / guest / signed in. `SessionStore.shared` persists the session in the Keychain (`KeychainCredentialStore`, account `session`) and restores it at launch, so the first request is authenticated. A plain `SessionStore()` (tests, previews) is memory-only.
+  - Sign out (Menu) calls `POST users/api/v1/auth/logout`. It clears the session on success or 401; other failures keep it, as in UIKit. `RootView` refreshes Home whenever the account changes.
 - **Images (`Core/Images`)**:
   - API image fields are relative keys joined to the CDN by `ImageURL.resolve`.
   - `ImageSet` variant codes (`tv`, `tp`, `tm`…) are sizes, not shapes. Video thumbnails are 16:9 but micro-series (`sho_type` 6) ones are 3:4, so each card picks its own variant order.
@@ -109,6 +117,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - Each tab has its own `NavigationStack`. Views call `@Environment(\.openRoute)` with an `AppRoute`; `RootView` pushes it onto the selected tab's stack, except `.search`, which switches to the Search tab, and `.menu`.
   - `.menu` opens `MenuDrawer` (`Features/Menu`), a side drawer drawn above the `TabView` (tab bar included). It slides in from the leading edge (left in LTR, right in Arabic) to `min(82%, 340pt)` wide over a dimmed scrim. The scrim, the close button and a swipe towards that edge close it. Any other route opened while it is showing closes it and pushes onto the current tab.
   - In RTL, SwiftUI mirrors `offset` but not `DragGesture` translations, so the drawer converts the translation (`towardsTrailing`) and offsets with it unconverted.
+  - `.signIn`, and `.signInRequired` while not signed in (guests included), present `LoginView` over everything: a full-screen cover on iOS and visionOS, a sheet on macOS. It closes the menu first. Menu has a Sign in row, or the account and Sign out once signed in.
   - Routes without a screen resolve to `PlaceholderDestinationView`. Add real screens by switching on the route in `navigationDestination`.
 - **Localization**:
   - English is the development language. Arabic (`ar`, right-to-left), Portuguese (`pt`) and Tamil (`ta`) are listed in `knownRegions`, and every string lives in `VPlayed/Localizable.xcstrings`.

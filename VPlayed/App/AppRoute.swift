@@ -13,8 +13,11 @@ enum AppRoute: Hashable {
     case menu
     case language
     case movies
-    /// Actions that need a signed-in user (watchlist, reminders) — there is no sign-in yet.
-    /// `prompt` is the localized title to show, e.g. "Sign in to add to your watchlist".
+    /// The Login screen, presented over the app by `RootView`.
+    case signIn
+    /// Actions that need a signed-in user (watchlist, reminders). Signed out or as a guest it opens
+    /// Login; signed in, the action itself isn't built yet, so it shows a placeholder titled `prompt`
+    /// (localized, e.g. "Sign in to add to your watchlist").
     case signInRequired(prompt: String)
 }
 
