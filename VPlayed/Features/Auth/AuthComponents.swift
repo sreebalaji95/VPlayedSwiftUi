@@ -1,4 +1,8 @@
 import SwiftUI
+#if os(iOS)
+import Combine
+import UIKit
+#endif
 
 /// "STEP 1 OF 3" above a Login step heading.
 struct AuthStepLabel: View {
@@ -124,6 +128,9 @@ struct AuthNotice: View {
 struct CodeField: View {
     @Binding var code: String
     var isFocused: FocusState<Bool>.Binding
+    #if os(iOS)
+    @State private var isKeyboardShown = false
+    #endif
 
     var body: some View {
         HStack(spacing: 8) {
@@ -146,9 +153,31 @@ struct CodeField: View {
                 .accessibilityValue(Text(verbatim: code))
         }
         .contentShape(Rectangle())
-        .onTapGesture { isFocused.wrappedValue = true }
+        .onTapGesture(perform: focus)
+        #if os(iOS)
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
+            isKeyboardShown = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            isKeyboardShown = false
+        }
+        #endif
         // Digits read left to right in every language.
         .environment(\.layoutDirection, .leftToRight)
+    }
+
+    private func focus() {
+        #if os(iOS)
+        // When the keyboard goes away without the field asking (a tap elsewhere on iPad, the iPad
+        // keyboard's hide key), the focus state can stay true, so setting it again does nothing and
+        // the keyboard never returns. Drop focus first, then take it back on the next update.
+        if isFocused.wrappedValue && !isKeyboardShown {
+            isFocused.wrappedValue = false
+            Task { isFocused.wrappedValue = true }
+            return
+        }
+        #endif
+        isFocused.wrappedValue = true
     }
 
     private func box(at index: Int) -> some View {
