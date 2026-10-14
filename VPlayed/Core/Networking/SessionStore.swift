@@ -4,7 +4,12 @@ import Foundation
 /// signed-in (or guest) session from the Keychain when it is created, so the first request after
 /// a relaunch is already authenticated. `AppStartup` adds the geo token, which is not persisted.
 actor SessionStore {
+    #if canImport(Shared)
+    /// Also keeps the Kotlin shared layer's request credentials in step (`SharedLayer.mirror`).
+    static let shared = SessionStore(credentials: KeychainCredentialStore(), onChange: SharedLayer.mirror)
+    #else
     static let shared = SessionStore(credentials: KeychainCredentialStore())
+    #endif
 
     struct Snapshot: Sendable {
         var accessToken: String?
@@ -12,13 +17,19 @@ actor SessionStore {
         var geoToken: String?
     }
 
-    private var snapshot = Snapshot()
+    private var snapshot = Snapshot() {
+        didSet { onChange?(snapshot) }
+    }
     private let credentials: (any CredentialStoring)?
+    private let onChange: (@Sendable (Snapshot) -> Void)?
 
     /// `credentials` persists the session; without one (tests, previews) it lives in memory only.
-    init(credentials: (any CredentialStoring)? = nil) {
+    /// `onChange` receives every new snapshot, starting with the restored one.
+    init(credentials: (any CredentialStoring)? = nil, onChange: (@Sendable (Snapshot) -> Void)? = nil) {
         self.credentials = credentials
+        self.onChange = onChange
         snapshot.accessToken = credentials?.load()?.accessToken
+        onChange?(snapshot)
     }
 
     func current() -> Snapshot { snapshot }

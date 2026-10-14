@@ -104,7 +104,6 @@ struct AuthDecodingTests {
         #expect(credentials.phone == nil)
         #expect(!credentials.isGuest)
         #expect(credentials.displayName == "Test")
-        #expect(response.hasLinkedSignIn) // google_auth_id
     }
 
     @Test func decodesAGuestAndPrefersGuestUserID() throws {
@@ -115,14 +114,10 @@ struct AuthDecodingTests {
         #expect(credentials.uniqueUserID == 9001)
     }
 
-    @Test func unlinkedAccountsAndMissingTokens() throws {
-        let unlinked = try JSONDecoder().decode(AuthResponse.self, from: Data(#"{"access_token":"t","email":"a@b.co","phone":null}"#.utf8))
-        #expect(!unlinked.hasLinkedSignIn)
-        #expect(unlinked.credentials != nil)
-
-        // An empty phone string still counts, as with SwiftyJSON's `.string`.
-        let emptyPhone = try JSONDecoder().decode(AuthResponse.self, from: Data(#"{"access_token":"t","phone":""}"#.utf8))
-        #expect(emptyPhone.hasLinkedSignIn)
+    @Test func emailOnlyAccountsAndMissingTokens() throws {
+        // Decision D4: an account without phone or social ids still gets a session.
+        let emailOnly = try JSONDecoder().decode(AuthResponse.self, from: Data(#"{"access_token":"t","email":"a@b.co","phone":null}"#.utf8))
+        #expect(emailOnly.credentials != nil)
 
         let noToken = try JSONDecoder().decode(AuthResponse.self, from: Data(#"{"email":"a@b.co","google_auth_id":"g"}"#.utf8))
         #expect(noToken.credentials == nil)
@@ -197,16 +192,20 @@ struct LoginViewModelTests {
         model.stopTimers()
     }
 
-    @Test func newAccountStaysOnTheEmailStep() async {
+    @Test func deviceLimitStaysOnTheEmailStepWithTheServerMessage() async {
         let service = MockAuthService()
-        service.sendResult = .success(.newAccount)
+        service.sendResult = .success(.deviceLimit(message: "Signed in on 2 devices"))
         let (model, _) = makeModel(service)
-        model.email = "new@example.com"
+        model.email = "tester@example.com"
 
         await model.continueWithEmail()
 
         #expect(model.step == .email)
-        #expect(model.notice != nil)
+        #expect(model.notice == "Signed in on 2 devices")
+
+        service.sendResult = .success(.deviceLimit(message: nil))
+        await model.continueWithEmail()
+        #expect(model.notice?.isEmpty == false)
     }
 
     @Test func sendFailureShowsTheServerMessage() async {

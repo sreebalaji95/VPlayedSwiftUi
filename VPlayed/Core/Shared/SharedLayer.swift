@@ -9,11 +9,27 @@ import os
 /// native networking uses. Kotlin/Native has no visionOS target, so this file and every use of
 /// `Shared` sit behind `#if canImport(Shared)`; visionOS keeps the native Swift implementations.
 ///
-/// Phase 2 (foundation): nothing in the app calls the graph yet, so behaviour is unchanged.
-/// Features move to it phase by phase (see `KMP_PLANNING/KMP_MIGRATION_PLAN.md`).
+/// Sign-in uses it since Phase 3 (`SharedAuthService`); Home, geo and settings still use
+/// `APIClient`. Features move to it phase by phase (see `KMP_PLANNING/KMP_MIGRATION_PLAN.md`).
 nonisolated enum SharedLayer {
     /// The app's graph, created on first use.
     static let graph: SharedGraph = makeGraph()
+
+    /// What shared requests send as `Authorization`, `profile_id` and `x-bearer-token`.
+    /// `SessionStore.shared` keeps it equal to its own snapshot (`mirror(_:)`), since Kotlin
+    /// cannot read an actor synchronously. The app owns the session until Phase 5.
+    static let credentials = InMemoryRequestCredentials()
+
+    /// Copies the native session snapshot into `credentials`.
+    static func mirror(_ snapshot: SessionStore.Snapshot) {
+        mirror(snapshot, into: credentials)
+    }
+
+    static func mirror(_ snapshot: SessionStore.Snapshot, into credentials: InMemoryRequestCredentials) {
+        credentials.setAuthTokens(tokens: snapshot.accessToken.map { AuthTokens(accessToken: $0, profileId: snapshot.profileID) })
+        // A geo token is never cleared, only replaced (blank values are ignored).
+        if let geoToken = snapshot.geoToken { credentials.setGeoToken(token: geoToken) }
+    }
 
     /// Builds a graph. Tests pass their own engine factory (e.g. one using a `URLProtocol` stub).
     static func makeGraph(
@@ -21,6 +37,7 @@ nonisolated enum SharedLayer {
         appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0",
         transportKey: String = CryptoJSAES.authPassphrase,
         deviceInfo: any DeviceInfo = IOSSharedDeviceInfo(),
+        requestCredentials: any RequestCredentials = credentials,
         engineFactory: (() -> any Ktor_client_coreHttpClientEngine)? = nil
     ) -> SharedGraph {
         SharedGraph(
@@ -29,7 +46,8 @@ nonisolated enum SharedLayer {
                 deviceInfo: deviceInfo,
                 logger: IOSSharedLogger(),
                 engineFactory: engineFactory ?? { HttpEngine_appleKt.createDarwinEngine(configure: configureSession) },
-                cryptoPrimitives: CryptoPrimitives_appleKt.platformCryptoPrimitives()
+                cryptoPrimitives: CryptoPrimitives_appleKt.platformCryptoPrimitives(),
+                requestCredentials: requestCredentials
             )
         )
     }

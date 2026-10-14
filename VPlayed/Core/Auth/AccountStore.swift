@@ -33,7 +33,7 @@ final class AccountStore {
     init(
         saved: AuthCredentials? = KeychainCredentialStore().load(),
         session: SessionStore = .shared,
-        service: any AuthServicing = AuthService()
+        service: any AuthServicing = AuthServices.live()
     ) {
         state = State(saved)
         self.session = session

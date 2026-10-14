@@ -3,19 +3,22 @@ import Foundation
 
 /// What happened after asking for a sign-in code.
 nonisolated enum SendCodeOutcome: Equatable, Sendable {
-    /// The code is on its way to an existing account (`statusCode` 200).
+    /// A code is on its way: `statusCode` 200 (existing account) or 203 (new account). Both go to
+    /// the code step (decision D2, as on Android; the UIKit app stopped at 203).
     case sent
-    /// No account uses this email yet (`statusCode` 203); UIKit continues to its Register screen.
-    case newAccount
+    /// The account is signed in on its maximum number of devices (`statusCode` 202, decision D3).
+    /// Signing other devices out here is Android-only until the backend confirms it is safe (D5).
+    case deviceLimit(message: String?)
 }
 
 /// What happened after submitting the code.
 nonisolated enum VerifyOutcome: Equatable, Sendable {
+    /// `statusCode` 200, or 203 for a new account, with an access token (decision D4).
     case signedIn(AuthCredentials)
     /// The account is signed in on its maximum number of devices (`statusCode` 202), with the
     /// server's explanation. UIKit opens its sign-out-devices screen here.
     case deviceLimit(message: String?)
-    /// The code was right but the account still needs registering (no linked sign-in method).
+    /// `statusCode` 203 without a session: the account still needs registering.
     case newAccount
 }
 
@@ -27,6 +30,21 @@ nonisolated protocol AuthServicing: Sendable {
     func logout() async throws
 }
 
+/// The implementation the app uses: the Kotlin Multiplatform shared layer where it links (iOS,
+/// macOS), the Swift `AuthService` on visionOS, which has no Kotlin/Native target. Both follow
+/// the same rules (decisions D1–D4 in `KMP_PLANNING/KMP_ARCHITECTURE_ANALYSIS.md`).
+nonisolated enum AuthServices {
+    static func live() -> any AuthServicing {
+        #if canImport(Shared)
+        SharedAuthService()
+        #else
+        AuthService()
+        #endif
+    }
+}
+
+/// The Swift implementation, used on visionOS (see `AuthServices.live()`); replaced by
+/// `SharedAuthService` elsewhere and removed once visionOS is settled (Phase 7).
 nonisolated struct AuthService: AuthServicing {
     var client: APIClient = .shared
     var deviceID: String = DeviceID.current
@@ -43,21 +61,22 @@ nonisolated struct AuthService: AuthServicing {
     /// `LoginViewController.sendOtpToMail` / `getEmailEncrypted`.
     func sendEmailCode(to email: String) async throws -> SendCodeOutcome {
         let body = try encrypted(["email": email])
-        let result = try await client.post(.emailLogin, body: body, as: IgnoredPayload.self, accepting: [200, 203])
-        return result.statusCode == 203 ? .newAccount : .sent
+        let result = try await client.post(.emailLogin, body: body, as: IgnoredPayload.self, accepting: [200, 202, 203])
+        return result.statusCode == 202 ? .deviceLimit(message: result.message) : .sent
     }
 
     /// `OtpViewController.verifyMailOtp` / `getOtpEncrypted`.
     func verifyEmailCode(_ code: String, email: String) async throws -> VerifyOutcome {
         let body = try encrypted(["email": email, "otp": code, "deviceDetail": deviceName])
-        let result = try await client.post(.verifyEmailOTP, body: body, as: AuthResponse.self, accepting: [200, 202])
+        let result = try await client.post(.verifyEmailOTP, body: body, as: AuthResponse.self, accepting: [200, 202, 203])
         if result.statusCode == 202 {
             return .deviceLimit(message: result.message)
         }
-        guard let response = result.payload else { throw APIError.decoding("Missing `response` payload") }
-        guard response.hasLinkedSignIn else { return .newAccount }
-        guard let credentials = response.credentials else { throw APIError.decoding("No access token") }
-        return .signedIn(credentials)
+        if let credentials = result.payload?.credentials {
+            return .signedIn(credentials)
+        }
+        if result.statusCode == 203 { return .newAccount }
+        throw APIError.decoding("No access token")
     }
 
     /// `ProfileTabViewModel.guestUserLogin`.

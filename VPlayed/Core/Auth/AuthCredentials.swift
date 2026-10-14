@@ -20,9 +20,6 @@ nonisolated struct AuthCredentials: Codable, Sendable, Equatable {
 nonisolated struct AuthResponse: Decodable, Sendable {
     /// `nil` when the response carries no access token, so no session can be made from it.
     let credentials: AuthCredentials?
-    /// The UIKit app sends a verified email with no phone and no Apple, Facebook or Google ID
-    /// to the Register screen instead of signing it in (`OtpViewController.handleMailOtpStatus200`).
-    let hasLinkedSignIn: Bool
 
     private enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
@@ -34,9 +31,6 @@ nonisolated struct AuthResponse: Decodable, Sendable {
         case phone
         case firstName = "first_name"
         case isGuestUser = "is_guest_user"
-        case appleAuthID = "apple_auth_id"
-        case facebookAuthID = "facebook_auth_id"
-        case googleAuthID = "google_auth_id"
     }
 
     init(from decoder: any Decoder) throws {
@@ -59,8 +53,5 @@ nonisolated struct AuthResponse: Decodable, Sendable {
         } else {
             credentials = nil
         }
-        // Any string counts, even an empty one, as with SwiftyJSON's `.string` in the UIKit check.
-        hasLinkedSignIn = [CodingKeys.phone, .appleAuthID, .facebookAuthID, .googleAuthID]
-            .contains { ((try? container.decodeIfPresent(String.self, forKey: $0)) ?? nil) != nil }
     }
 }

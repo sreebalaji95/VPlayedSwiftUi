@@ -123,7 +123,9 @@ nonisolated final class APIClient: Sendable {
             throw [401, 403].contains(httpStatus) ? APIError.unauthorized : APIError.http(statusCode: httpStatus)
         }
 
-        let code = status.statusCode ?? httpStatus
+        // Decision D1 (shared with Android): an HTTP error status always fails; within 2xx the
+        // envelope's `statusCode` decides when present.
+        let code = (200..<300).contains(httpStatus) ? status.statusCode ?? httpStatus : httpStatus
         guard codes.contains(code) else {
             if [401, 403].contains(code) { throw APIError.unauthorized }
             Self.log.error("\(method, privacy: .public) \(path, privacy: .public) API status \(code)")

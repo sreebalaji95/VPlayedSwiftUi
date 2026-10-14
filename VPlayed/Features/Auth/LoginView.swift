@@ -13,7 +13,7 @@ struct LoginView: View {
     @FocusState private var emailFocused: Bool
     @FocusState private var codeFocused: Bool
 
-    init(account: AccountStore, service: any AuthServicing = AuthService()) {
+    init(account: AccountStore, service: any AuthServicing = AuthServices.live()) {
         _model = State(initialValue: LoginViewModel(account: account, service: service))
     }
 

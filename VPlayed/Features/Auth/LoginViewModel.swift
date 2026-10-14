@@ -50,7 +50,7 @@ final class LoginViewModel {
     @ObservationIgnored private let account: AccountStore
     @ObservationIgnored private var resendTask: Task<Void, Never>?
 
-    init(account: AccountStore, service: any AuthServicing = AuthService()) {
+    init(account: AccountStore, service: any AuthServicing = AuthServices.live()) {
         self.account = account
         self.service = service
     }
@@ -80,8 +80,8 @@ final class LoginViewModel {
                 code = ""
                 step = .code
                 startResendTimer()
-            case .newAccount:
-                notice = String(localized: "There's no \(Brand.name) account for this email yet.", bundle: .localized)
+            case .deviceLimit(let message):
+                notice = deviceLimitNotice(message)
             }
         } catch {
             show(error)
@@ -116,8 +116,7 @@ final class LoginViewModel {
                 step = .done
             case .deviceLimit(let message):
                 code = ""
-                notice = message.flatMap { $0.isEmpty ? nil : $0 }
-                    ?? String(localized: "You're signed in on the maximum number of devices. Sign out on another device, then try again.", bundle: .localized)
+                notice = deviceLimitNotice(message)
             case .newAccount:
                 code = ""
                 notice = String(localized: "This email isn't registered yet. Create your account on the \(Brand.name) website, then sign in.", bundle: .localized)
@@ -138,8 +137,8 @@ final class LoginViewModel {
             case .sent:
                 code = ""
                 startResendTimer()
-            case .newAccount:
-                notice = String(localized: "There's no \(Brand.name) account for this email yet.", bundle: .localized)
+            case .deviceLimit(let message):
+                notice = deviceLimitNotice(message)
             }
         } catch {
             show(error)
@@ -171,6 +170,12 @@ final class LoginViewModel {
                 if resendSeconds == 0 { return }
             }
         }
+    }
+
+    /// The server's explanation, else ours. Signing other devices out is not offered on iOS yet (D5).
+    private func deviceLimitNotice(_ message: String?) -> String {
+        message.flatMap { $0.isEmpty ? nil : $0 }
+            ?? String(localized: "You're signed in on the maximum number of devices. Sign out on another device, then try again.", bundle: .localized)
     }
 
     private func show(_ error: any Error) {
