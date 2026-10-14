@@ -18,7 +18,7 @@ enum RoutedBackend {
             appVersion: "9.9.9",
             transportKey: "unit-test-passphrase",
             deviceInfo: IOSSharedDeviceInfo(deviceId: "test-device", deviceName: "iPhone17,3", languageCode: { language }),
-            requestCredentials: InMemoryRequestCredentials(),
+            sessions: SessionManager(store: InMemorySecureStore()),
             engineFactory: {
                 HttpEngine_appleKt.createDarwinEngine { $0.protocolClasses = [RouteStubURLProtocol.self] }
             }

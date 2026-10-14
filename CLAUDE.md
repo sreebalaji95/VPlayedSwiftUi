@@ -37,7 +37,7 @@ xcodebuild test -project VPlayed.xcodeproj -scheme Dev -destination 'platform=iO
 xcodebuild test -project VPlayed.xcodeproj -scheme Dev -destination 'platform=iOS Simulator,name=iPhone 17' '-only-testing:VPlayedTests/HomeViewModelTests/loadMoreAppendsDedupesAndStops()'
 ```
 
-`VPlayedTests/` is also a synchronized folder; JSON in `VPlayedTests/Fixtures/` is real dev-API output, trimmed to two items per rail and stripped of studio contact/KYC fields.
+`VPlayedTests/` is also a synchronized folder; JSON in `VPlayedTests/Fixtures/` is real dev-API output, trimmed to two items per rail and stripped of studio contact/KYC fields and live-stream credentials (`streaming_key`, `streaming_url`, `streaming_watch_url`, `streaming_id`, `streaming_arn`). Strip those again from any new capture; the app never reads them.
 
 ## Environments
 
@@ -78,7 +78,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - `APIClient.get(_:as:)` is a `@concurrent` URLSession GET that decodes the `{statusCode, message, response}` envelope.
   - Success means the JSON `statusCode == 200`, not the HTTP status, matching the UIKit app.
   - Endpoints live in `Endpoint.swift`; hosts in `APIEnvironment` (see Environments).
-  - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them. `AppStartup` sets the geo token (`X-Bearer-Token`) at launch; `AccountStore` sets the access token at sign-in (see Auth). Nothing sets `profile_id` yet (no profile selection).
+  - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them. `AppStartup` sets the geo token (`X-Bearer-Token`) at launch; `AccountStore` starts the session at sign-in (see Auth). `profile_id` is the default profile's id from the shared sign-in (`AuthCredentials.profileID`); there is no profile selection yet.
   - `APIClient.post(_:body:as:accepting:)` sends JSON and returns an `APIResult` (status code, message, optional payload), because some auth endpoints answer with several success codes the caller branches on.
   - Home APIs work as an anonymous guest.
 - **Shared layer (`Core/Shared`, `SharedKit/`)**:
@@ -92,9 +92,10 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
     - Launch: `StartupServices.live()` returns `SharedStartupService` (iOS, macOS: `SharedGraph.commonSettingsRepository` and `geoRepository`), or the Swift `StartupService` on visionOS. `AppStartup` still decides when they run (decision D18).
     - Kotlin types that share a name with an app type (`HomeSection`, `ContentItem`, `CommonSettings`, `GeoInfo`, `Price`, `AccessTag`) are written `Shared.X`; unqualified names are the app's. Tests import both modules, so they qualify the app's as `VPlayed.X`.
     - Movies still uses `APIClient`.
-  - The app owns the session until Phase 5. `SessionStore.shared` mirrors every snapshot (token, profile, geo token) into `SharedLayer.credentials`, which shared requests read for `Authorization`, `profile_id` and `x-bearer-token`.
+  - Since Phase 5 the session belongs to the shared `SessionManager` (`SharedLayer.sessions`), stored by `KeychainSecureStore` in the Keychain item the app always used. Shared requests send its tokens and the graph `GeoStore`'s geo token; `SessionStore.shared` reads the same manager for native requests, so nothing is mirrored.
   - Tests:
-    - `SharedLayerTests` checks that the shared Ktor client sends the same backend headers as `RequestHeaders`, that shared encryption decrypts with `CryptoJSAES`, and that the mirroring works.
+    - `SharedLayerTests` checks that the shared Ktor client sends the same backend headers as `RequestHeaders`, that shared encryption decrypts with `CryptoJSAES`, and that the app's `SessionStore` and graph share one `SessionManager`.
+    - `SharedSessionTests` covers the upgrade (a session stored as `AuthCredentials` JSON is restored, guests too), `SessionStore` and `AccountStore` over the manager, the Keychain round trip (skipped on macOS, see Auth), and the 401 rule.
     - `AuthServiceContractTests` runs the same backend answers against `SharedAuthService` and the Swift `AuthService`, so they can't drift apart.
     - `SharedLoginViewModelTests` runs the Login model against scripted answers.
     - The suites that script `AuthStubURLProtocol` are nested in the serialized `StubbedBackendTests`. The flow rules themselves are tested in `../kmp`.
@@ -124,8 +125,12 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - Device-limit and new-account responses show a message. The UIKit Register screen isn't ported.
   - The device-limit step (`LoginView.devicesStep`: sign other devices out, then continue) is built but switched off with `AuthFeatures.deviceSignOut = false`. Its "continue" (`verifyEmailLogin`) signs in without a code, so it stays off until the backend confirms that's safe (D5). `SharedLoginViewModelTests` runs it with the switch on.
   - Shared messages are `AuthMessage`s: the server's words when safe, else an `AuthMessageKey` that `SharedLoginViewModel.text(for:)` maps to `Localizable.xcstrings`. The Arabic, Portuguese and Tamil translations added in Phase 3 are marked "needs review". Phone sign-in isn't either, since UIKit verifies phone codes with Firebase. The Google and Apple buttons are UI only.
-  - `AccountStore` (`@Observable`, owned by `MyApp`) holds signed out / guest / signed in. `SessionStore.shared` persists the session in the Keychain (`KeychainCredentialStore`, account `session`) and restores it at launch, so the first request is authenticated. A plain `SessionStore()` (tests, previews) is memory-only.
-  - Sign out (Menu) calls `POST users/api/v1/auth/logout`. It clears the session on success or 401; other failures keep it, as in UIKit. `RootView` refreshes Home whenever the account changes.
+  - `AccountStore` (`@Observable`, owned by `MyApp`) holds signed out / guest / signed in.
+    - iOS and macOS: the shared `SessionManager` keeps the session in the Keychain (`KeychainSecureStore` over `KeychainCredentialStore`, service `com.contus.vplayed`, account `session`) and restores it on first use. Every request (shared or native, through `SessionStore.current()`) waits for that, so the first request is authenticated. `AccountStore` follows the manager's status: the restored session, and signed out when a request carrying the token gets a 401 (decision D21). Sessions stored before Phase 5 (`AuthCredentials` JSON) are read as they are.
+    - The macOS build cannot write to the data-protection Keychain (its signing has no keychain access group), before and after Phase 5, so there the session lasts until the app quits.
+    - visionOS: `SessionStore.shared` persists the session in the Keychain itself and restores it at launch.
+    - A plain `SessionStore()` (tests, previews) is memory-only.
+  - Sign out (Menu) calls `POST users/api/v1/auth/logout` (shared `SharedGraph.logout()` → `SessionManager.logout` on iOS and macOS, the same rule as AndroidJP's menu). It clears the session on success or 401; other failures keep it, as in UIKit. `RootView` refreshes Home whenever the account changes.
 - **Images (`Core/Images`)**:
   - API image fields are relative keys joined to the CDN by `ImageURL.resolve`.
   - `ImageSet` variant codes (`tv`, `tp`, `tm`…) are sizes, not shapes. Video thumbnails are 16:9 but micro-series (`sho_type` 6) ones are 3:4, so each card picks its own variant order.

@@ -6,14 +6,17 @@ import Foundation
 /// Sign-in through the Kotlin Multiplatform shared layer (`SharedGraph.authRepository`), the same
 /// code AndroidJP uses: request encryption, endpoints and the status-code rules (decisions D1–D4).
 /// This adapter only maps the shared results to the app's outcomes and `APIError`s, so
-/// `LoginViewModel` and `AccountStore` are unchanged. Storing the session stays with `AccountStore`.
+/// `LoginViewModel` and `AccountStore` are unchanged. `AccountStore` starts the session it returns
+/// (through `SessionStore`, into the shared `SessionManager`).
 ///
 /// The device-limit sign-out (`signOutDevice`, `continueAfterDeviceSignOut`) is not offered on
 /// iOS until the backend confirms that signing in without a code is safe (decision D5).
 nonisolated final class SharedAuthService: AuthServicing, @unchecked Sendable {
+    private let graph: SharedGraph
     private let repository: AuthRepository
 
     init(graph: SharedGraph = SharedLayer.graph) {
+        self.graph = graph
         repository = graph.authRepository
     }
 
@@ -65,9 +68,10 @@ nonisolated final class SharedAuthService: AuthServicing, @unchecked Sendable {
         }
     }
 
-    /// `AccountStore` forgets the session on success and on `APIError.unauthorized`.
+    /// The shared logout (`SharedGraph.logout`), which also ends the shared session when the server
+    /// confirms or no longer knows the token. `AccountStore` then forgets it on the app side.
     func logout() async throws {
-        let result = try await repository.logout()
+        let result = try await graph.logout()
         switch result {
         case is LogoutResultLoggedOut:
             return
@@ -93,7 +97,25 @@ extension AuthCredentials {
             email: session.email,
             phone: session.phone,
             firstName: session.firstName,
-            isGuest: session.isGuest
+            isGuest: session.isGuest,
+            profileID: session.profileId
+        )
+    }
+}
+
+extension AuthSession {
+    /// The shared session for credentials the app holds (the inverse of `AuthCredentials(_:)`).
+    nonisolated convenience init(_ credentials: AuthCredentials) {
+        self.init(
+            accessToken: credentials.accessToken,
+            refreshToken: credentials.refreshToken,
+            userId: credentials.userID,
+            uniqueUserId: credentials.uniqueUserID.map { KotlinLong(value: Int64($0)) },
+            email: credentials.email,
+            phone: credentials.phone,
+            firstName: credentials.firstName,
+            profileId: credentials.profileID,
+            isGuest: credentials.isGuest
         )
     }
 }

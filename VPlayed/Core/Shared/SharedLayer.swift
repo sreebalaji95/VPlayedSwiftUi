@@ -10,27 +10,17 @@ import os
 /// `Shared` sit behind `#if canImport(Shared)`; visionOS keeps the native Swift implementations.
 ///
 /// Sign-in uses it since Phase 3 (`SharedAuthService`, `SharedLoginViewModel`); Home, geo and the
-/// launch settings since Phase 4 (`SharedHomeViewModel`, `SharedStartupService`). Movies still uses
-/// `APIClient`. Features move to it phase by phase (see `KMP_PLANNING/KMP_MIGRATION_PLAN.md`).
+/// launch settings since Phase 4 (`SharedHomeViewModel`, `SharedStartupService`); the session since
+/// Phase 5 (`sessions`, behind `SessionStore` and `AccountStore`). Movies still uses `APIClient`.
+/// Features move to it phase by phase (see `KMP_PLANNING/KMP_MIGRATION_PLAN.md`).
 nonisolated enum SharedLayer {
     /// The app's graph, created on first use.
     static let graph: SharedGraph = makeGraph()
 
-    /// What shared requests send as `Authorization`, `profile_id` and `x-bearer-token`.
-    /// `SessionStore.shared` keeps it equal to its own snapshot (`mirror(_:)`), since Kotlin
-    /// cannot read an actor synchronously. The app owns the session until Phase 5.
-    static let credentials = InMemoryRequestCredentials()
-
-    /// Copies the native session snapshot into `credentials`.
-    static func mirror(_ snapshot: SessionStore.Snapshot) {
-        mirror(snapshot, into: credentials)
-    }
-
-    static func mirror(_ snapshot: SessionStore.Snapshot, into credentials: InMemoryRequestCredentials) {
-        credentials.setAuthTokens(tokens: snapshot.accessToken.map { AuthTokens(accessToken: $0, profileId: snapshot.profileID) })
-        // A geo token is never cleared, only replaced (blank values are ignored).
-        if let geoToken = snapshot.geoToken { credentials.setGeoToken(token: geoToken) }
-    }
+    /// The signed-in or guest session, stored in the Keychain item the app has always used
+    /// (`KeychainSecureStore`). Shared requests send its tokens as `Authorization` and `profile_id`;
+    /// `SessionStore.shared` reads it for native requests.
+    static let sessions = SessionManager(store: DispatchingSecureStore(store: KeychainSecureStore()))
 
     /// Builds a graph. Tests pass their own engine factory (e.g. one using a `URLProtocol` stub).
     static func makeGraph(
@@ -38,7 +28,7 @@ nonisolated enum SharedLayer {
         appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0",
         transportKey: String = CryptoJSAES.authPassphrase,
         deviceInfo: any DeviceInfo = IOSSharedDeviceInfo(),
-        requestCredentials: any RequestCredentials = credentials,
+        sessions: SessionManager = sessions,
         engineFactory: (() -> any Ktor_client_coreHttpClientEngine)? = nil
     ) -> SharedGraph {
         SharedGraph(
@@ -47,9 +37,9 @@ nonisolated enum SharedLayer {
                 deviceInfo: deviceInfo,
                 logger: IOSSharedLogger(),
                 engineFactory: engineFactory ?? { HttpEngine_appleKt.createDarwinEngine(configure: configureSession) },
-                cryptoPrimitives: CryptoPrimitives_appleKt.platformCryptoPrimitives(),
-                requestCredentials: requestCredentials
-            )
+                cryptoPrimitives: CryptoPrimitives_appleKt.platformCryptoPrimitives()
+            ),
+            sessionManager: sessions
         )
     }
 

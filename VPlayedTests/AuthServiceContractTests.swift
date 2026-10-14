@@ -70,13 +70,13 @@ enum StubbedBackendTests {}
 #if canImport(Shared)
 /// The shared layer wired to `AuthStubURLProtocol`, as the app wires it to the network.
 enum StubbedBackend {
-    static func graph(credentials: InMemoryRequestCredentials = InMemoryRequestCredentials()) -> SharedGraph {
+    static func graph(sessions: SessionManager = SessionManager(store: InMemorySecureStore())) -> SharedGraph {
         SharedLayer.makeGraph(
             environment: .development,
             appVersion: "9.9.9",
             transportKey: CryptoJSAES.authPassphrase,
             deviceInfo: IOSSharedDeviceInfo(deviceId: "test-device", deviceName: "iPhone17,3", languageCode: { "en" }),
-            requestCredentials: credentials,
+            sessions: sessions,
             engineFactory: {
                 HttpEngine_appleKt.createDarwinEngine { $0.protocolClasses = [AuthStubURLProtocol.self] }
             }
@@ -116,9 +116,9 @@ extension StubbedBackendTests {
                 return (AuthService(client: client, deviceID: "test-device", deviceName: "iPhone17,3"), store)
             #if canImport(Shared)
             case .shared:
-                let credentials = InMemoryRequestCredentials()
-                let store = SessionStore(onChange: { SharedLayer.mirror($0, into: credentials) })
-                return (SharedAuthService(graph: StubbedBackend.graph(credentials: credentials)), store)
+                // The app's wiring: one session manager behind both `SessionStore` and the graph.
+                let sessions = SessionManager(store: InMemorySecureStore())
+                return (SharedAuthService(graph: StubbedBackend.graph(sessions: sessions)), SessionStore(sessions: sessions))
             #endif
             }
         }

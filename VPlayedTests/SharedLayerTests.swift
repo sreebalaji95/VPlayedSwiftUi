@@ -57,29 +57,9 @@ struct SharedLayerTests {
         #expect(!config.description.contains("unit-test-passphrase"))
     }
 
-    @Test func sessionChangesReachTheSharedCredentials() async {
-        let credentials = InMemoryRequestCredentials()
-        let store = SessionStore(onChange: { SharedLayer.mirror($0, into: credentials) })
-        #expect(credentials.authTokens == nil)
-
-        await store.signIn(AuthCredentials(accessToken: "access-1", refreshToken: nil, userID: nil, uniqueUserID: nil, email: nil, phone: nil, firstName: nil, isGuest: false))
-        await store.update { $0.geoToken = "geo-1" }
-        #expect(credentials.authTokens?.accessToken == "access-1")
-        #expect(credentials.geoToken == "geo-1")
-
-        await store.signOut()
-        #expect(credentials.authTokens == nil)
-        // The geo token belongs to the device, not the account.
-        #expect(credentials.geoToken == "geo-1")
-    }
-
-    @Test func aRestoredSessionIsMirroredAtLaunch() {
-        let credentials = InMemoryRequestCredentials()
-        let saved = InMemoryCredentialStore(AuthCredentials(accessToken: "saved-1", refreshToken: nil, userID: nil, uniqueUserID: nil, email: nil, phone: nil, firstName: nil, isGuest: false))
-
-        _ = SessionStore(credentials: saved, onChange: { SharedLayer.mirror($0, into: credentials) })
-
-        #expect(credentials.authTokens?.accessToken == "saved-1")
+    @Test func theAppSessionIsTheSharedSessionManager() async {
+        #expect(SessionStore.shared.sessions === SharedLayer.sessions)
+        #expect(SharedLayer.graph.sessionManager === SharedLayer.sessions)
     }
 
     @Test func theAppUsesTheSharedAuthService() {
@@ -99,12 +79,11 @@ struct SharedLayerTests {
         SharedStubURLProtocol.reset()
 
         // Native stack: APIClient + RequestHeaders, signed in with a profile and a geo token.
-        let store = SessionStore()
-        await store.update {
-            $0.accessToken = "access-abc"
-            $0.profileID = "profile-1"
-            $0.geoToken = "geo-xyz"
-        }
+        // Both stacks read one session manager, as `SessionStore.shared` and `SharedLayer.graph` do.
+        let sessions = SessionManager(store: InMemorySecureStore())
+        let store = SessionStore(sessions: sessions)
+        await store.signIn(AuthCredentials(accessToken: "access-abc", refreshToken: nil, userID: nil, uniqueUserID: nil, email: nil, phone: nil, firstName: nil, isGuest: false, profileID: "profile-1"))
+        await store.update { $0.geoToken = "geo-xyz" }
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [SharedStubURLProtocol.self]
         let native = APIClient(
@@ -115,20 +94,19 @@ struct SharedLayerTests {
         _ = try await native.get(Endpoint(path: "mediaview/api/v1/home"), as: IgnoredPayload.self)
 
         // Shared stack: the same values through the Kotlin header plugin on the Darwin engine.
-        // The credentials come from the same session snapshot, as `SessionStore.shared` mirrors it.
-        let credentials = InMemoryRequestCredentials()
-        SharedLayer.mirror(await store.current(), into: credentials)
         let graph = SharedLayer.makeGraph(
             environment: .development,
             appVersion: "9.9.9",
             transportKey: "",
             deviceInfo: IOSSharedDeviceInfo(deviceId: "test-device", deviceName: "iPhone17,3", languageCode: { "ar" }),
-            requestCredentials: credentials,
+            sessions: sessions,
             engineFactory: {
                 HttpEngine_appleKt.createDarwinEngine { $0.protocolClasses = [SharedStubURLProtocol.self] }
             }
         )
-        let result = try await graph.apiCaller.get(path: "mediaview/api/v1/home", query: [], options: RequestOptions(sendGeoToken: true, redact: false))
+        // The geo token comes from the graph's `GeoStore` (filled by the shared geo lookup in the app).
+        graph.geoStore.updateGeo(token: "geo-xyz", info: nil)
+        let result = try await graph.apiCaller.get(path: "mediaview/api/v1/home", query: [], options: RequestOptions(sendGeoToken: true, redact: false, endsSessionOnUnauthorized: true))
         #expect(result is DataResultSuccess<AnyObject>)
 
         let requests = SharedStubURLProtocol.captured

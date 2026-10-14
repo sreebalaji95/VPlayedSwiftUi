@@ -24,25 +24,36 @@ nonisolated struct KeychainCredentialStore: CredentialStoring {
     }
 
     func load() -> AuthCredentials? {
-        var query = baseQuery()
-        query[kSecReturnData as String] = true
-        query[kSecMatchLimit as String] = kSecMatchLimitOne
-        var result: CFTypeRef?
-        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
-              let data = result as? Data else { return nil }
+        guard let data = loadData() else { return nil }
         return try? JSONDecoder().decode(AuthCredentials.self, from: data)
     }
 
     func save(_ credentials: AuthCredentials) {
         guard let data = try? JSONEncoder().encode(credentials) else { return }
+        // If the Keychain is unavailable the session lasts until the app quits.
+        saveData(data)
+    }
+
+    /// The item's bytes, whatever their format (the shared `KeychainSecureStore` stores its own JSON here).
+    func loadData() -> Data? {
+        var query = baseQuery()
+        query[kSecReturnData as String] = true
+        query[kSecMatchLimit as String] = kSecMatchLimitOne
+        var result: CFTypeRef?
+        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess else { return nil }
+        return result as? Data
+    }
+
+    /// False when the Keychain refused the item.
+    @discardableResult
+    func saveData(_ data: Data) -> Bool {
         let update = [kSecValueData as String: data] as CFDictionary
-        if SecItemUpdate(baseQuery() as CFDictionary, update) == errSecItemNotFound {
-            var attributes = baseQuery()
-            attributes[kSecValueData as String] = data
-            attributes[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
-            // If the Keychain is unavailable the session lasts until the app quits.
-            _ = SecItemAdd(attributes as CFDictionary, nil)
-        }
+        let status = SecItemUpdate(baseQuery() as CFDictionary, update)
+        guard status == errSecItemNotFound else { return status == errSecSuccess }
+        var attributes = baseQuery()
+        attributes[kSecValueData as String] = data
+        attributes[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
+        return SecItemAdd(attributes as CFDictionary, nil) == errSecSuccess
     }
 
     func delete() {

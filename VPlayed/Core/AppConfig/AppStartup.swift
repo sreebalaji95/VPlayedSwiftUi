@@ -9,8 +9,9 @@ import os
 /// The two calls are independent and run concurrently, as in the UIKit app:
 /// - **Common** (`SceneDelegate.getCommonKeys`): feature flags, payment flags and update details.
 /// - **Geo** (`SplashScreenViewController.getBearerToken`): looks up the public IP, then fetches
-///   its geo token. The token goes into `SessionStore`, so `RequestHeaders` (and the shared layer,
-///   through `SharedLayer.mirror`) send it as `X-Bearer-Token` on every later request.
+///   its geo token. The token goes into `SessionStore`, so `RequestHeaders` send it as
+///   `X-Bearer-Token` on every later request (shared requests read it from the shared `GeoStore`,
+///   which the shared lookup fills).
 ///
 /// Both calls run on the Kotlin shared layer where it is linked (`SharedStartupService`, decision
 /// D18: the refresh is shared, the app decides when it runs); visionOS uses `StartupService`.
