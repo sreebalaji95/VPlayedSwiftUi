@@ -108,8 +108,8 @@
      "is_archived": false,
      "title": "Comedy",
      "slug": "comedy",
-     "creator_id": "6a1432ca11219130eba167e0",
-     "updator_id": "6a1432ca11219130eba167e0",
+     "creator_id": "00000000000000000000c001",
+     "updator_id": "00000000000000000000c001",
      "created_at": "2026-05-25T11:31:00.507Z",
      "updated_at": "2026-05-25T11:31:00.507Z",
      "__v": 0
@@ -205,8 +205,8 @@
      "is_archived": false,
      "title": "Action",
      "slug": "action",
-     "creator_id": "6a1432ca11219130eba167e0",
-     "updator_id": "6a1432ca11219130eba167e0",
+     "creator_id": "00000000000000000000c001",
+     "updator_id": "00000000000000000000c001",
      "created_at": "2026-05-25T11:31:00.506Z",
      "updated_at": "2026-05-25T11:31:00.506Z",
      "__v": 0
@@ -458,24 +458,24 @@
     ],
     "stars_leads": [
      {
-      "lead_name": "Mel Gibson",
-      "cast_name": "Simon"
+      "lead_name": "Cast Member A",
+      "cast_name": "Cast Member B"
      },
      {
-      "lead_name": "Erin Moriarty",
-      "cast_name": "AndersonAndersonAnderson"
+      "lead_name": "Cast Member C",
+      "cast_name": "Cast Member D"
      },
      {
-      "lead_name": "William H. Macy",
-      "cast_name": "Mathew"
+      "lead_name": "Cast Member E",
+      "cast_name": "Cast Member F"
      },
      {
-      "lead_name": "Michael Parks",
-      "cast_name": "Angelin"
+      "lead_name": "Cast Member G",
+      "cast_name": "Cast Member H"
      },
      {
-      "lead_name": "Thomas Mann",
-      "cast_name": "Edison"
+      "lead_name": "Cast Member I",
+      "cast_name": "Cast Member J"
      }
     ],
     "prices": [

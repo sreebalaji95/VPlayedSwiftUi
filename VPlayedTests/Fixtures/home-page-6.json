@@ -21,7 +21,7 @@
      {
       "_id": "6a2d5adf6fd68806672e597f",
       "studio_id": "6a143b54c729db1125629ad4",
-      "studio_name": "Comedy Spot",
+      "studio_name": "Channel D",
       "studio_slug": "comedy-spot",
       "sho_type": 1,
       "title": "Freakier Friday",
@@ -79,8 +79,8 @@
       "whatsapp_shares": 0,
       "other_shares": 0,
       "use_video_thumbnail_image_instead": false,
-      "creator_id": "6a1432ca112191320fa167ed",
-      "updator_id": "6a1432ca112191320fa167ed",
+      "creator_id": "00000000000000000000c002",
+      "updator_id": "00000000000000000000c002",
       "sho_released_on": "2025-08-06",
       "poster_images": {
        "default": {
@@ -198,7 +198,7 @@
      {
       "_id": "6a2d651c6fd68806672e81fe",
       "studio_id": "6a143b54c729db1125629ad4",
-      "studio_name": "Comedy Spot",
+      "studio_name": "Channel D",
       "studio_slug": "comedy-spot",
       "sho_type": 1,
       "title": "Dilwale Dulhania Le Jayenge",
@@ -256,8 +256,8 @@
       "whatsapp_shares": 0,
       "other_shares": 0,
       "use_video_thumbnail_image_instead": false,
-      "creator_id": "6a1432ca112191320fa167ed",
-      "updator_id": "6a1432ca112191320fa167ed",
+      "creator_id": "00000000000000000000c002",
+      "updator_id": "00000000000000000000c002",
       "sho_released_on": "1995-10-20",
       "poster_images": {
        "default": {
@@ -396,7 +396,7 @@
       "is_active": true,
       "is_archived": false,
       "banner_img": "https://gsvp-dev.s3.ap-south-1.amazonaws.com/static/images/yellow.png",
-      "name": "Summer Offer",
+      "name": "Channel E",
       "description": "Premium is available for Rs 99 per month under a limited-period Summer OTT Sale",
       "in_app_purchase_id": "324567",
       "days": 7,
@@ -428,8 +428,8 @@
       "slug": "summer-offer",
       "studio_id": "6a1432ca1121914bd8a167f2",
       "rank": "0|xzzzzy:",
-      "creator_id": "6a1432ca11219130eba167e0",
-      "updator_id": "6a1432ca11219130eba167e0",
+      "creator_id": "00000000000000000000c001",
+      "updator_id": "00000000000000000000c001",
       "created_at": "2026-06-15T16:50:06.317Z",
       "updated_at": "2026-10-08T07:47:21.830Z",
       "background_color": "#FFCF1B",
@@ -462,7 +462,7 @@
       "is_active": true,
       "is_archived": false,
       "banner_img": "gudsho-upload-bulkpurchase-banner-images/24-06-2026/1782285571136-blob.jpg",
-      "name": "June feast",
+      "name": "Channel F",
       "description": "june feast Feasrtttttttttttttttttttttttttttt",
       "in_app_purchase_id": "feast10",
       "days": 7,
@@ -494,8 +494,8 @@
       "slug": "june-feast",
       "studio_id": "6a1432ca1121914bd8a167f2",
       "rank": "0|xzzzzs:",
-      "creator_id": "6a1432ca11219130eba167e0",
-      "updator_id": "6a1432ca11219130eba167e0",
+      "creator_id": "00000000000000000000c001",
+      "updator_id": "00000000000000000000c001",
       "created_at": "2026-06-24T07:24:43.097Z",
       "updated_at": "2026-10-08T07:47:20.452Z",
       "type": 5,
@@ -526,7 +526,7 @@
       "master_details_id": {
        "_id": "6a2d7c840baa554e4926ffdf",
        "studio_id": "6a143b54c729db4c6a629ac0",
-       "studio_name": "Drama Spotlight",
+       "studio_name": "Studio C",
        "studio_slug": "drama-spotlight",
        "sho_type": 1,
        "title": "Iyobinte Pusthakam",
@@ -590,8 +590,8 @@
        "twitter_shares": 0,
        "whatsapp_shares": 0,
        "other_shares": 0,
-       "creator_id": "6a1432ca112191320fa167ed",
-       "updator_id": "6a1432ca112191320fa167ed",
+       "creator_id": "00000000000000000000c002",
+       "updator_id": "00000000000000000000c002",
        "sho_released_on": "2014-11-07",
        "poster_images": {
         "default": {
@@ -761,7 +761,7 @@
       "master_details_id": {
        "_id": "6a2d7c930baa554e49270036",
        "studio_id": "6a1432ca1121914bd8a167f2",
-       "studio_name": "VplayedDev",
+       "studio_name": "Channel C",
        "studio_slug": "vplayeddev",
        "sho_type": 1,
        "title": "Kandahar",
@@ -820,8 +820,8 @@
        "twitter_shares": 0,
        "whatsapp_shares": 0,
        "other_shares": 0,
-       "creator_id": "6a1432ca112191320fa167ed",
-       "updator_id": "6a1432ca112191320fa167ed",
+       "creator_id": "00000000000000000000c002",
+       "updator_id": "00000000000000000000c002",
        "sho_released_on": "2010-12-16",
        "poster_images": {
         "default": {

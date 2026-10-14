@@ -39,10 +39,10 @@ struct HomeDecodingTests {
             Issue.record("Unexpected section content")
             return
         }
-        #expect(plans.first?.name == "Bp Plan")
+        #expect(plans.first?.name == "Channel A")
         #expect(plans.first?.label == "Special ony for you")
         #expect(plans.first?.price?.formatted == "₹1")
-        #expect(channels.first?.name == "VplayedDev")
+        #expect(channels.first?.name == "Channel C")
         #expect(channels.first?.logoURL?.absoluteString == "https://gsvp-dev.s3.ap-south-1.amazonaws.com/images/1779980945139-blob.png")
     }
 
@@ -57,9 +57,9 @@ struct HomeDecodingTests {
             Issue.record("Unexpected section content")
             return
         }
-        #expect(tracks.first?.artistName == "Sean Roldan")
+        #expect(tracks.first?.artistName == "Artist A")
         #expect(tracks.first?.imageURL != nil)
-        #expect(streams.first?.channelName == "VplayedDev")
+        #expect(streams.first?.channelName == "Channel C")
         #expect(streams.first?.isLive == false)
         #expect(micro.allSatisfy { $0.isMicroSeries })
         // Micro-series `tc` is tiny; `tp` is their largest 3:4 variant.

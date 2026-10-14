@@ -37,7 +37,7 @@ xcodebuild test -project VPlayed.xcodeproj -scheme Dev -destination 'platform=iO
 xcodebuild test -project VPlayed.xcodeproj -scheme Dev -destination 'platform=iOS Simulator,name=iPhone 17' '-only-testing:VPlayedTests/HomeViewModelTests/loadMoreAppendsDedupesAndStops()'
 ```
 
-`VPlayedTests/` is also a synchronized folder; JSON in `VPlayedTests/Fixtures/` is real dev-API output, trimmed to two items per rail and stripped of studio contact/KYC fields and live-stream credentials (`streaming_key`, `streaming_url`, `streaming_watch_url`, `streaming_id`, `streaming_arn`). Strip those again from any new capture; the app never reads them.
+`VPlayedTests/` is also a synchronized folder; JSON in `VPlayedTests/Fixtures/` is real dev-API output, trimmed to two items per rail and stripped of studio contact/KYC fields and live-stream credentials (`streaming_key`, `streaming_url`, `streaming_watch_url`, `streaming_id`, `streaming_arn`). People and accounts are pseudonymised: `studio_name` / `name` → "Studio A" / "Channel A"…, `artist_name`, `cast_name`, `lead_name` → "Artist A" / "Cast Member A"…, and `creator_id` / `updator_id` → `00000000000000000000c001`…; content titles and artwork paths stay. Do the same to any new capture; the app never reads the stripped fields.
 
 ## Environments
 
@@ -96,6 +96,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - Tests:
     - `SharedLayerTests` checks that the shared Ktor client sends the same backend headers as `RequestHeaders`, that shared encryption decrypts with `CryptoJSAES`, and that the app's `SessionStore` and graph share one `SessionManager`.
     - `SharedSessionTests` covers the upgrade (a session stored as `AuthCredentials` JSON is restored, guests too), `SessionStore` and `AccountStore` over the manager, the Keychain round trip (skipped on macOS, see Auth), and the 401 rule.
+    - `SharedInteropTests` checks how Swift meets Kotlin: Darwin timeouts and offline errors arrive as typed `Timeout` / `Network` failures, a suspend call from a cancelled Swift task still completes (cancellation does not cross into Kotlin), watchers deliver on the main thread from the current value and stop when closed, and Kotlin enums and sealed types compare as expected.
     - `AuthServiceContractTests` runs the same backend answers against `SharedAuthService` and the Swift `AuthService`, so they can't drift apart.
     - `SharedLoginViewModelTests` runs the Login model against scripted answers.
     - The suites that script `AuthStubURLProtocol` are nested in the serialized `StubbedBackendTests`. The flow rules themselves are tested in `../kmp`.

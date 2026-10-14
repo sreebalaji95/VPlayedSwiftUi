@@ -21,7 +21,7 @@
      {
       "_id": "6a2f84c22e1dcb33c68e61b2",
       "studio_id": "6a143ca9c729db3361629b3a",
-      "studio_name": "Action Hub",
+      "studio_name": "Studio B",
       "studio_slug": "action-hub",
       "sho_type": 1,
       "title": "District 13: Ultimatum",
@@ -74,8 +74,8 @@
       "whatsapp_shares": 0,
       "other_shares": 0,
       "use_video_thumbnail_image_instead": false,
-      "creator_id": "6a1432ca112191320fa167ed",
-      "updator_id": "6a1432ca112191320fa167ed",
+      "creator_id": "00000000000000000000c002",
+      "updator_id": "00000000000000000000c002",
       "sho_released_on": "2009-02-18",
       "poster_images": {
        "default": {
@@ -194,7 +194,7 @@
      {
       "_id": "6a2eb7ef4c9c7587f543fda0",
       "studio_id": "6a143b54c729db4c6a629ac0",
-      "studio_name": "Drama Spotlight",
+      "studio_name": "Studio C",
       "studio_slug": "drama-spotlight",
       "sho_type": 2,
       "title": "Anthracite",
@@ -252,8 +252,8 @@
       "whatsapp_shares": 0,
       "other_shares": 0,
       "use_video_thumbnail_image_instead": false,
-      "creator_id": "6a1432ca112191320fa167ed",
-      "updator_id": "6a1432ca112191320fa167ed",
+      "creator_id": "00000000000000000000c002",
+      "updator_id": "00000000000000000000c002",
       "sho_released_on": "2024-04-10",
       "poster_images": {
        "default": {
@@ -400,7 +400,7 @@
       "master_details_id": {
        "_id": "6a2d7c840baa554e4926ffdf",
        "studio_id": "6a143b54c729db4c6a629ac0",
-       "studio_name": "Drama Spotlight",
+       "studio_name": "Studio C",
        "studio_slug": "drama-spotlight",
        "sho_type": 1,
        "title": "Iyobinte Pusthakam",
@@ -464,8 +464,8 @@
        "twitter_shares": 0,
        "whatsapp_shares": 0,
        "other_shares": 0,
-       "creator_id": "6a1432ca112191320fa167ed",
-       "updator_id": "6a1432ca112191320fa167ed",
+       "creator_id": "00000000000000000000c002",
+       "updator_id": "00000000000000000000c002",
        "sho_released_on": "2014-11-07",
        "poster_images": {
         "default": {
@@ -635,7 +635,7 @@
       "master_details_id": {
        "_id": "6a2d7c930baa554e49270036",
        "studio_id": "6a1432ca1121914bd8a167f2",
-       "studio_name": "VplayedDev",
+       "studio_name": "Channel C",
        "studio_slug": "vplayeddev",
        "sho_type": 1,
        "title": "Kandahar",
@@ -694,8 +694,8 @@
        "twitter_shares": 0,
        "whatsapp_shares": 0,
        "other_shares": 0,
-       "creator_id": "6a1432ca112191320fa167ed",
-       "updator_id": "6a1432ca112191320fa167ed",
+       "creator_id": "00000000000000000000c002",
+       "updator_id": "00000000000000000000c002",
        "sho_released_on": "2010-12-16",
        "poster_images": {
         "default": {
@@ -877,7 +877,7 @@
      {
       "_id": "6a37a40c7b7d6d47909d6c82",
       "studio_id": "6a1432ca1121914bd8a167f2",
-      "studio_name": "VplayedDev",
+      "studio_name": "Channel C",
       "studio_slug": "vplayeddev",
       "default_title": "title-1",
       "title": "Sedhu Test Live",
@@ -910,7 +910,7 @@
       "is_converted": 0,
       "status": 1,
       "publish_status": 4,
-      "updator_id": "6a1432ca11219130eba167e0",
+      "updator_id": "00000000000000000000c001",
       "prices": [],
       "created_at": "2026-06-21T08:42:53.119Z",
       "updated_at": "2026-09-02T11:44:03.909Z",
