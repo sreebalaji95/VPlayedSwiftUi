@@ -37,6 +37,22 @@ nonisolated struct CommonSettings: Decodable, Sendable, Equatable {
             case softUpdateMessage = "soft_update_message"
         }
 
+        init(
+            isForceUpdateEnabled: Bool,
+            minimumVersion: String?,
+            forceUpdateMessage: String?,
+            isSoftUpdateEnabled: Bool,
+            latestVersion: String?,
+            softUpdateMessage: String?
+        ) {
+            self.isForceUpdateEnabled = isForceUpdateEnabled
+            self.minimumVersion = minimumVersion
+            self.forceUpdateMessage = forceUpdateMessage
+            self.isSoftUpdateEnabled = isSoftUpdateEnabled
+            self.latestVersion = latestVersion
+            self.softUpdateMessage = softUpdateMessage
+        }
+
         init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             isForceUpdateEnabled = container.lenientBool(.forceUpdate) ?? false
@@ -76,6 +92,30 @@ nonisolated struct CommonSettings: Decodable, Sendable, Equatable {
 
     private struct Platform: Decodable {
         var platform: String?
+    }
+
+    init(
+        isRTLAllowed: Bool? = nil,
+        isPiPAllowed: Bool? = nil,
+        isCastingAllowed: Bool? = nil,
+        isScreenRecordingAllowed: Bool? = nil,
+        isGuestUser: Bool? = nil,
+        contentLibrary: ContentLibrary = .vodDrama,
+        verificationMethod: VerificationMethod = .email,
+        isIAPEnabled: Bool = false,
+        isAppStoreCTAChange: Bool = false,
+        update: UpdateDetails? = nil
+    ) {
+        self.isRTLAllowed = isRTLAllowed
+        self.isPiPAllowed = isPiPAllowed
+        self.isCastingAllowed = isCastingAllowed
+        self.isScreenRecordingAllowed = isScreenRecordingAllowed
+        self.isGuestUser = isGuestUser
+        self.contentLibrary = contentLibrary
+        self.verificationMethod = verificationMethod
+        self.isIAPEnabled = isIAPEnabled
+        self.isAppStoreCTAChange = isAppStoreCTAChange
+        self.update = update
     }
 
     init(from decoder: any Decoder) throws {

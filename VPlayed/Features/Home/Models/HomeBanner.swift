@@ -28,6 +28,17 @@ nonisolated struct HomeBanner: Decodable, Sendable, Identifiable, Hashable {
         case posterImage = "poster_image"
     }
 
+    init(id: String, title: String, slug: String? = nil, kind: ContentKind = .unknown, synopsis: String? = nil, genres: [String] = [], backdropURL: URL? = nil, titleImageURL: URL? = nil) {
+        self.id = id
+        self.title = title
+        self.slug = slug
+        self.kind = kind
+        self.synopsis = synopsis
+        self.genres = genres
+        self.backdropURL = backdropURL
+        self.titleImageURL = titleImageURL
+    }
+
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let details = try container.nestedContainer(keyedBy: DetailKeys.self, forKey: .masterDetails)

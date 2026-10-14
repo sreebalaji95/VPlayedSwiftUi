@@ -9,8 +9,11 @@ import os
 /// The two calls are independent and run concurrently, as in the UIKit app:
 /// - **Common** (`SceneDelegate.getCommonKeys`): feature flags, payment flags and update details.
 /// - **Geo** (`SplashScreenViewController.getBearerToken`): looks up the public IP, then fetches
-///   its geo token. The token goes into `SessionStore`, so `RequestHeaders` sends it as
-///   `X-Bearer-Token` on every later request.
+///   its geo token. The token goes into `SessionStore`, so `RequestHeaders` (and the shared layer,
+///   through `SharedLayer.mirror`) send it as `X-Bearer-Token` on every later request.
+///
+/// Both calls run on the Kotlin shared layer where it is linked (`SharedStartupService`, decision
+/// D18: the refresh is shared, the app decides when it runs); visionOS uses `StartupService`.
 ///
 /// Failures are logged and otherwise ignored, as in the UIKit app: the defaults apply and launch
 /// carries on.
@@ -39,7 +42,7 @@ final class AppStartup {
     @ObservationIgnored private var geoTask: Task<Void, Never>?
     private static let log = Logger(subsystem: "com.contus.vplayed", category: "Startup")
 
-    init(service: any StartupServicing = StartupService(), session: SessionStore = .shared) {
+    init(service: any StartupServicing = StartupServices.live(), session: SessionStore = .shared) {
         self.service = service
         self.session = session
     }
@@ -77,13 +80,12 @@ final class AppStartup {
 
     private func loadGeoToken() async {
         do {
-            let ip = try await service.publicIPAddress()
-            guard let token = try await service.geoToken(forIP: ip), !token.isEmpty else {
+            guard let lookup = try await service.geoLookup() else {
                 Self.log.info("Geo token skipped: the server returned none")
                 return
             }
-            await session.update { $0.geoToken = token }
-            geoInfo = GeoInfo(token: token)
+            await session.update { $0.geoToken = lookup.token }
+            geoInfo = lookup.info
             Self.log.info("Geo token set (country \(self.geoInfo?.countryCode ?? "unknown", privacy: .public))")
         } catch {
             Self.log.error("Geo token failed: \(String(describing: error), privacy: .public)")

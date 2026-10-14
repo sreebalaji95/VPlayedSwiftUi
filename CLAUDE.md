@@ -85,16 +85,20 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - Business logic shared with the Android app lives in a Kotlin Multiplatform library in the `kmp` repository. The plan is in `../KMP_PLANNING/`. `scripts/build-shared.sh` builds `Shared.xcframework` (iOS device, iOS simulator arm64/x86_64, macOS arm64/x86_64) into the local `SharedKit` package, which the `VPlayed` target links with platform filters iOS and macOS.
   - Kotlin/Native has no visionOS target, so every use of the `Shared` module sits behind `#if canImport(Shared)`, and visionOS keeps the native Swift implementations.
   - `SharedLayer` builds the one `SharedGraph` from `APIEnvironment`, the app version and the transport key. `IOSSharedDeviceInfo` supplies `device_id` (`DeviceID`), `deviceDetail` (`DeviceModel`) and `X-Language-Code` (`AppLanguage.current`). It and `IOSSharedLogger` are `nonisolated`, because Kotlin calls them from background threads. Import the module as `@preconcurrency import Shared`, since Kotlin classes aren't `Sendable`.
-  - Phase 3 state: sign-in runs on the shared layer.
+  - Phase 3 and 4 state: sign-in, Home, geo and the launch settings run on the shared layer.
     - Login: `LoginView` works with a `LoginScreenModel`. On iOS and macOS that is `SharedLoginViewModel`, which runs the shared `EmailLoginController` and `OtpController` (the same rules AndroidJP's Login and OTP screens use), mirrors their state through `watchState` / `watchEffects`, and closes them through `KotlinSubscriptions`. On visionOS it is the Swift `LoginViewModel`.
     - Logout: `AuthServices.live()` returns `SharedAuthService` (iOS, macOS), or the Swift `AuthService` on visionOS. Both follow the same rules.
-    - Home, geo and settings still use `APIClient` (Phase 4).
+    - Home: `HomeView` works with `PlatformHomeModel`. On iOS and macOS that is `SharedHomeViewModel`, which runs the shared `HomeFeedController` (the same feed rules AndroidJP's Home uses: parallel first load, de-duplicated paging, up to five empty pages skipped, refresh that keeps content, channel follow) and maps the shared models into the Swift view structs (`SharedHomeMapping`). On visionOS it is the Swift `HomeViewModel` with `HomeService`. The shared mapper applies this app's image table (decision D12, `HomeImagePolicy.APPLE`), so the cards pick the same variants.
+    - Launch: `StartupServices.live()` returns `SharedStartupService` (iOS, macOS: `SharedGraph.commonSettingsRepository` and `geoRepository`), or the Swift `StartupService` on visionOS. `AppStartup` still decides when they run (decision D18).
+    - Kotlin types that share a name with an app type (`HomeSection`, `ContentItem`, `CommonSettings`, `GeoInfo`, `Price`, `AccessTag`) are written `Shared.X`; unqualified names are the app's. Tests import both modules, so they qualify the app's as `VPlayed.X`.
+    - Movies still uses `APIClient`.
   - The app owns the session until Phase 5. `SessionStore.shared` mirrors every snapshot (token, profile, geo token) into `SharedLayer.credentials`, which shared requests read for `Authorization`, `profile_id` and `x-bearer-token`.
   - Tests:
     - `SharedLayerTests` checks that the shared Ktor client sends the same backend headers as `RequestHeaders`, that shared encryption decrypts with `CryptoJSAES`, and that the mirroring works.
     - `AuthServiceContractTests` runs the same backend answers against `SharedAuthService` and the Swift `AuthService`, so they can't drift apart.
     - `SharedLoginViewModelTests` runs the Login model against scripted answers.
     - The suites that script `AuthStubURLProtocol` are nested in the serialized `StubbedBackendTests`. The flow rules themselves are tested in `../kmp`.
+    - `SharedHomeTests.swift` (suites nested in the serialized `RoutedBackendTests`, scripting `RouteStubURLProtocol`, which answers by path because Home loads banners and rails in parallel): `SharedHomeParityTests` runs the dev-API fixtures through the shared layer and through the Swift decoders and requires the same view models, `SharedHomeViewModelTests` runs the Home model, `SharedStartupServiceTests` the launch calls.
   - Kotlin `StateFlow`s are not `@Observable`. Observe them with `StateFlowWatcher.watch(onEach:)`, which delivers on the main thread, and `close()` the returned `Closeable` in `deinit`. Kotlin `suspend` functions are `async` in Swift. Shared APIs return result types and never throw.
 - **Decoding**:
   - The API mixes types (`sho_type` Int or String, `video_duration` String, flags 0/1 or Bool, titles String or `{"en": …}`). Decode through the lenient helpers in `LenientDecoding.swift` (`lenientInt`, `lossyArray`, `LocalizedText`…) so one malformed item never fails a whole response.
@@ -103,9 +107,10 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - `AppStartup` (`@Observable`) runs the UIKit app's two launch calls once per process. `MyApp` owns it and calls `start()` from its `init`, so view updates, navigation and language switches never fetch again. Don't trigger it from views.
   - The calls are independent and run concurrently:
     - `GET mediaview/api/v1/common` (`Endpoint.common`, from `SceneDelegate.getCommonKeys`) decodes into `CommonSettings`: feature flags, content library, OTP method, payment flags and the iOS `force_update_details`.
-    - The geo step looks up the public IP at `api.ipify.org`, then calls `GET mediaview/api/v1/common/geo-data/{ip}` (`Endpoint.geoData(ip:)`, from `SplashScreenViewController.getBearerToken`). It stores `geo_token` in `SessionStore` so every later request sends it as `X-Bearer-Token`. `GeoInfo` decodes the token's base64 JSON (country, currency…).
+    - The geo step (`geoLookup()`) looks up the public IP at `api.ipify.org`, then calls `GET mediaview/api/v1/common/geo-data/{ip}` (`Endpoint.geoData(ip:)`, from `SplashScreenViewController.getBearerToken`). It stores `geo_token` in `SessionStore` so every later request sends it as `X-Bearer-Token`. `GeoInfo` decodes the token's base64 JSON (country, currency…).
+    - On iOS and macOS both calls go through the shared layer (`SharedStartupService`); visionOS uses `StartupService`.
   - Failures are logged (category `Startup`) and ignored, as in UIKit, and the defaults apply.
-  - Home's first load waits for the geo step through `HomeViewModel(prepare:)`, for at most `SplashView.duration`.
+  - Home's first load waits for the geo step through `PlatformHomeModel(prepare:)`, for at most `SplashView.duration`.
   - `RootView` applies two UIKit rules. A drama catalogue (`content_library` 2) forces dark mode except in `QA` builds. `rtl: false` sets `LanguageStore.isRTLAllowed = false`, which lays the chosen language out left to right; use `languageStore.isRightToLeft`, not `language.isRightToLeft`, for layout.
   - Not ported yet: automatic guest login at launch, the force/soft update prompt (the settings are stored), and re-fetching on foreground.
 - **Auth (`Core/Auth`, `Features/Auth`)**:
@@ -131,8 +136,10 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - Data comes from `GET mediaview/api/v1/homebanners` (hero) and `GET mediaview/api/v1/home?limit=3&inside_limit=10&page=N` (rails, paged by top-level `next`).
   - Each rail's `data` is polymorphic by `type`: 1/7 titles, 2/8 promos, 3 audio, 4/9 channels, 5 bulk plans, 6 live.
   - `HomeSection.layout` maps type + `is_top_ten` + micro-series to a prototype card style. Unknown types and empty rails are dropped.
-  - `AccessTag` ports the UIKit card badge rules (`SeriesCollectionViewCell`).
-  - `HomeViewModel` (`@Observable`) owns phases, refresh and de-duplicated pagination. It is held by `RootView` so Home doesn't reload after navigation.
+  - `AccessTag` ports the UIKit card badge rules (`SeriesCollectionViewCell`); the shared layer has the same rule (decision D14). `ContentItem` stores its image URLs and tag, decided when it is read (by its decoder or by `SharedHomeMapping`).
+  - Live items: the dev API sends `streaming_status` and `schedule_at` (AndroidJP's keys); the shared layer reads those first, then `publish_status` / `scheduled_at` (decision D10).
+  - The bulk-plan card shows the full price and "Save up to N%" from the listed `discounted_percentage`, even when `discounted_price` is 0; AndroidJP shows the reduced price and a percentage only with a real discount (divergence D20, kept per app).
+  - `PlatformHomeModel` (`SharedHomeViewModel`, or `HomeViewModel` on visionOS; both `@Observable`) owns phases, refresh and de-duplicated pagination. It is held by `RootView` so Home doesn't reload after navigation.
 - **Movies (`Features/Movies`)**, opened from Menu → Movies:
   - Data comes from `GET mediaview/api/v1/sho-details/media/1?page=N&limit=10&is_promo=true` (`Endpoint.media(shoType:page:)`; 2 is series, 6 micro-series). It is paged by top-level `next`, and `total` feeds the "N films" subtitle.
   - Items decode as `ContentItem` (`genre` comes from `default_genre.title`). `MoviesViewModel` mirrors `HomeViewModel`'s phases, refresh and de-duplicated paging.

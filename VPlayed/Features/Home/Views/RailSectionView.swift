@@ -3,7 +3,7 @@ import SwiftUI
 /// One home rail: a tappable title (opens "view all") above a horizontally snapping row of cards.
 struct RailSectionView: View {
     let section: HomeSection
-    let model: HomeViewModel
+    let model: PlatformHomeModel
 
     @Environment(\.openRoute) private var openRoute
     @Environment(AccountStore.self) private var account

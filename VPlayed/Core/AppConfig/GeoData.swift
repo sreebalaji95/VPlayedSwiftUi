@@ -30,6 +30,24 @@ nonisolated struct GeoInfo: Decodable, Sendable, Equatable {
         case country, countryCode, currency, region, regionName, city, timezone
     }
 
+    init(
+        country: String? = nil,
+        countryCode: String? = nil,
+        currency: String? = nil,
+        region: String? = nil,
+        regionName: String? = nil,
+        city: String? = nil,
+        timezone: String? = nil
+    ) {
+        self.country = country
+        self.countryCode = countryCode
+        self.currency = currency
+        self.region = region
+        self.regionName = regionName
+        self.city = city
+        self.timezone = timezone
+    }
+
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         country = container.lenientString(.country)
@@ -47,4 +65,10 @@ nonisolated struct GeoInfo: Decodable, Sendable, Equatable {
               let info = try? JSONDecoder().decode(GeoInfo.self, from: data) else { return nil }
         self = info
     }
+}
+
+/// A geo token and the location it encodes (nil when the token isn't readable).
+nonisolated struct GeoLookup: Sendable, Equatable {
+    var token: String
+    var info: GeoInfo?
 }

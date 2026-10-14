@@ -1,13 +1,22 @@
 import Foundation
 import Observation
 
+/// The Home model the screens use: the shared-layer model where the Kotlin framework is linked
+/// (iOS, macOS), else this file's Swift model (visionOS, which has no Kotlin/Native target).
+#if canImport(Shared)
+typealias PlatformHomeModel = SharedHomeViewModel
+#else
+typealias PlatformHomeModel = HomeViewModel
+#endif
+
 /// A channel's follow state after the user changed it.
 struct ChannelFollowState: Equatable {
     var isFollowed: Bool
     var followers: Int
 }
 
-/// Drives the Home feed: hero banners plus paged rails.
+/// Drives the Home feed: hero banners plus paged rails. The Swift implementation, used on visionOS;
+/// iOS and macOS use `SharedHomeViewModel` (see `PlatformHomeModel`).
 @Observable
 final class HomeViewModel {
     enum Phase: Equatable {

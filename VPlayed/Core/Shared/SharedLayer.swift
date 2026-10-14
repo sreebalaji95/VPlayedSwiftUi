@@ -9,7 +9,8 @@ import os
 /// native networking uses. Kotlin/Native has no visionOS target, so this file and every use of
 /// `Shared` sit behind `#if canImport(Shared)`; visionOS keeps the native Swift implementations.
 ///
-/// Sign-in uses it since Phase 3 (`SharedAuthService`); Home, geo and settings still use
+/// Sign-in uses it since Phase 3 (`SharedAuthService`, `SharedLoginViewModel`); Home, geo and the
+/// launch settings since Phase 4 (`SharedHomeViewModel`, `SharedStartupService`). Movies still uses
 /// `APIClient`. Features move to it phase by phase (see `KMP_PLANNING/KMP_MIGRATION_PLAN.md`).
 nonisolated enum SharedLayer {
     /// The app's graph, created on first use.

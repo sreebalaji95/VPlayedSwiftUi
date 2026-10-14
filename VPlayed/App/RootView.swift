@@ -17,7 +17,7 @@ import SwiftUI
 struct RootView: View {
     let startup: AppStartup
     let account: AccountStore
-    @State private var homeModel: HomeViewModel
+    @State private var homeModel: PlatformHomeModel
     @State private var languageStore = LanguageStore()
     @State private var selectedTab: AppTab = .home
     @State private var paths: [AppTab: [AppRoute]] = [:]
@@ -29,7 +29,7 @@ struct RootView: View {
         self.startup = startup
         self.account = account
         // Home's first requests wait for the geo token (`X-Bearer-Token`), but no longer than the splash.
-        _homeModel = State(initialValue: HomeViewModel(prepare: { await startup.waitForGeoToken(upTo: SplashView.duration) }))
+        _homeModel = State(initialValue: PlatformHomeModel(prepare: { await startup.waitForGeoToken(upTo: SplashView.duration) }))
     }
 
     var body: some View {

@@ -105,24 +105,21 @@ nonisolated struct Price: Decodable, Sendable, Hashable {
     }
 }
 
-/// A video, series, micro-series or promo card (`TrendingShos` / `TrendingPromos`).
+/// A video, series, micro-series or promo card (`TrendingShos` / `TrendingPromos`). Image URLs and the
+/// corner tag are decided when the item is read, here or by the shared layer (`SharedHomeMapping`).
 nonisolated struct ContentItem: Decodable, Sendable, Identifiable, Hashable {
     let id: String
     let title: String
     let slug: String?
     let shoType: Int?
-    let thumbnailImage: String?
-    let thumbnailImages: ImageSet?
-    let newThumbnailImages: ImageSet?
-    let posterImage: String?
-    let mobilePosterImage: String?
+    /// 16:9 artwork. Micro-series `new_thumbnail_images` are portrait, so they use the poster instead.
+    let landscapeImageURL: URL?
+    /// Portrait artwork: micro-series 3:4 `new_thumbnail_images` (`tp` is the largest; their `tc` is
+    /// tiny), otherwise the 2:3 `thumbnail_images`.
+    let portraitImageURL: URL?
     let videoDuration: Double?
-    let monetization: Int?
-    let prices: [Price]
-    let defaultCurrencyType: Int?
-    let isSubscription: Bool?
-    let isUserSubscribed: Bool?
-    let isScheduled: Bool?
+    /// The card's corner tag (`AccessTag.resolve(monetization:…)`).
+    let accessTag: AccessTag?
     let viewCount: Int?
     let likeCount: Int?
     /// `default_genre.title`, e.g. "Drama" (catalogue items such as Movies).
@@ -145,6 +142,32 @@ nonisolated struct ContentItem: Decodable, Sendable, Identifiable, Hashable {
         case defaultGenre = "default_genre"
     }
 
+    init(
+        id: String,
+        title: String,
+        slug: String? = nil,
+        shoType: Int? = nil,
+        landscapeImageURL: URL? = nil,
+        portraitImageURL: URL? = nil,
+        videoDuration: Double? = nil,
+        accessTag: AccessTag? = nil,
+        viewCount: Int? = nil,
+        likeCount: Int? = nil,
+        genre: String? = nil
+    ) {
+        self.id = id
+        self.title = title
+        self.slug = slug
+        self.shoType = shoType
+        self.landscapeImageURL = landscapeImageURL
+        self.portraitImageURL = portraitImageURL
+        self.videoDuration = videoDuration
+        self.accessTag = accessTag
+        self.viewCount = viewCount
+        self.likeCount = likeCount
+        self.genre = genre
+    }
+
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let id = container.lenientString(.id) else {
@@ -154,41 +177,44 @@ nonisolated struct ContentItem: Decodable, Sendable, Identifiable, Hashable {
         title = container.lenientString(.title) ?? ""
         slug = container.lenientString(.slug)
         shoType = container.lenientInt(.shoType)
-        thumbnailImage = container.lenientString(.thumbnailImage)
-        thumbnailImages = container.lenient(ImageSet.self, .thumbnailImages)
-        newThumbnailImages = container.lenient(ImageSet.self, .newThumbnailImages)
-        posterImage = container.lenientString(.posterImage)
-        mobilePosterImage = container.lenientString(.mobilePosterImage)
         videoDuration = container.lenientDouble(.videoDuration)
-        monetization = container.lenientInt(.monetization)
-        prices = container.lossyArray(Price.self, .prices)
-        defaultCurrencyType = container.lenientInt(.defaultCurrencyType)
-        isSubscription = container.lenientBool(.isSubscription)
-        isUserSubscribed = container.lenientBool(.isUserSubscribed)
-        isScheduled = container.lenientBool(.scheduled)
         viewCount = container.lenientInt(.viewCount)
         likeCount = container.lenientInt(.likeCount)
         genre = container.lenient(Genre.self, .defaultGenre)?.title
+
+        let thumbnailImage = container.lenientString(.thumbnailImage)
+        let thumbnailImages = container.lenient(ImageSet.self, .thumbnailImages)
+        let newThumbnailImages = container.lenient(ImageSet.self, .newThumbnailImages)
+        let posterImage = container.lenientString(.posterImage)
+        if shoType == 6 {
+            landscapeImageURL = ImageURL.resolve(
+                container.lenientString(.mobilePosterImage) ?? posterImage ?? newThumbnailImages?.path(preferring: [.tl, .tp])
+            )
+            portraitImageURL = ImageURL.resolve(
+                newThumbnailImages?.path(preferring: [.tp, .to, .tl, .tm, .tc, .tv])
+                    ?? thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage
+            )
+        } else {
+            landscapeImageURL = ImageURL.resolve(
+                newThumbnailImages?.path(preferring: [.tc, .tl, .to, .tv, .tp, .tm, .mobile, .web]) ?? posterImage ?? thumbnailImage
+            )
+            portraitImageURL = ImageURL.resolve(
+                thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage
+                    ?? newThumbnailImages?.path(preferring: [.tc, .tv, .tp])
+            )
+        }
+
+        let prices = container.lossyArray(Price.self, .prices)
+        accessTag = AccessTag.resolve(
+            monetization: container.lenientInt(.monetization),
+            price: Price.preferred(in: prices, currencyType: container.lenientInt(.defaultCurrencyType)),
+            isSubscription: container.lenientBool(.isSubscription),
+            isUserSubscribed: container.lenientBool(.isUserSubscribed),
+            isScheduled: container.lenientBool(.scheduled)
+        )
     }
 
     var isMicroSeries: Bool { shoType == 6 }
-
-    /// 16:9 artwork. Micro-series `new_thumbnail_images` are portrait, so they use the poster instead.
-    var landscapeImageURL: URL? {
-        let path = isMicroSeries
-            ? mobilePosterImage ?? posterImage ?? newThumbnailImages?.path(preferring: [.tl, .tp])
-            : newThumbnailImages?.path(preferring: [.tc, .tl, .to, .tv, .tp, .tm, .mobile, .web]) ?? posterImage ?? thumbnailImage
-        return ImageURL.resolve(path)
-    }
-
-    /// Portrait artwork: micro-series 3:4 `new_thumbnail_images` (`tp` is the largest; their `tc` is
-    /// tiny), otherwise the 2:3 `thumbnail_images`.
-    var portraitImageURL: URL? {
-        let path = isMicroSeries
-            ? newThumbnailImages?.path(preferring: [.tp, .to, .tl, .tm, .tc, .tv]) ?? thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage
-            : thumbnailImages?.path(preferring: [.web, .key, .mobile]) ?? thumbnailImage ?? newThumbnailImages?.path(preferring: [.tc, .tv, .tp])
-        return ImageURL.resolve(path)
-    }
 
     /// e.g. `3m 26s`, `1h 12m`.
     var formattedDuration: String? {
@@ -214,6 +240,14 @@ nonisolated struct AudioItem: Decodable, Sendable, Identifiable, Hashable {
         case thumbnailImage = "thumbnail_image"
         case thumbnailImages = "thumbnail_images"
         case newThumbnailImages = "new_thumbnail_images"
+    }
+
+    init(id: String, title: String, slug: String? = nil, artistName: String? = nil, imageURL: URL? = nil) {
+        self.id = id
+        self.title = title
+        self.slug = slug
+        self.artistName = artistName
+        self.imageURL = imageURL
     }
 
     init(from decoder: any Decoder) throws {
@@ -254,6 +288,16 @@ nonisolated struct ChannelItem: Decodable, Sendable, Identifiable, Hashable {
         case followCount = "follow_count"
     }
 
+    init(id: String, name: String, slug: String? = nil, logoURL: URL? = nil, followCount: Int? = nil, brandHex: String? = nil, isFollowed: Bool = false) {
+        self.id = id
+        self.name = name
+        self.slug = slug
+        self.logoURL = logoURL
+        self.followCount = followCount
+        self.brandHex = brandHex
+        self.isFollowed = isFollowed
+    }
+
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let id = container.lenientString(.id) else {
@@ -276,12 +320,23 @@ nonisolated struct BulkPlan: Decodable, Sendable, Identifiable, Hashable {
     let slug: String?
     let label: String?
     let summary: String?
-    let prices: [Price]
+    /// The full price in rupees (`currency_type` 1), as the UIKit card shows it.
+    let price: Price?
     let accentHex: String?
 
     private enum CodingKeys: String, CodingKey {
         case id = "_id", name, slug, label, description, prices
         case backgroundColor = "background_color"
+    }
+
+    init(id: String, name: String, slug: String? = nil, label: String? = nil, summary: String? = nil, price: Price? = nil, accentHex: String? = nil) {
+        self.id = id
+        self.name = name
+        self.slug = slug
+        self.label = label
+        self.summary = summary
+        self.price = price
+        self.accentHex = accentHex
     }
 
     init(from decoder: any Decoder) throws {
@@ -294,11 +349,9 @@ nonisolated struct BulkPlan: Decodable, Sendable, Identifiable, Hashable {
         slug = container.lenientString(.slug)
         label = container.lenient(LocalizedText.self, .label)?.value.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
         summary = container.lenientString(.description)
-        prices = container.lossyArray(Price.self, .prices)
+        price = Price.preferred(in: container.lossyArray(Price.self, .prices), currencyType: 1)
         accentHex = container.lenientString(.backgroundColor)
     }
-
-    var price: Price? { Price.preferred(in: prices, currencyType: 1) }
 }
 
 /// A live stream (rail type 6). `publish_status`: 0 soon, 1 upcoming, 2 yet to connect, 3 live, 4 hidden.
@@ -307,7 +360,8 @@ nonisolated struct LiveItem: Decodable, Sendable, Identifiable, Hashable {
     let title: String
     let slug: String?
     let channelName: String?
-    let publishStatus: Int?
+    /// `publish_status` 3.
+    let isLive: Bool
     let startsAt: Date?
     let imageURL: URL?
 
@@ -321,6 +375,16 @@ nonisolated struct LiveItem: Decodable, Sendable, Identifiable, Hashable {
         case thumbnailImage = "thumbnail_image"
     }
 
+    init(id: String, title: String, slug: String? = nil, channelName: String? = nil, isLive: Bool, startsAt: Date? = nil, imageURL: URL? = nil) {
+        self.id = id
+        self.title = title
+        self.slug = slug
+        self.channelName = channelName
+        self.isLive = isLive
+        self.startsAt = startsAt
+        self.imageURL = imageURL
+    }
+
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let id = container.lenientString(.id) else {
@@ -330,15 +394,13 @@ nonisolated struct LiveItem: Decodable, Sendable, Identifiable, Hashable {
         title = container.lenientString(.title) ?? ""
         slug = container.lenientString(.slug)
         channelName = container.lenientString(.studioName)
-        publishStatus = container.lenientInt(.publishStatus)
+        isLive = container.lenientInt(.publishStatus) == 3
         startsAt = (container.lenientString(.streamStartTime) ?? container.lenientString(.scheduledAt)).flatMap(Self.parseDate)
         imageURL = ImageURL.resolve(
             container.lenient(ImageSet.self, .newThumbnailImages)?.path(preferring: [.tc, .tl, .to, .tv, .tp, .tm])
                 ?? container.lenientString(.thumbnailImage)
         )
     }
-
-    var isLive: Bool { publishStatus == 3 }
 
     private static func parseDate(_ value: String) -> Date? {
         (try? Date(value, strategy: .iso8601.year().month().day().time(includingFractionalSeconds: true)))

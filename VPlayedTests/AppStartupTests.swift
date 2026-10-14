@@ -32,18 +32,17 @@ final class MockStartupService: StartupServicing, @unchecked Sendable {
         return try settings.get()
     }
 
-    func publicIPAddress() async throws -> String {
+    /// The IP lookup then the token, counted separately, like `StartupService.geoLookup()`.
+    func geoLookup() async throws -> GeoLookup? {
         lock.withLock { counts["ip", default: 0] += 1 }
-        return try ip.get()
-    }
-
-    func geoToken(forIP ip: String) async throws -> String? {
+        let ip = try ip.get()
         lock.withLock {
             counts["geo", default: 0] += 1
             requestedIPs.append(ip)
         }
         if let geoDelay { try await Task.sleep(for: geoDelay) }
-        return try token.get()
+        guard let token = try token.get(), !token.isEmpty else { return nil }
+        return GeoLookup(token: token, info: GeoInfo(token: token))
     }
 }
 

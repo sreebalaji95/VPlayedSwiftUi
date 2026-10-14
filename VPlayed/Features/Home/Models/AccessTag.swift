@@ -7,14 +7,10 @@ nonisolated enum AccessTag: Hashable, Sendable {
     case price(String)
     case crown
 
+    /// The tag decided when the item was read (by `resolve(monetization:…)` below, or by the shared
+    /// layer's port of it, decision D14).
     static func resolve(for item: ContentItem) -> AccessTag? {
-        resolve(
-            monetization: item.monetization,
-            price: Price.preferred(in: item.prices, currencyType: item.defaultCurrencyType),
-            isSubscription: item.isSubscription,
-            isUserSubscribed: item.isUserSubscribed,
-            isScheduled: item.isScheduled
-        )
+        item.accessTag
     }
 
     static func resolve(
