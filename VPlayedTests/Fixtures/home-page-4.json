@@ -886,9 +886,6 @@
       "live_id": "GSVPLIVE-LhOTVY",
       "recording_url": null,
       "streaming_status": 2,
-      "streaming_watch_url": {
-       "hls": "https://1b48f0f4d2af.ap-south-1.playback.live-video.net/api/video/v1/ap-south-1.603425007851.channel.cG9cayY3anmn.m3u8"
-      },
       "is_stream_key_deleted": true,
       "is_cf_enable": false,
       "cf_webhook_update": "2026-09-02T08:14:23.000Z",
@@ -919,11 +916,7 @@
       "updated_at": "2026-09-02T11:44:03.909Z",
       "__v": 0,
       "stream_type": 2,
-      "streaming_arn": "arn:aws:ivs:ap-south-1:603425007851:stream-key/iQZub3C7TZq1",
-      "streaming_id": "arn:aws:ivs:ap-south-1:603425007851:channel/cG9cayY3anmn",
-      "streaming_key": "sk_ap-south-1_iQZub3C7TZq1_Tn8kL3RZtL55Aly4mfcI5ZmRiUC85O",
       "streaming_type": 2,
-      "streaming_url": "rtmps://1b48f0f4d2af.global-contribute.live-video.net:443/app/",
       "conversion_status": "pending",
       "new_thumbnail_images": {
        "default": {

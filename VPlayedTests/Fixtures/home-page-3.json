@@ -520,7 +520,6 @@
       "live_id": "GSVPLIVE-P2zKdc",
       "recording_url": null,
       "streaming_status": 0,
-      "streaming_watch_url": null,
       "is_stream_key_deleted": true,
       "is_cf_enable": false,
       "cf_webhook_update": null,
@@ -602,9 +601,6 @@
       "live_id": "GSVPLIVE-qPgADV",
       "recording_url": null,
       "streaming_status": 0,
-      "streaming_watch_url": {
-       "hls": "https://1b48f0f4d2af.ap-south-1.playback.live-video.net/api/video/v1/ap-south-1.603425007851.channel.AgWTpzZBGXku.m3u8"
-      },
       "is_stream_key_deleted": false,
       "is_cf_enable": false,
       "cf_webhook_update": null,
@@ -630,10 +626,7 @@
       "publish_status": 1,
       "prices": [],
       "stream_type": 2,
-      "streaming_id": "arn:aws:ivs:ap-south-1:603425007851:channel/AgWTpzZBGXku",
-      "streaming_key": "sk_ap-south-1_sVhh5q3ib52x_gqXum4HwYnu6WgStMh3xNdRXwjmNQU",
       "streaming_type": 2,
-      "streaming_url": "rtmps://1b48f0f4d2af.global-contribute.live-video.net:443/app/",
       "new_thumbnail_images": {
        "default": {
         "to": "gudsho-upload-new_thumbnail_images/08-10-2026/1791462596957-blob.jpg",
