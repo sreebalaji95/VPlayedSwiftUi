@@ -1,13 +1,11 @@
-#if canImport(Shared)
 import Foundation
 // Kotlin classes are not Sendable; the repository is thread-safe and only used through this adapter.
 @preconcurrency import Shared
 
 /// Sign-in through the Kotlin Multiplatform shared layer (`SharedGraph.authRepository`), the same
 /// code AndroidJP uses: request encryption, endpoints and the status-code rules (decisions D1–D4).
-/// This adapter only maps the shared results to the app's outcomes and `APIError`s, so
-/// `LoginViewModel` and `AccountStore` are unchanged. `AccountStore` starts the session it returns
-/// (through `SessionStore`, into the shared `SessionManager`).
+/// This adapter only maps the shared results to the app's outcomes and `APIError`s.
+/// `AccountStore` starts the session it returns in the shared `SessionManager`.
 ///
 /// The device-limit sign-out (`signOutDevice`, `continueAfterDeviceSignOut`) is not offered on
 /// iOS until the backend confirms that signing in without a code is safe (decision D5).
@@ -146,4 +144,3 @@ extension APIError {
         }
     }
 }
-#endif

@@ -20,9 +20,7 @@ struct MoviesView: View {
             .animation(.easeOut(duration: 0.22), value: model.notice)
             .background(Theme.Palette.background.ignoresSafeArea())
             .navigationTitle(Text("Movies"))
-            #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
-            #endif
             .task { await model.loadIfNeeded() }
             .task(id: model.notice) {
                 guard model.notice != nil else { return }
@@ -116,7 +114,7 @@ private struct MovieCard: View {
         VStack(alignment: .leading, spacing: 0) {
             CardArtwork(url: item.landscapeImageURL, aspectRatio: 16 / 9)
                 .overlay(alignment: .topTrailing) {
-                    if let tag = AccessTag.resolve(for: item) { CornerTag(tag: tag) }
+                    if let tag = item.accessTag { CornerTag(tag: tag) }
                 }
             Text(item.title)
                 .font(Theme.Typography.cardTitle)

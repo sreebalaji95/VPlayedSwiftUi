@@ -3,10 +3,9 @@ import SwiftUI
 /// Sign in, from the prototype's "VPlayed Sign Up" page: email, then the 6-digit code, then
 /// "You're all set", plus guest access when the server allows it. Presented over the app by
 /// `RootView`; it closes itself once a session starts. The social buttons are for show only.
-/// The flow comes from a `LoginScreenModel`: the shared Kotlin one on iOS and macOS, the Swift one
-/// on visionOS.
-struct LoginView<Model: LoginScreenModel>: View {
-    @State private var model: Model
+/// The flow comes from `SharedLoginViewModel`, on the Kotlin shared controllers.
+struct LoginView: View {
+    @State private var model: SharedLoginViewModel
     @Environment(AppStartup.self) private var startup
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
@@ -15,8 +14,8 @@ struct LoginView<Model: LoginScreenModel>: View {
     @FocusState private var emailFocused: Bool
     @FocusState private var codeFocused: Bool
 
-    init(model: Model) {
-        _model = State(initialValue: model)
+    init(account: AccountStore) {
+        _model = State(initialValue: SharedLoginViewModel(account: account))
     }
 
     var body: some View {
@@ -31,9 +30,7 @@ struct LoginView<Model: LoginScreenModel>: View {
                     .frame(maxWidth: .infinity, minHeight: proxy.size.height)
             }
         }
-        #if !os(visionOS)
         .scrollDismissesKeyboard(.interactively)
-        #endif
         .scrollBounceBehavior(.basedOnSize)
         .background { background }
         .overlay(alignment: .topTrailing) { closeButton }
@@ -140,10 +137,8 @@ struct LoginView<Model: LoginScreenModel>: View {
                 .focused($emailFocused)
                 .textContentType(.emailAddress)
                 .autocorrectionDisabled()
-                #if !os(macOS)
                 .keyboardType(.emailAddress)
                 .textInputAutocapitalization(.never)
-                #endif
                 .submitLabel(.continue)
                 .onSubmit { Task { await model.continueWithEmail() } }
                 .modifier(AuthFieldBackground(isInvalid: model.emailError != nil, isFocused: emailFocused))
@@ -487,19 +482,5 @@ private struct AutoAdvanceBar: View {
                 withAnimation(.linear(duration: 3)) { progress = 1 }
             }
         }
-    }
-}
-
-#if canImport(Shared)
-/// The Login model this platform uses: the Kotlin shared controllers.
-typealias PlatformLoginModel = SharedLoginViewModel
-#else
-/// The Login model this platform uses: visionOS has no Kotlin/Native target.
-typealias PlatformLoginModel = LoginViewModel
-#endif
-
-extension LoginView where Model == PlatformLoginModel {
-    init(account: AccountStore) {
-        self.init(model: PlatformLoginModel(account: account))
     }
 }

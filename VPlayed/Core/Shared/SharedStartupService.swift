@@ -1,4 +1,3 @@
-#if canImport(Shared)
 import Foundation
 // Kotlin classes are not Sendable; the repositories are thread-safe and only used through this adapter.
 @preconcurrency import Shared
@@ -6,8 +5,7 @@ import Foundation
 /// The launch-time calls through the Kotlin Multiplatform shared layer, the same code AndroidJP uses:
 /// `mediaview/api/v1/common` (`SharedGraph.commonSettingsRepository`) and the public IP → geo token
 /// lookup (`SharedGraph.geoRepository`, decision D18), which keeps the token in the graph's `GeoStore`
-/// for shared requests. `AppStartup` still decides when they run and stores the token in
-/// `SessionStore` for native requests.
+/// for every request. `AppStartup` decides when they run.
 nonisolated final class SharedStartupService: StartupServicing, @unchecked Sendable {
     private let settingsRepository: CommonSettingsRepository
     private let geoRepository: GeoRepository
@@ -94,4 +92,3 @@ extension GeoInfo {
         )
     }
 }
-#endif

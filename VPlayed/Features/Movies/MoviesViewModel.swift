@@ -27,7 +27,7 @@ final class MoviesViewModel {
     /// Bumped on every full reload so responses from superseded loads are discarded.
     private var generation = 0
 
-    init(service: any MoviesServicing = MoviesService()) {
+    init(service: any MoviesServicing = SharedMoviesService()) {
         self.service = service
     }
 

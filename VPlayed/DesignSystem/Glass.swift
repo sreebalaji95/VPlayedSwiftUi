@@ -1,8 +1,8 @@
 import SwiftUI
 
 // Liquid Glass for every tappable element and floating chrome. Views use these helpers instead of
-// checking availability themselves: iOS / macOS 26 get real glass, iOS 17–18 get the closest
-// standard styles, and visionOS, whose standard buttons are already glass, uses those.
+// checking availability themselves: iOS 26 gets real glass, iOS 17–18 get the closest standard
+// styles.
 
 enum GlassProminence {
     /// Neutral glass, for most controls.
@@ -26,44 +26,32 @@ extension View {
 
     @ViewBuilder
     private func systemGlassButtonStyle(prominent: Bool) -> some View {
-        #if os(visionOS)
-        if prominent { buttonStyle(.borderedProminent) } else { buttonStyle(.bordered) }
-        #else
-        if #available(iOS 26, macOS 26, *) {
+        if #available(iOS 26, *) {
             if prominent { buttonStyle(.glassProminent) } else { buttonStyle(.glass) }
         } else {
             if prominent { buttonStyle(.borderedProminent) } else { buttonStyle(.bordered) }
         }
-        #endif
     }
 
     /// Soft scroll-edge effect under the glass top bar, so content blurs gently into the bar
     /// instead of meeting it at a hard line.
     @ViewBuilder
     func softTopScrollEdge() -> some View {
-        #if os(visionOS)
-        self
-        #else
-        if #available(iOS 26, macOS 26, *) {
+        if #available(iOS 26, *) {
             scrollEdgeEffectStyle(.soft, for: .top)
         } else {
             self
         }
-        #endif
     }
 
     /// Non-interactive glass behind floating chrome such as badges.
     @ViewBuilder
     func glassSurface(in shape: some Shape) -> some View {
-        #if os(visionOS)
-        background(.ultraThinMaterial, in: shape)
-        #else
-        if #available(iOS 26, macOS 26, *) {
+        if #available(iOS 26, *) {
             glassEffect(.regular, in: shape)
         } else {
             background(.ultraThinMaterial, in: shape)
         }
-        #endif
     }
 }
 
@@ -104,14 +92,7 @@ private struct GlassCard<S: Shape, Label: View>: View {
         let padded = label
             .padding(padding)
             .contentShape(shape)
-        #if os(visionOS)
-        padded
-            .background(.regularMaterial, in: shape)
-            .hoverEffect()
-            .scaleEffect(isPressed ? 0.97 : 1)
-            .animation(.easeOut(duration: 0.16), value: isPressed)
-        #else
-        if #available(iOS 26, macOS 26, *) {
+        if #available(iOS 26, *) {
             padded.glassEffect(.regular.interactive(), in: shape)
         } else {
             padded
@@ -120,24 +101,19 @@ private struct GlassCard<S: Shape, Label: View>: View {
                 .opacity(isPressed ? 0.85 : 1)
                 .animation(.easeOut(duration: 0.16), value: isPressed)
         }
-        #endif
     }
 }
 
-/// Groups nearby glass shapes so they blend and morph together (iOS / macOS 26).
+/// Groups nearby glass shapes so they blend and morph together (iOS 26).
 struct GlassGroup<Content: View>: View {
     var spacing: CGFloat? = nil
     @ViewBuilder let content: Content
 
     var body: some View {
-        #if os(visionOS)
-        content
-        #else
-        if #available(iOS 26, macOS 26, *) {
+        if #available(iOS 26, *) {
             GlassEffectContainer(spacing: spacing) { content }
         } else {
             content
         }
-        #endif
     }
 }

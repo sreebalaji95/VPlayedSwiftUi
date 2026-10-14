@@ -53,9 +53,7 @@ struct PlaceholderDestinationView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Theme.Palette.background)
         .navigationTitle(navigationTitle)
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
     }
 
     private static func navigationTitle(for route: AppRoute) -> String {

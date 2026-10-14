@@ -9,7 +9,7 @@ struct LandscapeCard: View {
         VStack(alignment: .leading, spacing: 0) {
             CardArtwork(url: item.landscapeImageURL, width: width, height: width * 9 / 16)
                 .overlay(alignment: .topTrailing) {
-                    if let tag = AccessTag.resolve(for: item) { CornerTag(tag: tag) }
+                    if let tag = item.accessTag { CornerTag(tag: tag) }
                 }
             CardTitle(text: item.title)
         }
@@ -26,7 +26,7 @@ struct PortraitCard: View {
         VStack(alignment: .leading, spacing: 0) {
             CardArtwork(url: item.portraitImageURL, width: width, height: width * 295 / 221, fade: (0.85, 0.42))
                 .overlay(alignment: .topTrailing) {
-                    if let tag = AccessTag.resolve(for: item) { CornerTag(tag: tag) }
+                    if let tag = item.accessTag { CornerTag(tag: tag) }
                 }
             CardTitle(text: item.title)
         }
@@ -49,7 +49,7 @@ struct RankedPortraitCard: View {
                 CardArtwork(url: item.portraitImageURL, width: posterWidth, height: posterHeight, fade: (0.85, 0.42))
                     .overlay(alignment: .topTrailing) {
                         // Price and coming-soon tags are hidden on this rail; crowns still show.
-                        if AccessTag.resolve(for: item) == .crown { CornerTag(tag: .crown) }
+                        if item.accessTag == .crown { CornerTag(tag: .crown) }
                     }
             }
             Text(item.title)
@@ -75,7 +75,7 @@ struct RankedLandscapeCard: View {
                 RankNumeral(rank: rank, height: 82)
                 CardArtwork(url: item.landscapeImageURL, width: 171, height: 96, cornerRadius: Theme.Radius.card)
                     .overlay(alignment: .topTrailing) {
-                        if AccessTag.resolve(for: item) == .crown { CornerTag(tag: .crown, height: 28) }
+                        if item.accessTag == .crown { CornerTag(tag: .crown, height: 28) }
                     }
             }
             Text(item.title)

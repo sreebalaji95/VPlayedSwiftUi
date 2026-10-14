@@ -1,4 +1,3 @@
-#if canImport(Shared)
 import Foundation
 @preconcurrency import Shared
 import Testing
@@ -16,7 +15,7 @@ func eventually(timeout: Duration = .seconds(3), _ condition: () -> Bool) async 
 }
 
 extension StubbedBackendTests {
-    /// The iOS and macOS Login model on the shared controllers, against scripted backend answers.
+    /// The Login model on the shared controllers, against scripted backend answers.
     /// The flow rules themselves are tested in `../kmp` (`EmailLoginControllerTest`, `OtpControllerTest`).
     @MainActor
     @Suite
@@ -35,17 +34,17 @@ extension StubbedBackendTests {
         private func makeModel(
             _ answers: [AuthStubURLProtocol.Answer],
             deviceSignOut: Bool = false,
-            session: SessionStore = SessionStore()
+            sessions: SessionManager = SessionManager(store: InMemorySecureStore())
         ) -> (SharedLoginViewModel, AccountStore) {
             AuthStubURLProtocol.reset(answers)
-            let account = AccountStore(saved: nil, session: session, service: MockAuthService())
+            let account = AccountStore(sessions: sessions, service: MockAuthService())
             // A 1-second resend wait and a short success step keep the tests fast.
             let config = AuthFlowConfig(deviceSignOutEnabled: deviceSignOut, resendSeconds: 1, successMillis: 50)
             return (SharedLoginViewModel(account: account, graph: StubbedBackend.graph(), config: config), account)
         }
 
-        private func atCodeStep(_ answers: [AuthStubURLProtocol.Answer], session: SessionStore = SessionStore()) async throws -> (SharedLoginViewModel, AccountStore) {
-            let (model, account) = makeModel([Self.codeSent] + answers, session: session)
+        private func atCodeStep(_ answers: [AuthStubURLProtocol.Answer], sessions: SessionManager = SessionManager(store: InMemorySecureStore())) async throws -> (SharedLoginViewModel, AccountStore) {
+            let (model, account) = makeModel([Self.codeSent] + answers, sessions: sessions)
             model.email = "tester@example.com"
             await model.continueWithEmail()
             try #require(await eventually { model.step == .code })
@@ -125,8 +124,8 @@ extension StubbedBackendTests {
         // MARK: Code step
 
         @Test func aCorrectCodeSignsInShowsTheSuccessStepThenFinishes() async throws {
-            let session = SessionStore()
-            let (model, account) = try await atCodeStep([Self.signedIn], session: session)
+            let sessions = SessionManager(store: InMemorySecureStore())
+            let (model, account) = try await atCodeStep([Self.signedIn], sessions: sessions)
 
             model.code = "12a3456"
             #expect(model.code == "123456")
@@ -136,7 +135,7 @@ extension StubbedBackendTests {
             #expect(await eventually { model.step == .done })
             #expect(await eventually { model.isFinished })
             #expect(account.isSignedIn)
-            #expect(await session.current().accessToken == "access-1")
+            #expect(sessions.session?.accessToken == "access-1")
             #expect(model.doneNotice == nil)
         }
 
@@ -220,4 +219,3 @@ extension StubbedBackendTests {
         }
     }
 }
-#endif

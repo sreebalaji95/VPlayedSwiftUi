@@ -1,16 +1,14 @@
 import Foundation
 import Observation
-#if canImport(Shared)
+// Kotlin classes are not Sendable; the session manager is thread-safe.
 @preconcurrency import Shared
-#endif
 
 /// Who is using the app: nobody, a guest or a signed-in account. `MyApp` owns it; views read it
-/// from the environment. Every change goes to `SessionStore`, so requests carry the matching
-/// `Authorization` header.
+/// from the environment.
 ///
-/// With the shared layer (iOS, macOS) it follows the shared `SessionManager`: the session it
-/// restores at launch, and its end when the server rejects the token (decision D21). On visionOS
-/// it restores the saved session from the Keychain itself.
+/// It is a view of the shared `SessionManager`, which stores the session, sends its tokens with
+/// every request and ends it when the server rejects the token (decision D21): the state follows the
+/// manager's status, starting with the session it restores at launch.
 @Observable
 final class AccountStore {
     enum State: Equatable {
@@ -25,6 +23,11 @@ final class AccountStore {
             case let credentials?: self = .signedIn(credentials)
             }
         }
+
+        /// Loading reads as signed out until the stored session is known.
+        init(_ status: any SessionStatus) {
+            self.init((status as? SessionStatusSignedIn).map { AuthCredentials($0.session) })
+        }
     }
 
     private(set) var state: State
@@ -34,39 +37,24 @@ final class AccountStore {
         if case .signedIn = state { true } else { false }
     }
 
-    @ObservationIgnored private let session: SessionStore
+    @ObservationIgnored private let sessions: SessionManager
     @ObservationIgnored private let service: any AuthServicing
-    #if canImport(Shared)
     @ObservationIgnored private let watchers = KotlinSubscriptions()
-    #endif
 
-    init(
-        saved: AuthCredentials? = AccountStore.savedCredentials(),
-        session: SessionStore = .shared,
-        service: any AuthServicing = AuthServices.live()
-    ) {
-        state = State(saved)
-        self.session = session
+    init(sessions: SessionManager = SharedLayer.sessions, service: any AuthServicing = AuthServices.live()) {
+        self.sessions = sessions
         self.service = service
-        #if canImport(Shared)
-        if let sessions = session.sessions { follow(sessions) }
-        #endif
-    }
-
-    /// The session saved by an earlier launch, read synchronously where this store restores it (visionOS).
-    static func savedCredentials() -> AuthCredentials? {
-        #if canImport(Shared)
-        // The shared `SessionManager` restores it; `follow(_:)` applies it.
-        nil
-        #else
-        KeychainCredentialStore().load()
-        #endif
+        state = State(sessions.currentStatus)
+        watchers.add(sessions.watchStatus { [weak self] status in
+            MainActor.assumeIsolated { self?.apply(status) }
+        }.close)
+        Task { try? await sessions.awaitLoaded() }
     }
 
     /// Starts the session a login returned. Only called with a real response, so a failed login
     /// never leaves a session behind.
     func complete(with credentials: AuthCredentials) async {
-        await session.signIn(credentials)
+        try? await sessions.signIn(session: AuthSession(credentials))
         state = State(credentials)
     }
 
@@ -78,28 +66,13 @@ final class AccountStore {
         } catch APIError.unauthorized {
             // The session is already gone on the server.
         }
-        await session.signOut()
+        try? await sessions.signOut(reason: .user)
         state = .signedOut
     }
 
-    #if canImport(Shared)
-    private func follow(_ sessions: SessionManager) {
-        watchers.add(sessions.watchStatus { [weak self] status in
-            MainActor.assumeIsolated { self?.apply(status) }
-        }.close)
-        Task { try? await sessions.awaitLoaded() }
-    }
-
     private func apply(_ status: any SessionStatus) {
-        switch status {
-        case let signedIn as SessionStatusSignedIn:
-            state = State(AuthCredentials(signedIn.session))
-        case is SessionStatusSignedOut:
-            state = .signedOut
-        default:
-            // Still reading the stored session.
-            break
-        }
+        // Still reading the stored session: keep what is shown.
+        guard !(status is SessionStatusLoading) else { return }
+        state = State(status)
     }
-    #endif
 }

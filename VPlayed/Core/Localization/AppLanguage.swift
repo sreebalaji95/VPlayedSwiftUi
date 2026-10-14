@@ -1,8 +1,6 @@
 import Foundation
 import Observation
-#if canImport(UIKit)
 import UIKit
-#endif
 
 /// The languages the app ships in. The choice is stored as the app's `AppleLanguages`, the same
 /// per-app setting iOS Settings → VPlayed → Language writes, so the in-app picker and Settings
@@ -83,9 +81,7 @@ final class LanguageStore {
     /// Forcing the direction makes UIKit views created from now on follow `language`; `RootView`
     /// rebuilds its tabs (`.id`) on every switch, so their bars are new.
     private static func applyLayoutDirectionToUIKit(rightToLeft: Bool) {
-        #if canImport(UIKit)
         UIView.appearance().semanticContentAttribute = rightToLeft ? .forceRightToLeft : .forceLeftToRight
-        #endif
     }
 }
 

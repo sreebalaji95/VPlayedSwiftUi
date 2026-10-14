@@ -12,15 +12,19 @@ final class MockStartupService: StartupServicing, @unchecked Sendable {
     private var counts: [String: Int] = [:]
     private var requestedIPs: [String] = []
 
+    private let info: GeoInfo?
+
     init(
         settings: Result<CommonSettings, any Error>,
         ip: Result<String, any Error> = .success("203.0.113.7"),
         token: Result<String?, any Error>,
+        info: GeoInfo? = GeoInfo(countryCode: "IN", currency: "INR"),
         geoDelay: Duration? = nil
     ) {
         self.settings = settings
         self.ip = ip
         self.token = token
+        self.info = info
         self.geoDelay = geoDelay
     }
 
@@ -32,7 +36,7 @@ final class MockStartupService: StartupServicing, @unchecked Sendable {
         return try settings.get()
     }
 
-    /// The IP lookup then the token, counted separately, like `StartupService.geoLookup()`.
+    /// The IP lookup then the token, counted separately, like the shared refresh.
     func geoLookup() async throws -> GeoLookup? {
         lock.withLock { counts["ip", default: 0] += 1 }
         let ip = try ip.get()
@@ -42,96 +46,17 @@ final class MockStartupService: StartupServicing, @unchecked Sendable {
         }
         if let geoDelay { try await Task.sleep(for: geoDelay) }
         guard let token = try token.get(), !token.isEmpty else { return nil }
-        return GeoLookup(token: token, info: GeoInfo(token: token))
+        return GeoLookup(token: token, info: info)
     }
 }
 
-private func settings(_ json: String) throws -> CommonSettings {
-    try JSONDecoder().decode(CommonSettings.self, from: Data(json.utf8))
-}
-
-private func fixtureToken() throws -> String {
-    try #require(try Fixture.payload("geo-data", as: GeoTokenResponse.self).geoToken)
-}
-
-private func headers(_ session: SessionStore) async -> [String: String] {
-    await RequestHeaders(session: session, deviceID: "test-device", appVersion: "9.9.9", languageCode: { "en" }).values()
-}
-
-@MainActor
-struct CommonSettingsDecodingTests {
-    @Test func decodesDevResponse() throws {
-        let settings = try Fixture.payload("common", as: CommonSettings.self)
-
-        #expect(settings.isRTLAllowed == true)
-        #expect(settings.isPiPAllowed == true)
-        #expect(settings.isCastingAllowed == true)
-        #expect(settings.isScreenRecordingAllowed == true)
-        #expect(settings.isGuestUser == false)
-        #expect(settings.contentLibrary == .vodDrama)
-        #expect(settings.verificationMethod == .email)
-        #expect(settings.isIAPEnabled == false)
-        #expect(settings.isAppStoreCTAChange == false)
-        let update = try #require(settings.update)
-        #expect(update.isForceUpdateEnabled == false)
-        #expect(update.minimumVersion == nil)
-    }
-
-    @Test func toleratesMixedTypesAndMissingKeys() throws {
-        let decoded = try settings(#"{"content_library":"2","otp_verfied":"phone","rtl":0,"is_iap_enabled":1}"#)
-
-        #expect(decoded.contentLibrary == .drama)
-        #expect(decoded.verificationMethod == .phone)
-        #expect(decoded.isRTLAllowed == false)
-        #expect(decoded.isIAPEnabled == true)
-        #expect(decoded.isPiPAllowed == nil)
-        #expect(decoded.update == nil)
-
-        let empty = try settings("{}")
-        #expect(empty.contentLibrary == .vodDrama)
-        #expect(empty.verificationMethod == .email)
-        #expect(empty.isRTLAllowed == nil)
-    }
-
-    @Test func keepsOnlyTheIOSUpdateDetails() throws {
-        let android = try settings(#"{"force_update_details":{"platform":"android","force_update":true}}"#)
-        #expect(android.update == nil)
-
-        let ios = try settings(#"{"force_update_details":{"platform":"iOS","force_update":true,"minimum_version":"2.1.0"}}"#)
-        #expect(ios.update?.isForceUpdateEnabled == true)
-        #expect(ios.update?.minimumVersion == "2.1.0")
-    }
-
-    @Test func decodesGeoTokenPayload() throws {
-        let info = try #require(GeoInfo(token: try fixtureToken()))
-
-        #expect(info.countryCode == "IN")
-        #expect(info.currency == "INR")
-        #expect(info.timezone == "Asia/Kolkata")
-        #expect(GeoInfo(token: "not base64!") == nil)
-        #expect(GeoInfo(token: Data("plain text".utf8).base64EncodedString()) == nil)
-    }
-
-    @Test func nullGeoTokenDecodesAsNil() throws {
-        let response = try JSONDecoder().decode(GeoTokenResponse.self, from: Data(#"{"geo_token":null}"#.utf8))
-        #expect(response.geoToken == nil)
-    }
-
-    @Test func endpointsMatchTheUIKitPaths() throws {
-        let base = APIEnvironment.development.apiBaseURL
-        #expect(try Endpoint.common.url(relativeTo: base).absoluteString == "https://api-devgs.vplayed.com/mediaview/api/v1/common")
-        #expect(try Endpoint.geoData(ip: "203.0.113.7").url(relativeTo: base).absoluteString
-            == "https://api-devgs.vplayed.com/mediaview/api/v1/common/geo-data/203.0.113.7")
-    }
-}
+private let devSettings = CommonSettings(isRTLAllowed: true, isPiPAllowed: true, isCastingAllowed: true, isScreenRecordingAllowed: true, isGuestUser: false)
 
 @MainActor
 struct AppStartupTests {
-    @Test func startRunsEachCallOnceAndSetsTheGeoHeader() async throws {
-        let token = try fixtureToken()
-        let service = MockStartupService(settings: .success(try Fixture.payload("common", as: CommonSettings.self)), token: .success(token))
-        let session = SessionStore()
-        let startup = AppStartup(service: service, session: session)
+    @Test func startRunsEachCallOnceAndKeepsTheLocation() async throws {
+        let service = MockStartupService(settings: .success(devSettings), token: .success("geo-token"))
+        let startup = AppStartup(service: service)
 
         startup.start()
         startup.start()
@@ -143,7 +68,6 @@ struct AppStartupTests {
         #expect(service.calls("ip") == 1)
         #expect(service.calls("geo") == 1)
         #expect(service.ipsRequested == ["203.0.113.7"])
-        #expect(await headers(session)["X-Bearer-Token"] == token)
         #expect(startup.geoInfo?.countryCode == "IN")
         #expect(startup.isRTLAllowed)
         #expect(!startup.forcesDarkMode)
@@ -151,14 +75,12 @@ struct AppStartupTests {
 
     @Test func failuresAndNullTokenLeaveDefaults() async throws {
         let service = MockStartupService(settings: .failure(APIError.network(code: -1009)), token: .success(nil))
-        let session = SessionStore()
-        let startup = AppStartup(service: service, session: session)
+        let startup = AppStartup(service: service)
 
         startup.start()
         await startup.waitForGeoToken(upTo: .seconds(5))
 
         #expect(service.calls("geo") == 1)
-        #expect(await headers(session)["X-Bearer-Token"] == nil)
         #expect(startup.geoInfo == nil)
         #expect(startup.settings == nil)
         #expect(startup.isRTLAllowed)
@@ -166,8 +88,8 @@ struct AppStartupTests {
     }
 
     @Test func ipLookupFailureSkipsGeoData() async throws {
-        let service = MockStartupService(settings: .success(try settings("{}")), ip: .failure(APIError.network(code: -1001)), token: .success("unused"))
-        let startup = AppStartup(service: service, session: SessionStore())
+        let service = MockStartupService(settings: .success(CommonSettings()), ip: .failure(APIError.network(code: -1001)), token: .success("unused"))
+        let startup = AppStartup(service: service)
 
         startup.start()
         await startup.waitForGeoToken(upTo: .seconds(5))
@@ -176,8 +98,8 @@ struct AppStartupTests {
     }
 
     @Test func waitGivesUpAtTheLimit() async throws {
-        let service = MockStartupService(settings: .success(try settings("{}")), token: .success("late"), geoDelay: .seconds(30))
-        let startup = AppStartup(service: service, session: SessionStore())
+        let service = MockStartupService(settings: .success(CommonSettings()), token: .success("late"), geoDelay: .seconds(30))
+        let startup = AppStartup(service: service)
         startup.start()
 
         let elapsed = await ContinuousClock().measure {
@@ -188,17 +110,17 @@ struct AppStartupTests {
     }
 
     @Test func waitReturnsAtOnceWhenNotStarted() async throws {
-        let startup = AppStartup(service: MockStartupService(settings: .success(try settings("{}")), token: .success(nil), geoDelay: .seconds(30)))
+        let startup = AppStartup(service: MockStartupService(settings: .success(CommonSettings()), token: .success(nil), geoDelay: .seconds(30)))
         let elapsed = await ContinuousClock().measure {
             await startup.waitForGeoToken(upTo: .seconds(30))
         }
         #expect(elapsed < .seconds(1))
     }
 
-    @Test(arguments: [("0", false), ("1", false), ("2", true)])
-    func dramaForcesDarkMode(library: String, dark: Bool) async throws {
-        let service = MockStartupService(settings: .success(try settings(#"{"content_library":\#(library),"rtl":false}"#)), token: .success(nil))
-        let startup = AppStartup(service: service, session: SessionStore())
+    @Test(arguments: [(CommonSettings.ContentLibrary.vodDrama, false), (.vod, false), (.drama, true)])
+    func dramaForcesDarkMode(library: CommonSettings.ContentLibrary, dark: Bool) async throws {
+        let service = MockStartupService(settings: .success(CommonSettings(isRTLAllowed: false, contentLibrary: library)), token: .success(nil))
+        let startup = AppStartup(service: service)
 
         startup.start()
         while startup.settings == nil { await Task.yield() }
@@ -219,17 +141,5 @@ struct AppStartupTests {
         #expect(!store.isRightToLeft)
         store.isRTLAllowed = true
         #expect(store.isRightToLeft == store.language.isRightToLeft)
-    }
-
-    @Test func homeWaitsForPrepareBeforeItsFirstRequest() async throws {
-        let service = MockHomeService(pages: [1: .success(HomeFeedPage(sections: [], nextPage: nil))])
-        var callsDuringPrepare: [Int]?
-        let model = HomeViewModel(service: service, prepare: { callsDuringPrepare = service.pageCalls })
-
-        await model.loadIfNeeded()
-        await model.refresh()
-
-        #expect(callsDuringPrepare == [])
-        #expect(service.pageCalls == [1, 1])
     }
 }

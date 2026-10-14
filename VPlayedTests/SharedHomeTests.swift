@@ -1,4 +1,3 @@
-#if canImport(Shared)
 import Foundation
 @preconcurrency import Shared
 import Testing
@@ -39,81 +38,8 @@ enum RoutedBackend {
 }
 
 extension RoutedBackendTests {
-    /// The dev-API fixtures through the shared layer and through the Swift decoders must give the
-    /// Home views the same models: Phase 4 changes where Home is read, not what it shows.
-    @MainActor
-    @Suite
-    struct SharedHomeParityTests {
-        private let repository = RoutedBackend.graph().homeRepository
 
-        @Test(arguments: ["home-page-1", "home-page-3", "home-page-4", "home-page-6"])
-        func railsMatchTheSwiftDecoder(fixture: String) async throws {
-            RouteStubURLProtocol.reset([RoutedBackend.home(1): try RoutedBackend.fixture(fixture)])
-            let swift = try Fixture.payload(fixture, as: HomeFeedPage.self)
-
-            let result = try await repository.getSections(page: 1)
-            let page = try #require((result as? DataResultSuccess<HomeSectionsPage>)?.data)
-            let shared = page.sections.map(SharedHomeMapping.section)
-
-            let displayed = swift.sections.filter(\.isDisplayable)
-            #expect(shared.map(\.id) == displayed.map(\.id))
-            #expect(page.nextPage.map { Int(truncating: $0) } == swift.nextPage)
-            for (mine, theirs) in zip(shared, displayed) {
-                #expect(mine.layout == theirs.layout, "\(mine.id)")
-                #expect(Self.comparable(mine) == Self.comparable(theirs), "\(mine.id)")
-            }
-        }
-
-        /// Decision D10: live items also read AndroidJP's `schedule_at`, which the Swift decoder
-        /// missed, so a scheduled stream now shows its start time.
-        @Test func liveItemsAlsoReadTheAndroidScheduleKey() async throws {
-            RouteStubURLProtocol.reset([RoutedBackend.home(1): try RoutedBackend.fixture("home-page-3")])
-
-            let result = try await repository.getSections(page: 1)
-            let page = try #require((result as? DataResultSuccess<HomeSectionsPage>)?.data)
-            guard case .live(let streams) = page.sections.map(SharedHomeMapping.section).first(where: { $0.layout == .live })?.content else {
-                Issue.record("Expected a live rail")
-                return
-            }
-            let scheduled = try #require(streams.first { $0.title == "Future Plan" })
-            #expect(scheduled.startsAt == Date(timeIntervalSince1970: 1_791_570_600))
-        }
-
-        /// What the Home cards draw. Two fields differ on purpose and are left out: genre (the shared
-        /// mapper title-cases it; Home doesn't show it) and live start times (see the test above).
-        private static func comparable(_ section: VPlayed.HomeSection) -> VPlayed.HomeSection {
-            let content: VPlayed.HomeSection.Content = switch section.content {
-            case .titles(let items): .titles(items.map(comparable))
-            case .promos(let items): .promos(items.map(comparable))
-            case .live(let items): .live(items.map {
-                LiveItem(id: $0.id, title: $0.title, slug: $0.slug, channelName: $0.channelName, isLive: $0.isLive, imageURL: $0.imageURL)
-            })
-            default: section.content
-            }
-            return VPlayed.HomeSection(id: section.id, title: section.title, type: section.type, isTopTen: section.isTopTen, content: content)
-        }
-
-        private static func comparable(_ item: VPlayed.ContentItem) -> VPlayed.ContentItem {
-            VPlayed.ContentItem(
-                id: item.id, title: item.title, slug: item.slug, shoType: item.shoType,
-                landscapeImageURL: item.landscapeImageURL, portraitImageURL: item.portraitImageURL,
-                videoDuration: item.videoDuration, accessTag: item.accessTag,
-                viewCount: item.viewCount, likeCount: item.likeCount
-            )
-        }
-
-        @Test func bannersMatchTheSwiftDecoder() async throws {
-            RouteStubURLProtocol.reset([RoutedBackend.banners: try RoutedBackend.fixture("home-banners")])
-            let swift = try Fixture.payload("home-banners", as: HomeBannerList.self).banners
-
-            let result = try await repository.getBanners()
-            let banners = try #require((result as? DataResultSuccess<NSArray>)?.data as? [Shared.HomeBanner])
-
-            #expect(banners.map(SharedHomeMapping.banner) == swift)
-        }
-    }
-
-    /// The iOS and macOS Home model on the shared `HomeFeedController`. The feed rules themselves are
+    /// The Home model on the shared `HomeFeedController`. The feed rules themselves are
     /// tested in `../kmp` (`HomeFeedControllerTest`).
     @MainActor
     @Suite
@@ -247,17 +173,29 @@ extension RoutedBackendTests {
     struct SharedStartupServiceTests {
         private static let ipLookup = "api.ipify.org/"
 
-        @Test func settingsMatchTheSwiftDecoder() async throws {
+        @Test func settingsComeFromTheDevResponse() async throws {
             RouteStubURLProtocol.reset([RoutedBackend.route("mediaview/api/v1/common"): try RoutedBackend.fixture("common")])
             let service = SharedStartupService(graph: RoutedBackend.graph())
 
             let settings = try await service.commonSettings()
 
-            #expect(settings == (try Fixture.payload("common", as: VPlayed.CommonSettings.self)))
+            #expect(settings.isRTLAllowed == true)
+            #expect(settings.isPiPAllowed == true)
+            #expect(settings.isCastingAllowed == true)
+            #expect(settings.isScreenRecordingAllowed == true)
+            #expect(settings.isGuestUser == false)
+            #expect(settings.contentLibrary == .vodDrama)
+            #expect(settings.verificationMethod == .email)
+            #expect(settings.isIAPEnabled == false)
+            #expect(settings.isAppStoreCTAChange == false)
+            let update = try #require(settings.update)
+            #expect(update.isForceUpdateEnabled == false)
+            #expect(update.minimumVersion == nil)
         }
 
         @Test func geoLookupReturnsTheTokenAndItsLocation() async throws {
-            let token = try #require(try Fixture.payload("geo-data", as: GeoTokenResponse.self).geoToken)
+            let fixture = try #require(try JSONSerialization.jsonObject(with: Fixture.data("geo-data")) as? [String: Any])
+            let token = try #require((fixture["response"] as? [String: Any])?["geo_token"] as? String)
             RouteStubURLProtocol.reset([
                 Self.ipLookup: .json(status: 200, body: #"{"ip":"203.0.113.7"}"#),
                 RoutedBackend.route("mediaview/api/v1/common/geo-data/203.0.113.7"): try RoutedBackend.fixture("geo-data"),
@@ -267,8 +205,9 @@ extension RoutedBackendTests {
             let lookup = try #require(try await service.geoLookup())
 
             #expect(lookup.token == token)
-            #expect(lookup.info == VPlayed.GeoInfo(token: token))
             #expect(lookup.info?.countryCode == "IN")
+            #expect(lookup.info?.currency == "INR")
+            #expect(lookup.info?.timezone == "Asia/Kolkata")
         }
 
         @Test func geoFailuresThrowOrReturnNil() async throws {
@@ -284,4 +223,3 @@ extension RoutedBackendTests {
         }
     }
 }
-#endif

@@ -3,7 +3,7 @@ import SwiftUI
 /// The mobile Home screen: a Liquid Glass top bar (`HomeToolbar`) over the hero carousel and
 /// API-driven rails. The hero runs up behind the bar. The tab bar belongs to `RootView`.
 struct HomeView: View {
-    let model: PlatformHomeModel
+    let model: SharedHomeViewModel
 
     @Environment(\.openRoute) private var openRoute
 
@@ -26,9 +26,7 @@ struct HomeView: View {
             try? await Task.sleep(for: .seconds(2.5))
             if !Task.isCancelled { model.notice = nil }
         }
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
     }
 
     @ViewBuilder

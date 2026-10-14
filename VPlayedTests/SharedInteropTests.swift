@@ -1,4 +1,3 @@
-#if canImport(Shared)
 import Foundation
 @preconcurrency import Shared
 import Testing
@@ -82,4 +81,3 @@ extension RoutedBackendTests {
         }
     }
 }
-#endif

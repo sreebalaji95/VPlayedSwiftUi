@@ -29,9 +29,7 @@ struct LanguageView: View {
         }
         .background(Theme.Palette.background.ignoresSafeArea())
         .navigationTitle(Text("Language"))
-        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
-        #endif
     }
 
     private func row(for language: AppLanguage) -> some View {

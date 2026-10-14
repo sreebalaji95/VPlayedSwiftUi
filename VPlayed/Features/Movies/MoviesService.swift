@@ -1,29 +1,14 @@
 import Foundation
+// Kotlin classes are not Sendable; the repository is thread-safe and only used through this adapter.
+@preconcurrency import Shared
 
-/// One page of the `sho-details/media/{type}` catalogue.
-nonisolated struct MediaPage: Decodable, Sendable {
+/// One page of the movie catalogue.
+nonisolated struct MediaPage: Sendable {
     let items: [ContentItem]
     /// Titles in the whole catalogue, e.g. 1,997.
     let total: Int?
     /// The next page number, or nil on the last page.
     let nextPage: Int?
-
-    private enum CodingKeys: String, CodingKey {
-        case data, total, next
-    }
-
-    init(items: [ContentItem], total: Int?, nextPage: Int?) {
-        self.items = items
-        self.total = total
-        self.nextPage = nextPage
-    }
-
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        items = container.lossyArray(ContentItem.self, .data)
-        total = container.lenientInt(.total)
-        nextPage = container.lenientInt(.next).flatMap { $0 > 0 ? $0 : nil }
-    }
 }
 
 /// Data source for the Movies screen.
@@ -31,10 +16,30 @@ nonisolated protocol MoviesServicing: Sendable {
     func page(_ page: Int) async throws -> MediaPage
 }
 
-nonisolated struct MoviesService: MoviesServicing {
-    var client: APIClient = .shared
+/// The movie catalogue through the Kotlin shared layer (`SharedGraph.moviesRepository`,
+/// `GET mediaview/api/v1/sho-details/media/1`). Items get the same image, price and access-tag rules
+/// as Home (`SharedHomeMapping`); the paging rules stay in `MoviesViewModel`.
+nonisolated final class SharedMoviesService: MoviesServicing, @unchecked Sendable {
+    private let repository: MoviesRepository
+
+    init(graph: SharedGraph = SharedLayer.graph) {
+        repository = graph.moviesRepository
+    }
 
     func page(_ page: Int) async throws -> MediaPage {
-        try await client.get(.media(shoType: 1, page: page), as: MediaPage.self)
+        let result = try await repository.getPage(page: Int32(page))
+        switch result {
+        case let success as DataResultSuccess<MoviesPage>:
+            guard let page = success.data else { throw APIError.decoding("Empty movies page") }
+            return MediaPage(
+                items: page.items.map(SharedHomeMapping.contentItem),
+                total: page.total.map { Int(truncating: $0) },
+                nextPage: page.nextPage.map { Int(truncating: $0) }
+            )
+        case let failure as DataResultFailure:
+            throw APIError(failure.error)
+        default:
+            throw APIError.decoding("Unknown movies result")
+        }
     }
 }

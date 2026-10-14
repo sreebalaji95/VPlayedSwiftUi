@@ -9,12 +9,11 @@ import os
 /// The two calls are independent and run concurrently, as in the UIKit app:
 /// - **Common** (`SceneDelegate.getCommonKeys`): feature flags, payment flags and update details.
 /// - **Geo** (`SplashScreenViewController.getBearerToken`): looks up the public IP, then fetches
-///   its geo token. The token goes into `SessionStore`, so `RequestHeaders` send it as
-///   `X-Bearer-Token` on every later request (shared requests read it from the shared `GeoStore`,
-///   which the shared lookup fills).
+///   its geo token. The shared lookup keeps the token in the graph's `GeoStore`, so every later
+///   request sends it as `X-Bearer-Token`.
 ///
-/// Both calls run on the Kotlin shared layer where it is linked (`SharedStartupService`, decision
-/// D18: the refresh is shared, the app decides when it runs); visionOS uses `StartupService`.
+/// Both calls run on the Kotlin shared layer (`SharedStartupService`, decision D18: the refresh is
+/// shared, the app decides when it runs).
 ///
 /// Failures are logged and otherwise ignored, as in the UIKit app: the defaults apply and launch
 /// carries on.
@@ -38,14 +37,12 @@ final class AppStartup {
     }
 
     @ObservationIgnored private let service: any StartupServicing
-    @ObservationIgnored private let session: SessionStore
     @ObservationIgnored private var commonTask: Task<Void, Never>?
     @ObservationIgnored private var geoTask: Task<Void, Never>?
     private static let log = Logger(subsystem: "com.contus.vplayed", category: "Startup")
 
-    init(service: any StartupServicing = StartupServices.live(), session: SessionStore = .shared) {
+    init(service: any StartupServicing = StartupServices.live()) {
         self.service = service
-        self.session = session
     }
 
     /// Starts both calls. Later calls do nothing.
@@ -85,7 +82,6 @@ final class AppStartup {
                 Self.log.info("Geo token skipped: the server returned none")
                 return
             }
-            await session.update { $0.geoToken = lookup.token }
             geoInfo = lookup.info
             Self.log.info("Geo token set (country \(self.geoInfo?.countryCode ?? "unknown", privacy: .public))")
         } catch {

@@ -1,17 +1,23 @@
-#if canImport(Shared)
 import Foundation
 import Observation
 // Kotlin classes are not Sendable; they are only used on the main thread here.
 @preconcurrency import Shared
 
-/// The Home model on iOS and macOS: the Kotlin shared `HomeFeedController` (also behind AndroidJP's
-/// Home) runs the feed — parallel first load, paging with de-duplication, skipping pages with
-/// nothing new (decision D9), refresh that keeps content on failure, and channel follow. This class
-/// mirrors its state into the structs the Home views draw (`SharedHomeMapping`) and turns its
-/// events into notices. Same API as `HomeViewModel`, which stays for visionOS.
+/// The Home model: the Kotlin shared `HomeFeedController` (also behind AndroidJP's Home) runs the
+/// feed — parallel first load, paging with de-duplication, skipping pages with nothing new
+/// (decision D9), refresh that keeps content on failure, and channel follow. This class mirrors its
+/// state into the structs the Home views draw (`SharedHomeMapping`) and turns its events into notices.
 @Observable
 final class SharedHomeViewModel {
-    private(set) var phase: HomeViewModel.Phase = .idle
+    enum Phase: Equatable {
+        case idle
+        case loading
+        case loaded
+        case empty
+        case failed(String)
+    }
+
+    private(set) var phase: Phase = .idle
     private(set) var banners: [HomeBanner] = []
     private(set) var sections: [HomeSection] = []
     private(set) var isLoadingMore = false
@@ -117,7 +123,7 @@ final class SharedHomeViewModel {
         resumeWaiters()
     }
 
-    private func derivedPhase(_ state: HomeFeedState) -> HomeViewModel.Phase {
+    private func derivedPhase(_ state: HomeFeedState) -> Phase {
         if !hasStarted { return .idle }
         if let error = state.error { return .failed(APIError(error).userMessage) }
         if state.isLoading { return .loading }
@@ -158,4 +164,3 @@ final class SharedHomeViewModel {
         ready.forEach { $0.continuation.resume() }
     }
 }
-#endif

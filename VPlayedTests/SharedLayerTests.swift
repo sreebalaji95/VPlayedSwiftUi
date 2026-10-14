@@ -1,4 +1,3 @@
-#if canImport(Shared)
 import Foundation
 @preconcurrency import Shared
 import Testing
@@ -27,17 +26,10 @@ final class SharedStubURLProtocol: URLProtocol {
     override func stopLoading() {}
 }
 
-/// The Kotlin Multiplatform shared layer, as linked into the app (iOS and macOS; there is no visionOS slice).
+/// The Kotlin Multiplatform shared layer, as the app builds it.
 @MainActor
 @Suite(.serialized)
 struct SharedLayerTests {
-    /// Headers the backend reads. `Content-Type` is left out: `RequestHeaders` sends it on every
-    /// request (even GETs), the shared client only with a body (divergence D19, harmless).
-    private static let backendHeaders = [
-        "Accept", "X-Request-Type", "device_type", "app_version", "X-Language-Code",
-        "device_id", "Authorization", "profile_id", "X-Bearer-Token",
-    ]
-
     @Test func environmentsMapToTheSameIdsAsAndroid() {
         #expect(SharedLayer.serverEnvironment(for: .development) == .development)
         #expect(SharedLayer.serverEnvironment(for: .qa) == .qa)
@@ -58,7 +50,6 @@ struct SharedLayerTests {
     }
 
     @Test func theAppSessionIsTheSharedSessionManager() async {
-        #expect(SessionStore.shared.sessions === SharedLayer.sessions)
         #expect(SharedLayer.graph.sessionManager === SharedLayer.sessions)
     }
 
@@ -66,34 +57,10 @@ struct SharedLayerTests {
         #expect(AuthServices.live() is SharedAuthService)
     }
 
-    @Test func sharedEncryptionDecryptsWithTheNativeImplementation() throws {
-        let graph = SharedLayer.makeGraph(transportKey: "unit-test-passphrase")
-        let plain = #"{"email":"user@example.com"}"#
-
-        let cipher = try #require(graph.encryptForTransport(plainJson: plain))
-
-        #expect(try CryptoJSAES.decrypt(cipher, passphrase: "unit-test-passphrase") == plain)
-    }
-
-    @Test func sharedClientSendsTheSameHeadersAsRequestHeaders() async throws {
+    @Test func backendRequestsCarryTheAppHeadersOnTheDarwinEngine() async throws {
         SharedStubURLProtocol.reset()
-
-        // Native stack: APIClient + RequestHeaders, signed in with a profile and a geo token.
-        // Both stacks read one session manager, as `SessionStore.shared` and `SharedLayer.graph` do.
         let sessions = SessionManager(store: InMemorySecureStore())
-        let store = SessionStore(sessions: sessions)
-        await store.signIn(AuthCredentials(accessToken: "access-abc", refreshToken: nil, userID: nil, uniqueUserID: nil, email: nil, phone: nil, firstName: nil, isGuest: false, profileID: "profile-1"))
-        await store.update { $0.geoToken = "geo-xyz" }
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.protocolClasses = [SharedStubURLProtocol.self]
-        let native = APIClient(
-            environment: .development,
-            session: URLSession(configuration: configuration),
-            headers: RequestHeaders(session: store, deviceID: "test-device", appVersion: "9.9.9", languageCode: { "ar" })
-        )
-        _ = try await native.get(Endpoint(path: "mediaview/api/v1/home"), as: IgnoredPayload.self)
-
-        // Shared stack: the same values through the Kotlin header plugin on the Darwin engine.
+        try await sessions.signIn(session: AuthSession(AuthCredentials(accessToken: "access-abc", refreshToken: nil, userID: nil, uniqueUserID: nil, email: nil, phone: nil, firstName: nil, isGuest: false, profileID: "profile-1")))
         let graph = SharedLayer.makeGraph(
             environment: .development,
             appVersion: "9.9.9",
@@ -104,20 +71,22 @@ struct SharedLayerTests {
                 HttpEngine_appleKt.createDarwinEngine { $0.protocolClasses = [SharedStubURLProtocol.self] }
             }
         )
-        // The geo token comes from the graph's `GeoStore` (filled by the shared geo lookup in the app).
+        // The shared geo lookup fills the graph's `GeoStore` in the app.
         graph.geoStore.updateGeo(token: "geo-xyz", info: nil)
-        let result = try await graph.apiCaller.get(path: "mediaview/api/v1/home", query: [], options: RequestOptions(sendGeoToken: true, redact: false, endsSessionOnUnauthorized: true))
-        #expect(result is DataResultSuccess<AnyObject>)
 
-        let requests = SharedStubURLProtocol.captured
-        try #require(requests.count == 2)
-        let (nativeRequest, sharedRequest) = (requests[0], requests[1])
-        #expect(nativeRequest.url == sharedRequest.url)
-        for name in Self.backendHeaders {
-            #expect(nativeRequest.value(forHTTPHeaderField: name) == sharedRequest.value(forHTTPHeaderField: name), "\(name)")
+        let result = try await graph.apiCaller.get(path: "mediaview/api/v1/home", query: [], options: RequestOptions(sendGeoToken: true, redact: false, endsSessionOnUnauthorized: true))
+
+        #expect(result is DataResultSuccess<AnyObject>)
+        #expect(SharedStubURLProtocol.captured.count == 1)
+        let request = try #require(SharedStubURLProtocol.captured.first)
+        #expect(request.url?.absoluteString == "https://api-devgs.vplayed.com/mediaview/api/v1/home")
+        let expected = [
+            "Accept": "application/json", "X-Request-Type": "mobile", "device_type": "ios", "app_version": "9.9.9",
+            "X-Language-Code": "ar", "device_id": "test-device", "Authorization": "Bearer access-abc",
+            "profile_id": "profile-1", "X-Bearer-Token": "geo-xyz",
+        ]
+        for (name, value) in expected {
+            #expect(request.value(forHTTPHeaderField: name) == value, "\(name)")
         }
-        #expect(sharedRequest.value(forHTTPHeaderField: "Authorization") == "Bearer access-abc")
-        #expect(sharedRequest.value(forHTTPHeaderField: "device_type") == "ios")
     }
 }
-#endif

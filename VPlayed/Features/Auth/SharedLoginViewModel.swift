@@ -1,16 +1,18 @@
-#if canImport(Shared)
 import Foundation
 import Observation
 // Kotlin classes are not Sendable; they are only used on the main thread here.
 @preconcurrency import Shared
 
-/// The Login model on iOS and macOS: the Kotlin shared controllers (`EmailLoginController`,
+/// The Login screen's model: the Kotlin shared controllers (`EmailLoginController`,
 /// `OtpController`, also behind AndroidJP's Login and OTP screens) run the flow: validation, one
 /// request at a time, the resend countdown, the device-limit step and the success step. This class
 /// mirrors their state for SwiftUI, turns messages into this app's strings and stores the session
 /// in `AccountStore`.
 @Observable
-final class SharedLoginViewModel: LoginScreenModel {
+final class SharedLoginViewModel {
+    /// Digits in a login code (the shared rule, `AuthFlowConfig.CODE_LENGTH`).
+    static let codeLength = Int(AuthFlowConfig.companion.CODE_LENGTH)
+
     /// The UIKit app's cap on the email field.
     static let maxEmailLength = 50
 
@@ -54,7 +56,7 @@ final class SharedLoginViewModel: LoginScreenModel {
     }
 
     var isSending: Bool { isSubmitting || isResending }
-    var canVerify: Bool { codeText.count == Int(AuthFlowConfig.companion.CODE_LENGTH) && !isVerifying }
+    var canVerify: Bool { codeText.count == Self.codeLength && !isVerifying }
 
     @ObservationIgnored private let account: AccountStore
     @ObservationIgnored private let graph: SharedGraph
@@ -320,4 +322,3 @@ nonisolated final class KotlinSubscriptions: @unchecked Sendable {
 
     deinit { closeAll() }
 }
-#endif

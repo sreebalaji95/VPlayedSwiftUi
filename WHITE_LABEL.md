@@ -2,7 +2,7 @@
 
 This guide is for teams that fork VPlayed to ship it under another brand. A rebrand changes the **identity, colours, wordmark, app icon and brand copy** listed below. It does not touch networking, decoding, navigation or view models. If a branding change seems to need an edit outside the files named here, treat that as a gap: raise it with the core team rather than patching around it.
 
-The app is SwiftUI only: no storyboards, no XIBs, no third-party dependencies. It builds for iOS/iPadOS 17+, macOS 26 and visionOS 26 from one target, with four schemes (`Dev`, `Qa`, `Stage`, `Demo`).
+The app is SwiftUI only: no storyboards, no XIBs, no third-party dependencies. It is one iOS/iPadOS 17+ target (Apple-silicon Macs and Apple Vision Pro run it as the iPad app), with four schemes (`Dev`, `Qa`, `Stage`, `Demo`). Networking, decoding and business rules come from the shared Kotlin layer in the `kmp` repository (see `CLAUDE.md`).
 
 ## Quick start
 
@@ -85,7 +85,7 @@ Text uses SF Pro unless you set a brand typeface:
 Every text style then uses that family. Each style picks the face nearest to its weight (regular, medium, semibold, bold, heavy), so ship at least regular and bold. The sizes and weights themselves are the core team's, in `Theme.Typography`.
 
 - **Scripts:** characters the typeface lacks fall back to the system font automatically. A Latin-only typeface therefore shows Arabic and Tamil in SF, which is usually what you want. Check those languages if your typeface covers them.
-- **System bars:** navigation titles and tab bar labels use the typeface too, at the system sizes (iOS and iPadOS; macOS and visionOS bars stay in the system font).
+- **System bars:** navigation titles and tab bar labels use the typeface too, at the system sizes.
 - **Licence:** make sure the font's licence allows embedding in an app.
 - `BrandTests/brandTypefaceIsAvailable()` fails if the family named in `Brand.fontFamily` isn't installed.
 
@@ -109,9 +109,9 @@ This file holds the API host and image bucket per environment. Edit it only if y
 These are owned by the core team. Brands get their look from the tokens above, so don't edit these files to rebrand.
 
 - [`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift): palette, typography roles (sizes and weights), corner radii, spacing.
-- [`DesignSystem/Glass.swift`](VPlayed/DesignSystem/Glass.swift): Liquid Glass buttons and surfaces, with all the iOS 17–18 and visionOS fallbacks. Primary actions use `glassButtonStyle(.primary)`, which alone sets their `primary` tint and `onPrimary` label.
+- [`DesignSystem/Glass.swift`](VPlayed/DesignSystem/Glass.swift): Liquid Glass buttons and surfaces, with all the iOS 17–18 fallbacks. Primary actions use `glassButtonStyle(.primary)`, which alone sets their `primary` tint and `onPrimary` label.
 - [`DesignSystem/BrandWordmark.swift`](VPlayed/DesignSystem/BrandWordmark.swift), [`Skeleton.swift`](VPlayed/DesignSystem/Skeleton.swift), [`LetterSpacing.swift`](VPlayed/DesignSystem/LetterSpacing.swift).
-- Card layouts in `Features/**/Views`. Card sizes and aspect ratios match the API's image variants (`Core/Images/ImageSet.swift`), so don't change them.
+- Card layouts in `Features/**/Views`. Card sizes and aspect ratios match the API's image variants (the shared layer's image table, `HomeImagePolicy.APPLE`), so don't change them.
 
 ## Protected areas
 
@@ -119,10 +119,10 @@ No branding change needs these.
 
 | Area | Files |
 |---|---|
-| API and session | `Core/Networking/` (`APIClient`, `Endpoint`, `RequestHeaders`, `SessionStore`, `LenientDecoding`, `APIError`) |
+| API and session | `Core/Shared/` (`SharedLayer`, the shared services, `KeychainSecureStore`), `Core/Networking/` (`APIEnvironment`, `APIError`), `SharedKit/` and the `kmp` repository |
 | Device ID | `Core/Networking/DeviceID.swift`. Its Keychain service name must stay as it is; changing it resets every install's device ID. |
-| Images | `Core/Images/` (`ImagePipeline`, `ImageSet`, `RemoteImage`) |
-| Business rules and data | `Features/*/*ViewModel.swift`, `*Service.swift`, `Features/Home/Models/` (`AccessTag`, `HomeSection`, content models) |
+| Images | `Core/Images/` (`ImagePipeline`, `ImageURL`, `RemoteImage`) |
+| Business rules and data | `Features/*/*ViewModel.swift`, `*Service.swift`, `Features/Home/SharedHomeMapping.swift`, `Features/Home/Models/` (`AccessTag`, `HomeSection`, content models) |
 | Navigation | `App/RootView.swift`, `App/AppRoute.swift`, `Features/Menu/MenuDrawer.swift` |
 | Localization plumbing | `Core/Localization/` |
 | Launch plumbing | `VPlayed/Info.plist` (launch screen keys only) and its exception in the project file |
@@ -133,11 +133,9 @@ Tab titles and symbols in `App/AppTab.swift` may be changed with care. Titles ne
 
 Run these after every rebrand.
 
-1. **Build every scheme and platform.** Repeat with `-scheme Qa`, `Stage` and `Demo`:
+1. **Build every scheme.** Repeat with `-scheme Qa`, `Stage` and `Demo`:
    ```bash
    xcodebuild -project VPlayed.xcodeproj -scheme Dev -destination 'generic/platform=iOS Simulator' build
-   xcodebuild -project VPlayed.xcodeproj -scheme Dev -destination 'generic/platform=macOS' build
-   xcodebuild -project VPlayed.xcodeproj -scheme Dev -destination 'generic/platform=visionOS Simulator' build
    ```
 2. **Run the tests:**
    ```bash

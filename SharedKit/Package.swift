@@ -5,13 +5,13 @@ import PackageDescription
 
 let package = Package(
     name: "SharedKit",
-    platforms: [.iOS(.v17), .macOS(.v15)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(name: "SharedKit", targets: ["Shared"]),
     ],
     targets: [
-        // iOS device, iOS simulator and macOS (Apple silicon) slices. Kotlin/Native has no visionOS
-        // target, so the app links this only for iOS and macOS (platform filter in the project).
+        // iOS device and simulator slices. On Mac and Apple Vision Pro the app runs as the iPad app
+        // ("Designed for iPad"), which uses the device slice.
         .binaryTarget(name: "Shared", path: "Shared.xcframework"),
     ]
 )

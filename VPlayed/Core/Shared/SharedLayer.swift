@@ -1,32 +1,33 @@
-#if canImport(Shared)
 import Foundation
 import os
 // Kotlin classes are not Sendable; they are only used through the main-actor adapters below.
 @preconcurrency import Shared
 
 /// Entry point to the Kotlin Multiplatform shared layer (`../kmp`, linked through the local
-/// `SharedKit` package). One `SharedGraph` per process, built from the same configuration the
-/// native networking uses. Kotlin/Native has no visionOS target, so this file and every use of
-/// `Shared` sit behind `#if canImport(Shared)`; visionOS keeps the native Swift implementations.
-///
-/// Sign-in uses it since Phase 3 (`SharedAuthService`, `SharedLoginViewModel`); Home, geo and the
-/// launch settings since Phase 4 (`SharedHomeViewModel`, `SharedStartupService`); the session since
-/// Phase 5 (`sessions`, behind `SessionStore` and `AccountStore`). Movies still uses `APIClient`.
-/// Features move to it phase by phase (see `KMP_PLANNING/KMP_MIGRATION_PLAN.md`).
+/// `SharedKit` package). One `SharedGraph` per process. Every backend call goes through it: sign-in
+/// (`SharedAuthService`, `SharedLoginViewModel`), Home (`SharedHomeViewModel`), Movies
+/// (`SharedMoviesService`), the launch calls (`SharedStartupService`) and the session (`sessions`,
+/// behind `AccountStore`). The app has no other network stack. On Mac and Apple Vision Pro it runs
+/// as the iPad app ("Designed for iPad").
 nonisolated enum SharedLayer {
     /// The app's graph, created on first use.
     static let graph: SharedGraph = makeGraph()
 
     /// The signed-in or guest session, stored in the Keychain item the app has always used
-    /// (`KeychainSecureStore`). Shared requests send its tokens as `Authorization` and `profile_id`;
-    /// `SessionStore.shared` reads it for native requests.
+    /// (`KeychainSecureStore`). Shared requests send its tokens as `Authorization` and `profile_id`.
     static let sessions = SessionManager(store: DispatchingSecureStore(store: KeychainSecureStore()))
+
+    /// The passphrase the UIKit app encrypts auth payloads with (`getEmailEncrypted`). It is not in
+    /// source control: `VPLAYED_TRANSPORT_KEY` in the git-ignored `Config/Secrets.xcconfig` reaches the
+    /// app through the `VPlayedTransportKey` Info.plist entry. Empty when the build has none (sign-in
+    /// then reports an error and sends nothing).
+    static let transportKey: String = Bundle.main.object(forInfoDictionaryKey: "VPlayedTransportKey") as? String ?? ""
 
     /// Builds a graph. Tests pass their own engine factory (e.g. one using a `URLProtocol` stub).
     static func makeGraph(
         environment: APIEnvironment = .current,
         appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0",
-        transportKey: String = CryptoJSAES.authPassphrase,
+        transportKey: String = SharedLayer.transportKey,
         deviceInfo: any DeviceInfo = IOSSharedDeviceInfo(),
         sessions: SessionManager = sessions,
         engineFactory: (() -> any Ktor_client_coreHttpClientEngine)? = nil
@@ -44,7 +45,7 @@ nonisolated enum SharedLayer {
     }
 
     /// The shared layer's configuration for an environment: same hosts as `APIEnvironment`, same
-    /// app version and transport key as the native requests.
+    /// app version and transport key.
     static func sharedConfig(environment: APIEnvironment, appVersion: String, transportKey: String) -> SharedConfig {
         SharedConfig(
             environment: serverEnvironment(for: environment),
@@ -69,7 +70,7 @@ nonisolated enum SharedLayer {
         }
     }
 
-    /// The same session tuning as `APIClient.makeSession()`; timeouts come from `SharedConfig`.
+    /// Connection limit and response cache for the Darwin engine; timeouts come from `SharedConfig`.
     private static func configureSession(_ configuration: URLSessionConfiguration) {
         configuration.httpMaximumConnectionsPerHost = 6
         configuration.urlCache = URLCache(memoryCapacity: 8 << 20, diskCapacity: 32 << 20)
@@ -85,7 +86,7 @@ nonisolated enum SharedLayer {
     }
 }
 
-/// Device facts for shared requests, from the same sources as `RequestHeaders` and `AuthService`.
+/// Device facts for the backend headers: the Keychain device id, the model identifier and the in-app language.
 /// Called by Kotlin from background threads, so it is nonisolated and reads only thread-safe values.
 nonisolated final class IOSSharedDeviceInfo: NSObject, DeviceInfo, @unchecked Sendable {
     private let languageCodeProvider: @Sendable () -> String
@@ -103,7 +104,7 @@ nonisolated final class IOSSharedDeviceInfo: NSObject, DeviceInfo, @unchecked Se
         languageCodeProvider = languageCode
     }
 
-    /// Read per request, so an in-app language switch applies immediately (as in `RequestHeaders`).
+    /// Read per request, so an in-app language switch applies immediately.
     func languageCode() -> String { languageCodeProvider() }
 }
 
@@ -123,4 +124,3 @@ nonisolated final class IOSSharedLogger: NSObject, SharedLogger, @unchecked Send
         log.error("[\(tag, privacy: .public)] \(message, privacy: .public)")
     }
 }
-#endif

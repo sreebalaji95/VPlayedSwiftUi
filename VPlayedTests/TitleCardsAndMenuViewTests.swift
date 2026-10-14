@@ -5,7 +5,7 @@ import Testing
 @MainActor
 struct TitleCardsTests {
     @Test func titleCardsUsePrototypeDefaultWidths() throws {
-        let item = try makeItem()
+        let item = makeItem()
 
         #expect(LandscapeCard(item: item).width == 172)
         #expect(PortraitCard(item: item).width == 112)
@@ -13,7 +13,7 @@ struct TitleCardsTests {
     }
 
     @Test func titleCardsPreserveCustomWidths() throws {
-        let item = try makeItem()
+        let item = makeItem()
 
         #expect(LandscapeCard(item: item, width: 240).width == 240)
         #expect(PortraitCard(item: item, width: 144).width == 144)
@@ -21,7 +21,7 @@ struct TitleCardsTests {
     }
 
     @Test func rankedCardsKeepTheirItemAndRank() throws {
-        let item = try makeItem(id: "featured")
+        let item = makeItem(id: "featured")
 
         let portrait = RankedPortraitCard(item: item, rank: 10)
         let landscape = RankedLandscapeCard(item: item, rank: 1)

@@ -21,28 +21,45 @@ final class MockMoviesService: MoviesServicing, @unchecked Sendable {
 
     func page(_ page: Int) async throws -> MediaPage {
         lock.withLock { calls.append(page) }
-        guard let result = lock.withLock({ pages[page] }) else { throw APIError.http(statusCode: 404) }
+        guard let result = lock.withLock({ pages[page] }) else { throw APIError.api(statusCode: 404, message: nil) }
         return try result.get()
     }
 }
 
 private func movies(_ ids: [String], total: Int? = 100, next: Int?) throws -> MediaPage {
-    MediaPage(items: try ids.map { try makeItem(id: $0) }, total: total, nextPage: next)
+    MediaPage(items: ids.map { makeItem(id: $0) }, total: total, nextPage: next)
 }
 
-struct MediaPageDecodingTests {
-    @Test func decodesMoviesPage() throws {
-        let page = try Fixture.payload("movies-page-1", as: MediaPage.self)
-        #expect(page.items.count == 3)
-        #expect(page.total == 1997)
-        #expect(page.nextPage == 2)
+extension RoutedBackendTests {
+    /// The dev-API movie page through the shared layer (`SharedMoviesService`), as the Movies tab reads it.
+    @MainActor
+    @Suite
+    struct SharedMoviesServiceTests {
+        private static let firstPage = RoutedBackend.route("mediaview/api/v1/sho-details/media/1", page: 1)
 
-        let first = try #require(page.items.first)
-        #expect(first.title == "sample1")
-        #expect(first.genre == "Comedy")
-        #expect(first.landscapeImageURL != nil)
-        // Every item carries `default_genre`, whether the full genre document or just _id/title/slug.
-        #expect(page.items.map(\.genre) == ["Comedy", "Action", "Action"])
+        @Test func readsTheMoviesPage() async throws {
+            RouteStubURLProtocol.reset([Self.firstPage: try RoutedBackend.fixture("movies-page-1")])
+
+            let page = try await SharedMoviesService(graph: RoutedBackend.graph()).page(1)
+
+            #expect(page.items.count == 3)
+            #expect(page.total == 1997)
+            #expect(page.nextPage == 2)
+            let first = try #require(page.items.first)
+            #expect(first.title == "sample1")
+            #expect(first.genre == "Comedy")
+            #expect(first.landscapeImageURL != nil)
+            // Every item carries `default_genre`, whether the full genre document or just _id/title/slug.
+            #expect(page.items.map(\.genre) == ["Comedy", "Action", "Action"])
+            let query = try #require(RouteStubURLProtocol.captured.first?.url.flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false) }?.queryItems)
+            #expect(Set(query.map(\.name)) == ["page", "limit", "is_promo"])
+        }
+
+        @Test func failuresBecomeTheScreensErrors() async throws {
+            RouteStubURLProtocol.reset([Self.firstPage: .failure(.notConnectedToInternet)])
+
+            await #expect(throws: APIError.self) { try await SharedMoviesService(graph: RoutedBackend.graph()).page(1) }
+        }
     }
 }
 
@@ -112,7 +129,7 @@ struct MoviesViewModelTests {
     @Test func failedLoadMoreKeepsGridAndFlagsRetry() async throws {
         let service = MockMoviesService(pages: [
             1: .success(try movies(["a"], next: 2)),
-            2: .failure(APIError.http(statusCode: 500)),
+            2: .failure(APIError.api(statusCode: 500, message: nil)),
         ])
         let model = MoviesViewModel(service: service)
         await model.loadIfNeeded()

@@ -1,12 +1,9 @@
 import CoreText
 import Foundation
-#if os(iOS)
 import UIKit
-#endif
 
 /// Makes the brand typeface's bundled font files available to the app, so `Brand.fontFamily` can
-/// name it without listing each file in Info.plist (`UIAppFonts` on iOS and visionOS,
-/// `ATSApplicationFontsPath` on macOS).
+/// name it without listing each file in Info.plist (`UIAppFonts`).
 enum BrandFonts {
     /// Registers every font file in the app bundle for this process and puts the typeface in the
     /// system bars. Call once at launch, before any text draws. Does nothing when the brand uses
@@ -23,7 +20,6 @@ enum BrandFonts {
     /// Navigation titles and tab bar labels are drawn by UIKit, so SwiftUI's `.font` never
     /// reaches them; their appearance proxies get the brand typeface at the system sizes instead.
     private static func styleSystemBars() {
-        #if os(iOS)
         guard let family = Brand.fontFamily else { return }
         func font(_ size: CGFloat, _ weight: UIFont.Weight) -> UIFont {
             let descriptor = UIFontDescriptor(fontAttributes: [
@@ -48,7 +44,6 @@ enum BrandFonts {
         }
         UITabBar.appearance().standardAppearance = tabs
         UITabBar.appearance().scrollEdgeAppearance = tabs
-        #endif
     }
 
     /// Font files anywhere in the app's resources, whichever folder they were copied into.

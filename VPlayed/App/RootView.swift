@@ -1,4 +1,6 @@
 import SwiftUI
+// Kotlin classes are not Sendable; only the preview builds one here.
+@preconcurrency import Shared
 
 /// App root: a system tab bar (Liquid Glass on iOS 26+) with one navigation stack per tab,
 /// covered by the splash on cold launch. The Home model lives here so it survives navigation
@@ -17,7 +19,7 @@ import SwiftUI
 struct RootView: View {
     let startup: AppStartup
     let account: AccountStore
-    @State private var homeModel: PlatformHomeModel
+    @State private var homeModel: SharedHomeViewModel
     @State private var languageStore = LanguageStore()
     @State private var selectedTab: AppTab = .home
     @State private var paths: [AppTab: [AppRoute]] = [:]
@@ -29,7 +31,7 @@ struct RootView: View {
         self.startup = startup
         self.account = account
         // Home's first requests wait for the geo token (`X-Bearer-Token`), but no longer than the splash.
-        _homeModel = State(initialValue: PlatformHomeModel(prepare: { await startup.waitForGeoToken(upTo: SplashView.duration) }))
+        _homeModel = State(initialValue: SharedHomeViewModel(prepare: { await startup.waitForGeoToken(upTo: SplashView.duration) }))
     }
 
     var body: some View {
@@ -75,7 +77,7 @@ struct RootView: View {
         .onChange(of: account.state) {
             Task { await homeModel.refresh() }
         }
-        .loginPresentation(isPresented: $showsLogin) {
+        .fullScreenCover(isPresented: $showsLogin) {
             LoginView(account: account)
                 .font(Theme.Typography.standard)
                 .environment(startup)
@@ -140,19 +142,6 @@ struct RootView: View {
     }
 }
 
-private extension View {
-    /// Full screen on iOS and visionOS; macOS has no full-screen cover, so a sheet there.
-    func loginPresentation<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> Content) -> some View {
-        #if os(macOS)
-        sheet(isPresented: isPresented) {
-            content().frame(minWidth: 460, minHeight: 640)
-        }
-        #else
-        fullScreenCover(isPresented: isPresented, content: content)
-        #endif
-    }
-}
-
 #Preview {
-    RootView(startup: AppStartup(), account: AccountStore(saved: nil, session: SessionStore()))
+    RootView(startup: AppStartup(), account: AccountStore(sessions: SessionManager(store: InMemorySecureStore())))
 }

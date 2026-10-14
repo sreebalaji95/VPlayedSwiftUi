@@ -1,4 +1,3 @@
-#if canImport(Shared)
 import Foundation
 // Kotlin classes are not Sendable; they are only read on the main actor here.
 @preconcurrency import Shared
@@ -132,4 +131,3 @@ nonisolated enum SharedHomeMapping {
         return String(format: "#%06X", argb & 0xFFFFFF)
     }
 }
-#endif

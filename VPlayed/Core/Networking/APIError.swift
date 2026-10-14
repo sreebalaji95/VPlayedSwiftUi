@@ -1,11 +1,10 @@
 import Foundation
 
+/// Failures the screens explain to the user. The shared layer's `AppError`s arrive here through
+/// `APIError(_:)` (`SharedAuthService.swift`); `userMessage` stays native for localization.
 nonisolated enum APIError: Error, Sendable, Equatable {
-    case invalidURL
     /// Transport failure (offline, timeout, TLS…).
     case network(code: Int)
-    /// Non-2xx HTTP status without a decodable API envelope.
-    case http(statusCode: Int)
     /// The envelope's `statusCode` was not 200.
     case api(statusCode: Int, message: String?)
     /// 401/403 — the session is missing or expired.
@@ -25,7 +24,7 @@ nonisolated enum APIError: Error, Sendable, Equatable {
             message
         case .unauthorized:
             String(localized: "Your session has expired. Please sign in again.", bundle: .localized)
-        case .invalidURL, .http, .api, .decoding:
+        case .api, .decoding:
             String(localized: "Something went wrong while loading. Please try again.", bundle: .localized)
         }
     }
