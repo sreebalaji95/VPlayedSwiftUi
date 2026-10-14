@@ -368,6 +368,28 @@
         }
       }
     },
+    "Choosing a profile is coming soon; your default profile is used.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "سيتوفر اختيار الملف الشخصي قريبًا؛ يُستخدم ملفك الشخصي الافتراضي."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "A escolha de perfil chegará em breve; seu perfil padrão está sendo usado."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "சுயவிவரத் தேர்வு விரைவில் வரும்; உங்கள் இயல்புநிலைச் சுயவிவரம் பயன்படுத்தப்படுகிறது."
+          }
+        }
+      }
+    },
     "COMING SOON": {
       "localizations": {
         "ar": {
@@ -852,6 +874,28 @@
         }
       }
     },
+    "Incorrect code. Try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "الرمز غير صحيح. حاول مرة أخرى."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Código incorreto. Tente novamente."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "தவறான குறியீடு. மீண்டும் முயலவும்."
+          }
+        }
+      }
+    },
     "LIVE": {
       "localizations": {
         "ar": {
@@ -980,6 +1024,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "திரைப்படங்கள் ஏற்றப்படுகின்றன"
+          }
+        }
+      }
+    },
+    "Maximum devices reached": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "تم الوصول إلى الحد الأقصى من الأجهزة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Limite de dispositivos atingido"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "அதிகபட்ச சாதன வரம்பை எட்டிவிட்டீர்கள்"
           }
         }
       }
@@ -1512,6 +1578,28 @@
         }
       }
     },
+    "Sign out from all devices": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "تسجيل الخروج من جميع الأجهزة"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Sair de todos os dispositivos"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "எல்லாச் சாதனங்களிலிருந்தும் வெளியேறு"
+          }
+        }
+      }
+    },
     "Sign out of %@?": {
       "localizations": {
         "ar": {
@@ -1794,6 +1882,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "இன்னும் காட்ட எதுவும் இல்லை. விரைவில் மீண்டும் பாருங்கள்."
+          }
+        }
+      }
+    },
+    "This device": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "هذا الجهاز"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Este dispositivo"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "இந்தச் சாதனம்"
           }
         }
       }
@@ -2194,6 +2304,50 @@
         }
       }
     },
+    "We couldn't sign that device out. Please try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "تعذّر تسجيل الخروج من هذا الجهاز. يُرجى المحاولة مرة أخرى."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Não foi possível desconectar esse dispositivo. Tente novamente."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "அந்தச் சாதனத்திலிருந்து வெளியேற்ற முடியவில்லை. மீண்டும் முயலவும்."
+          }
+        }
+      }
+    },
+    "We couldn't sign you in. Please try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "تعذّر تسجيل دخولك. يُرجى المحاولة مرة أخرى."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Não foi possível fazer seu login. Tente novamente."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "உங்களை உள்நுழைய வைக்க முடியவில்லை. மீண்டும் முயலவும்."
+          }
+        }
+      }
+    },
     "We'll send a 6-digit code to verify it's you.": {
       "localizations": {
         "ar": {
@@ -2212,6 +2366,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "இது நீங்கள்தான் என உறுதிசெய்ய 6 இலக்கக் குறியீட்டை அனுப்புவோம்."
+          }
+        }
+      }
+    },
+    "Welcome! Setting up your profile is coming soon.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "مرحبًا! سيتوفر إعداد ملفك الشخصي قريبًا."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Boas-vindas! A configuração do seu perfil chegará em breve."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "வரவேற்கிறோம்! உங்கள் சுயவிவர அமைப்பு விரைவில் வரும்."
           }
         }
       }
@@ -2344,6 +2520,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "உங்கள் %@ கணக்கு தயார்."
+          }
+        }
+      }
+    },
+    "Your account is signed in on as many devices as it allows. Sign out from one of them to continue.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "حسابك مسجَّل الدخول على الحد الأقصى المسموح به من الأجهزة. سجّل الخروج من أحدها للمتابعة."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Sua conta está conectada no número máximo de dispositivos permitido. Saia de um deles para continuar."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "உங்கள் கணக்கு அனுமதிக்கப்பட்ட அதிகபட்ச சாதனங்களில் உள்நுழைந்துள்ளது. தொடர, அவற்றில் ஒன்றிலிருந்து வெளியேறவும்."
           }
         }
       }

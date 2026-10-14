@@ -3,8 +3,10 @@ import SwiftUI
 /// Sign in, from the prototype's "VPlayed Sign Up" page: email, then the 6-digit code, then
 /// "You're all set", plus guest access when the server allows it. Presented over the app by
 /// `RootView`; it closes itself once a session starts. The social buttons are for show only.
-struct LoginView: View {
-    @State private var model: LoginViewModel
+/// The flow comes from a `LoginScreenModel`: the shared Kotlin one on iOS and macOS, the Swift one
+/// on visionOS.
+struct LoginView<Model: LoginScreenModel>: View {
+    @State private var model: Model
     @Environment(AppStartup.self) private var startup
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
@@ -13,8 +15,8 @@ struct LoginView: View {
     @FocusState private var emailFocused: Bool
     @FocusState private var codeFocused: Bool
 
-    init(account: AccountStore, service: any AuthServicing = AuthServices.live()) {
-        _model = State(initialValue: LoginViewModel(account: account, service: service))
+    init(model: Model) {
+        _model = State(initialValue: model)
     }
 
     var body: some View {
@@ -42,14 +44,9 @@ struct LoginView: View {
             emailFocused = step == .email
             codeFocused = step == .code
         }
+        // Guest sessions at once; sign-in after "You're all set" has shown for 3 seconds.
         .onChange(of: model.isFinished) { _, finished in
             if finished { dismiss() }
-        }
-        .task(id: model.step) {
-            // "You're all set" moves on by itself after 3 seconds, as in the prototype.
-            guard model.step == .done else { return }
-            try? await Task.sleep(for: .seconds(3))
-            if !Task.isCancelled { dismiss() }
         }
         .onDisappear { model.stopTimers() }
     }
@@ -90,6 +87,7 @@ struct LoginView: View {
             switch model.step {
             case .email: emailStep
             case .code: codeStep
+            case .devices: devicesStep
             case .done: doneStep
             }
         }
@@ -328,6 +326,106 @@ struct LoginView: View {
         .font(Theme.Typography.bodySmall)
     }
 
+    // MARK: Device limit (off until the backend confirms it is safe, see `AuthFeatures`)
+
+    private var devicesStep: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Button { model.editEmail() } label: {
+                Label("Back", systemImage: "chevron.backward")
+                    .labelStyle(SpacedLabelStyle(spacing: 6))
+                    .font(Theme.Typography.note)
+                    .foregroundStyle(Theme.Palette.textSecondary)
+            }
+            .buttonStyle(.plain)
+            .disabled(model.isSigningOut)
+            .padding(.bottom, 18)
+
+            AuthTitle(text: "Maximum devices reached")
+                .padding(.bottom, 10)
+            Text("Your account is signed in on as many devices as it allows. Sign out from one of them to continue.")
+                .font(Theme.Typography.body)
+                .foregroundStyle(Theme.Palette.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.bottom, 22)
+
+            if let notice = model.notice {
+                AuthNotice(message: notice)
+                    .padding(.bottom, 18)
+            }
+
+            VStack(spacing: 10) {
+                ForEach(model.devices) { device in
+                    deviceRow(device)
+                }
+            }
+            .padding(.bottom, 22)
+
+            if model.hasSignedOutDevice {
+                Button { model.continueAfterSignOut() } label: {
+                    AuthButtonLabel(title: "Continue", font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isSigningOut) {
+                        Image(systemName: "arrow.forward")
+                            .font(.system(size: 16, weight: .bold))
+                    }
+                }
+                .glassButtonStyle(.primary)
+                .authButtonShape()
+                .disabled(model.isSigningOut)
+            } else if !model.devices.isEmpty {
+                Button { model.signOutAllDevices() } label: {
+                    AuthButtonLabel(title: "Sign out from all devices", isLoading: model.isSigningOut) {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                            .font(.system(size: 16, weight: .medium))
+                    }
+                }
+                .glassButtonStyle()
+                .authButtonShape()
+                .disabled(model.isSigningOut)
+            }
+        }
+    }
+
+    private func deviceRow(_ device: LoginDevice) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: Self.symbol(for: device.kind))
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(Theme.Palette.textSecondary)
+                .frame(width: 28)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(verbatim: device.name)
+                    .font(Theme.Typography.note)
+                    .foregroundStyle(Theme.Palette.textPrimary)
+                if device.isCurrent {
+                    Text("This device")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Palette.primary)
+                } else if let detail = device.detail {
+                    Text(verbatim: detail)
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Palette.textTertiary)
+                }
+            }
+            Spacer(minLength: 8)
+            Button("Sign out") { model.signOut(device) }
+                .font(Theme.Typography.note)
+                .foregroundStyle(Theme.Palette.primary)
+                .buttonStyle(.plain)
+                .disabled(model.isSigningOut)
+        }
+        .padding(.vertical, 10)
+        .modifier(AuthFieldBackground())
+        .accessibilityElement(children: .combine)
+    }
+
+    private static func symbol(for kind: LoginDevice.Kind) -> String {
+        switch kind {
+        case .desktop: "desktopcomputer"
+        case .phone: "iphone"
+        case .tv: "tv"
+        case .other: "questionmark.square.dashed"
+        }
+    }
+
     // MARK: Step 3 — done
 
     private var doneStep: some View {
@@ -348,6 +446,13 @@ struct LoginView: View {
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Palette.textSecondary)
                 .multilineTextAlignment(.center)
+            if let doneNotice = model.doneNotice {
+                Text(verbatim: doneNotice)
+                    .font(Theme.Typography.bodySmall)
+                    .foregroundStyle(Theme.Palette.textTertiary)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 8)
+            }
             AutoAdvanceBar()
                 .padding(.top, 20)
         }
@@ -382,5 +487,19 @@ private struct AutoAdvanceBar: View {
                 withAnimation(.linear(duration: 3)) { progress = 1 }
             }
         }
+    }
+}
+
+#if canImport(Shared)
+/// The Login model this platform uses: the Kotlin shared controllers.
+typealias PlatformLoginModel = SharedLoginViewModel
+#else
+/// The Login model this platform uses: visionOS has no Kotlin/Native target.
+typealias PlatformLoginModel = LoginViewModel
+#endif
+
+extension LoginView where Model == PlatformLoginModel {
+    init(account: AccountStore) {
+        self.init(model: PlatformLoginModel(account: account))
     }
 }

@@ -1,23 +1,25 @@
 import Foundation
 import Observation
 
-/// Drives the Login screen: the UIKit app's passwordless email sign-in (email → 6-digit code)
-/// and guest login, with its validation, resend timer and outcome handling.
+/// The Swift Login model, used on visionOS (no Kotlin/Native target): the UIKit app's passwordless
+/// email sign-in (email → 6-digit code) and guest login, with its validation, resend timer and
+/// outcome handling, on `AuthServicing`. iOS and macOS use `SharedLoginViewModel`, which runs the
+/// same flow on the Kotlin shared controllers. Removed if visionOS gets the shared layer (Phase 7).
 @Observable
-final class LoginViewModel {
-    enum Step: Equatable {
-        case email
-        case code
-        /// Signed in; the screen shows "You're all set" and closes itself.
-        case done
-    }
+final class LoginViewModel: LoginScreenModel {
+    typealias Step = LoginStep
 
     /// UIKit's limits: an email field of at most 50 characters, a 60-second resend wait.
     static let maxEmailLength = 50
     static let codeLength = 6
     static let resendInterval = 60
 
-    private(set) var step: Step = .email
+    private(set) var step: Step = .email {
+        didSet {
+            // "You're all set" moves on by itself after 3 seconds, as in the prototype.
+            if step == .done { finishAfterSuccessStep() }
+        }
+    }
     var email = "" {
         didSet {
             if email.count > Self.maxEmailLength { email = String(email.prefix(Self.maxEmailLength)) }
@@ -39,7 +41,7 @@ final class LoginViewModel {
     private(set) var isSending = false
     private(set) var isVerifying = false
     private(set) var isJoiningAsGuest = false
-    /// Set when a guest session has started, so the screen can close.
+    /// Set when a session has started (guest at once, sign-in after the success step), so the screen can close.
     private(set) var isFinished = false
     /// An error to show above the form (server messages, connection problems).
     var notice: String?
@@ -49,6 +51,10 @@ final class LoginViewModel {
     @ObservationIgnored private let service: any AuthServicing
     @ObservationIgnored private let account: AccountStore
     @ObservationIgnored private var resendTask: Task<Void, Never>?
+    @ObservationIgnored private var finishTask: Task<Void, Never>?
+
+    /// How long "You're all set" stays.
+    static let successDuration = Duration.seconds(3)
 
     init(account: AccountStore, service: any AuthServicing = AuthServices.live()) {
         self.account = account
@@ -157,6 +163,15 @@ final class LoginViewModel {
     func stopTimers() {
         resendTask?.cancel()
         resendTask = nil
+    }
+
+    private func finishAfterSuccessStep() {
+        finishTask?.cancel()
+        finishTask = Task { [weak self] in
+            try? await Task.sleep(for: Self.successDuration)
+            guard let self, !Task.isCancelled else { return }
+            isFinished = true
+        }
     }
 
     private func startResendTimer() {
