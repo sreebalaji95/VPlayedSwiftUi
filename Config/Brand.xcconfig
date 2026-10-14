@@ -11,3 +11,6 @@ BRAND_DISPLAY_NAME = VPlayed
 DEVELOPMENT_TEAM = G44VFA67ZG
 MARKETING_VERSION = 1.0.0
 CURRENT_PROJECT_VERSION = 1
+
+// Local secrets (git-ignored; see Secrets.example.xcconfig). Optional, so a checkout without it still builds.
+#include? "Secrets.xcconfig"

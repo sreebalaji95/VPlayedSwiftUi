@@ -29,6 +29,8 @@ Every scheme and both targets read this file. Don't set these keys in the projec
 | `DEVELOPMENT_TEAM` | `G44VFA67ZG` | Signing team for all configurations |
 | `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` | `1.0.0` / `1` | Version and build number |
 
+`Brand.xcconfig` ends by including `Config/Secrets.xcconfig` when it exists. That file is git-ignored and holds `VPLAYED_TRANSPORT_KEY`, the backend's request-encryption passphrase. Create it from `Config/Secrets.example.xcconfig` with the value for your brand's backend. Without it the app builds, but email sign-in reports an error.
+
 ### Colours: `VPlayed/Brand/Assets.xcassets`
 
 Views never use raw colours. They read `Theme.Palette` ([`DesignSystem/Theme.swift`](VPlayed/DesignSystem/Theme.swift)), which reads these colorsets through Xcode's generated asset symbols. So:

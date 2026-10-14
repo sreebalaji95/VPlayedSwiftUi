@@ -56,20 +56,32 @@ private func authorization(_ session: SessionStore) async -> String? {
 
 @MainActor
 struct CryptoJSAESTests {
+    /// Test-only passphrase; the real one is a build secret (`Config/Secrets.xcconfig`).
+    private let passphrase = "unit-test-passphrase"
+
     @Test func roundTripsInTheOpenSSLFormat() throws {
         let message = #"{"email":"tester@example.com","otp":"123456","deviceDetail":"iPhone17,3"}"#
-        let encrypted = try CryptoJSAES.encrypt(message, passphrase: CryptoJSAES.authPassphrase)
+        let encrypted = try CryptoJSAES.encrypt(message, passphrase: passphrase)
 
         #expect(encrypted.hasPrefix("U2FsdGVkX1")) // base64 of "Salted__"
-        #expect(try CryptoJSAES.decrypt(encrypted, passphrase: CryptoJSAES.authPassphrase) == message)
+        #expect(try CryptoJSAES.decrypt(encrypted, passphrase: passphrase) == message)
         // A fresh salt every time, as crypto-js does.
-        #expect(try CryptoJSAES.encrypt(message, passphrase: CryptoJSAES.authPassphrase) != encrypted)
+        #expect(try CryptoJSAES.encrypt(message, passphrase: passphrase) != encrypted)
     }
 
     @Test func readsCiphertextFromOpenSSL() throws {
-        // printf '{"email":"test@example.com"}' | openssl enc -aes-256-cbc -md md5 -salt -pass pass:vplayed@contus -a -A
-        let fromOpenSSL = "U2FsdGVkX1+SLj2OwP6VcvOcxjW+nxpOnvYvx8b6Dm3fUAqhf6Gn5P2QuBCU7FRF"
-        #expect(try CryptoJSAES.decrypt(fromOpenSSL, passphrase: "vplayed@contus") == #"{"email":"test@example.com"}"#)
+        // printf '{"email":"test@example.com"}' | openssl enc -aes-256-cbc -md md5 -salt -pass pass:unit-test-passphrase -a -A
+        let fromOpenSSL = "U2FsdGVkX18Y6Qdfa44XB43+WiAbE1nCj/6yMVgeKl6iv23QaD/kz5BsMrdvL+mK"
+        #expect(try CryptoJSAES.decrypt(fromOpenSSL, passphrase: passphrase) == #"{"email":"test@example.com"}"#)
+    }
+
+    @Test func refusesToEncryptWithoutAPassphrase() {
+        #expect(throws: CryptoJSAES.Failure.self) { try CryptoJSAES.encrypt("{}", passphrase: "") }
+    }
+
+    @Test func buildProvidesTheTransportKey() {
+        // Config/Secrets.xcconfig must exist for email sign-in to work (see Secrets.example.xcconfig).
+        #expect(!CryptoJSAES.authPassphrase.isEmpty)
     }
 
     @Test func rejectsTheWrongPassphrase() throws {

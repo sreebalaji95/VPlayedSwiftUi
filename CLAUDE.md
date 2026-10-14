@@ -16,6 +16,11 @@ Do not add a `Co-Authored-By: Claude …` trailer or any other Claude attributio
 
 ## Build
 
+Before the first build, set up the two local inputs that are not in git:
+
+- `Config/Secrets.xcconfig`: copy `Config/Secrets.example.xcconfig` and fill in `VPLAYED_TRANSPORT_KEY`.
+- `SharedKit/Shared.xcframework`: the Kotlin Multiplatform shared layer, built from the `kmp` repository checked out next to this one (`../kmp`). Run `scripts/build-shared.sh` (needs JDK 25, e.g. `export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"`), and run it again after pulling `kmp` changes. See "Shared layer" under Architecture.
+
 The app target is `VPlayed`. There is one shared scheme per environment (`Dev`, `Qa`, `Stage`, `Demo`; see Environments), and each also runs the `VPlayedTests` target (Swift Testing). Use `Dev` day to day. Build per platform:
 
 ```bash
@@ -76,6 +81,12 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - `RequestHeaders` sends the UIKit app's header set: `X-Request-Type: mobile`, `device_type: ios`, `device_id`, `app_version`, `X-Language-Code`. It adds `Authorization`, `profile_id` and `X-Bearer-Token` only when `SessionStore` holds them. `AppStartup` sets the geo token (`X-Bearer-Token`) at launch; `AccountStore` sets the access token at sign-in (see Auth). Nothing sets `profile_id` yet (no profile selection).
   - `APIClient.post(_:body:as:accepting:)` sends JSON and returns an `APIResult` (status code, message, optional payload), because some auth endpoints answer with several success codes the caller branches on.
   - Home APIs work as an anonymous guest.
+- **Shared layer (`Core/Shared`, `SharedKit/`)**:
+  - Business logic shared with the Android app lives in a Kotlin Multiplatform library in the `kmp` repository. The plan is in `../KMP_PLANNING/`. `scripts/build-shared.sh` builds `Shared.xcframework` (iOS device, iOS simulator arm64/x86_64, macOS arm64/x86_64) into the local `SharedKit` package, which the `VPlayed` target links with platform filters iOS and macOS.
+  - Kotlin/Native has no visionOS target, so every use of the `Shared` module sits behind `#if canImport(Shared)`, and visionOS keeps the native Swift implementations.
+  - `SharedLayer` builds the one `SharedGraph` from `APIEnvironment`, the app version and the transport key. `IOSSharedDeviceInfo` supplies `device_id` (`DeviceID`), `deviceDetail` (`DeviceModel`) and `X-Language-Code` (`AppLanguage.current`). It and `IOSSharedLogger` are `nonisolated`, because Kotlin calls them from background threads. Import the module as `@preconcurrency import Shared`, since Kotlin classes aren't `Sendable`.
+  - Phase 2 state: nothing in the app calls the graph yet. `SharedLayerTests` checks that the shared Ktor client sends the same backend headers as `RequestHeaders`, and that shared encryption decrypts with `CryptoJSAES`. Features move over phase by phase, behind the existing service protocols (`AuthServicing`, `HomeServicing`, `StartupServicing`).
+  - Kotlin `StateFlow`s are not `@Observable`. Observe them with `StateFlowWatcher.watch(onEach:)`, which delivers on the main thread, and `close()` the returned `Closeable` in `deinit`. Kotlin `suspend` functions are `async` in Swift. Shared APIs return result types and never throw.
 - **Decoding**:
   - The API mixes types (`sho_type` Int or String, `video_duration` String, flags 0/1 or Bool, titles String or `{"en": …}`). Decode through the lenient helpers in `LenientDecoding.swift` (`lenientInt`, `lossyArray`, `LocalizedText`…) so one malformed item never fails a whole response.
   - Model structs are `nonisolated` so they decode off the main actor.
@@ -90,7 +101,7 @@ Four shared schemes, `Dev`, `Qa`, `Stage` and `Demo`, mirror the UIKit app's env
   - Not ported yet: automatic guest login at launch, the force/soft update prompt (the settings are stored), and re-fetching on foreground.
 - **Auth (`Core/Auth`, `Features/Auth`)**:
   - Login (`LoginView` / `LoginViewModel`) is the prototype's "VPlayed Sign Up" flow on the UIKit app's passwordless email sign-in. Step 1: `POST users/api/v1/auth/email-login` (200 sends a code; 203 means no account). Step 2: `POST users/api/v1/auth/verifyEmailOtp` (200 signs in; 202 is the device limit). Then "You're all set", which closes itself after 3s. UIKit rules kept: its email regex, a 50-character cap, a 60s resend wait, and an account with no phone and no Apple, Facebook or Google ID counts as not registered.
-  - Bodies are `{"data": <CryptoJS AES>}`: `CryptoJSAES` reproduces `CryptoJS.AES.encrypt(json, "vplayed@contus")` (OpenSSL `Salted__` format, MD5 key derivation, AES-256-CBC) with CommonCrypto.
+  - Bodies are `{"data": <CryptoJS AES>}`: `CryptoJSAES` reproduces `CryptoJS.AES.encrypt(json, passphrase)` (OpenSSL `Salted__` format, MD5 key derivation, AES-256-CBC) with CommonCrypto. The passphrase is a build secret. `VPLAYED_TRANSPORT_KEY` comes from the git-ignored `Config/Secrets.xcconfig` (included by `Brand.xcconfig`) and reaches `CryptoJSAES.authPassphrase` through the `VPlayedTransportKey` Info.plist entry. Never put it in source. Tests use a test-only passphrase.
   - "Continue as guest" (`POST users/api/v1/auth/generate`, `{"uuid": DeviceID}`) only shows when the common API's `is_guest_user` is true. Guests still see "Sign in" in Menu.
   - Device-limit and new-account responses show a message; the UIKit sign-out-devices and Register screens aren't ported. Phone sign-in isn't either, since UIKit verifies phone codes with Firebase. The Google and Apple buttons are UI only.
   - `AccountStore` (`@Observable`, owned by `MyApp`) holds signed out / guest / signed in. `SessionStore.shared` persists the session in the Keychain (`KeychainCredentialStore`, account `session`) and restores it at launch, so the first request is authenticated. A plain `SessionStore()` (tests, previews) is memory-only.

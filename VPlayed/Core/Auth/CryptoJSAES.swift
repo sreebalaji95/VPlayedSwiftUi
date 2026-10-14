@@ -10,17 +10,22 @@ import Security
 /// derived from the passphrase and salt by OpenSSL's `EVP_BytesToKey` (MD5, one iteration).
 nonisolated enum CryptoJSAES {
     enum Failure: Error {
+        /// The build has no passphrase (`Config/Secrets.xcconfig` missing), so nothing can be encrypted.
+        case missingPassphrase
         case randomBytes
         case crypt(CCCryptorStatus)
         case malformed
     }
 
-    /// The passphrase the UIKit app encrypts auth payloads with (`getEmailEncrypted`).
-    static let authPassphrase = "vplayed@contus"
+    /// The passphrase the UIKit app encrypts auth payloads with (`getEmailEncrypted`). It is not in
+    /// source control: `VPLAYED_TRANSPORT_KEY` in the git-ignored `Config/Secrets.xcconfig` reaches the
+    /// app through the `VPlayedTransportKey` Info.plist entry. Empty when the build has none.
+    static let authPassphrase: String = Bundle.main.object(forInfoDictionaryKey: "VPlayedTransportKey") as? String ?? ""
 
     private static let magic = Data("Salted__".utf8)
 
     static func encrypt(_ plaintext: String, passphrase: String) throws -> String {
+        guard !passphrase.isEmpty else { throw Failure.missingPassphrase }
         var salt = Data(count: 8)
         let status = salt.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, 8, $0.baseAddress!) }
         guard status == errSecSuccess else { throw Failure.randomBytes }

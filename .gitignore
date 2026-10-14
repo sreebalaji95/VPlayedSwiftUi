@@ -25,6 +25,8 @@ DerivedData/
 .build/
 .swiftpm/
 /Packages/
+# Built from ../kmp by scripts/build-shared.sh.
+SharedKit/Shared.xcframework/
 
 # Testing and profiling
 *.xcresult
@@ -38,5 +40,6 @@ fastlane/test_output/
 
 # Secrets and local config
 *.xcconfig.local
+Config/Secrets.xcconfig
 .env
 .env.*
