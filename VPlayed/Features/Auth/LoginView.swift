@@ -143,6 +143,7 @@ struct LoginView: View {
                 .onSubmit { Task { await model.continueWithEmail() } }
                 .modifier(AuthFieldBackground(isInvalid: model.emailError != nil, isFocused: emailFocused))
                 .accessibilityLabel(Text("Email ID"))
+                .accessibilityIdentifier("login_email_field")
             Group {
                 if let error = model.emailError {
                     Text(verbatim: error)

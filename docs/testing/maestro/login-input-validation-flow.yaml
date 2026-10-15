@@ -1,0 +1,143 @@
+appId: com.contus.vplayed.qa
+---
+# ==============================================================================
+# VPlayed 3.0 iOS (SwiftUI) — Login Input Validation & End-to-End Flow
+# ==============================================================================
+# Bundle ID  : com.contus.vplayed.dev (Dev scheme)
+# Screen     : LoginView, OtpScreen, Dashboard Home, Movies, Language
+# Selectors  : Visible text, accessibility labels & test tags (login_email_field, otp_code_field)
+# Parity     : Matches Android Compose test suite architecture
+# ==============================================================================
+
+- launchApp:
+    clearState: true
+
+# 1. Wait for Splash → Home
+- assertVisible: "Home"
+- assertVisible: "Watch now"
+
+# 2. Open the side drawer / menu (accessibility label = "Menu" on HomeToolbar)
+- tapOn: "Menu"
+
+# 3. Drawer is open — navigate to Sign in (Login)
+- assertVisible: "Sign in"
+- tapOn: "Sign in"
+
+# 4. Assert Login screen loaded
+- assertVisible: "Sign in or create your account"
+- assertVisible: "Email ID"
+- assertVisible: "Continue"
+
+# ---------------------------------------------------------------------------
+# Case 1: Empty submission → "Email is required" / "Please enter a valid email address"
+# Field is empty, so just tap Continue. Error appears immediately.
+# ---------------------------------------------------------------------------
+- tapOn: "Continue"
+- assertVisible:
+    text: "Email is required|Please enter a valid email address"
+
+# ---------------------------------------------------------------------------
+# Case 2: Incomplete address "user@" → "Please enter a valid email address"
+# Focus the email field via its unique test tag, then enter text.
+# ---------------------------------------------------------------------------
+- tapOn:
+    id: "login_email_field"
+- inputText: "user@"
+- tapOn: "Continue"
+- assertVisible: "Please enter a valid email address"
+
+# ---------------------------------------------------------------------------
+# Case 3: Missing TLD "user@example" → "Please enter a valid email address"
+# Focus the field, erase existing text, and type incomplete address.
+# ---------------------------------------------------------------------------
+- tapOn:
+    id: "login_email_field"
+- eraseText: 100
+- inputText: "user@example"
+- tapOn: "Continue"
+- assertVisible: "Please enter a valid email address"
+
+# ---------------------------------------------------------------------------
+# Case 4: 1-char TLD "user@example.c" → "Please enter a valid email address"
+# Focus the field, erase existing text, and type 1-char TLD address.
+# ---------------------------------------------------------------------------
+- tapOn:
+    id: "login_email_field"
+- eraseText: 100
+- inputText: "user@example.c"
+- tapOn: "Continue"
+- assertVisible: "Please enter a valid email address"
+
+# ---------------------------------------------------------------------------
+# Case 5: Valid email → error messages must clear
+# Focus the field, erase existing text, and type valid address.
+# ---------------------------------------------------------------------------
+- tapOn:
+    id: "login_email_field"
+- eraseText: 100
+- inputText: "sreetest123@mailinator.com"
+
+- assertNotVisible: "Please enter a valid email address"
+- assertNotVisible: "Email is required"
+
+# Close keyboard to expose Continue button
+# - hideKeyboard
+- scroll
+- waitForAnimationToEnd
+# ---------------------------------------------------------------------------
+# Step 6: Go to OTP page, enter any OTP (invalid), wait 3 seconds, close OTP page
+# ---------------------------------------------------------------------------
+- tapOn: "Continue"
+
+# Assert OTP screen loaded (Step 2 of 3)
+- assertVisible: "Verify it's you"
+- assertVisible: "Step 2 of 3"
+- assertVisible: "Verify & continue"
+
+# Enter any OTP (6 digits)
+- tapOn:
+    id: "otp_code_field"
+- inputText: "123456"
+- tapOn: "Verify & continue"
+
+# Wait 3 seconds for invalid OTP response & animation
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Close the OTP page
+- tapOn: "Close"
+- assertVisible: "Home"
+- assertVisible: "Watch now"
+
+# ---------------------------------------------------------------------------
+# Step 7: Check Home page vertical scroll
+# ---------------------------------------------------------------------------
+- scroll
+- waitForAnimationToEnd
+
+# ---------------------------------------------------------------------------
+# Step 8: Open menu -> go to Movies -> click back
+# ---------------------------------------------------------------------------
+- tapOn: "Menu"
+- assertVisible: "Movies"
+- tapOn: "Movies"
+
+- assertVisible: "Movies"
+- back
+- assertVisible: "Home"
+
+# ---------------------------------------------------------------------------
+# Step 9: Open menu -> Language -> select Arabic -> go to Home -> check Arabic
+# ---------------------------------------------------------------------------
+- tapOn: "Menu"
+- assertVisible: "Language"
+- tapOn: "Language"
+
+- assertVisible: "Language"
+- tapOn:
+    text: "Arabic|العربية"
+- back
+
+# Check Home page reflects Arabic locale & translations
+- assertVisible: "الرئيسية"
+- assertVisible: "شاهد الآن"

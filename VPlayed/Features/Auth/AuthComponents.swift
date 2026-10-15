@@ -144,6 +144,7 @@ struct CodeField: View {
                 .foregroundStyle(.clear)
                 .tint(.clear)
                 .accessibilityLabel(Text("Verification code"))
+                .accessibilityIdentifier("otp_code_field")
                 .accessibilityValue(Text(verbatim: code))
         }
         .contentShape(Rectangle())
