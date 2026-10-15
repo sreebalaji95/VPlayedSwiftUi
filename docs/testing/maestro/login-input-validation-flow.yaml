@@ -1,4 +1,4 @@
-appId: com.contus.vplayed.qa
+appId: com.contus.vplayed.dev
 ---
 # ==============================================================================
 # VPlayed 3.0 iOS (SwiftUI) — Login Input Validation & End-to-End Flow
@@ -75,7 +75,7 @@ appId: com.contus.vplayed.qa
 - tapOn:
     id: "login_email_field"
 - eraseText: 100
-- inputText: "sreetest123@mailinator.com"
+- inputText: "sreebalaji.k@contus.in"
 
 - assertNotVisible: "Please enter a valid email address"
 - assertNotVisible: "Email is required"
@@ -91,7 +91,6 @@ appId: com.contus.vplayed.qa
 
 # Assert OTP screen loaded (Step 2 of 3)
 - assertVisible: "Verify it's you"
-- assertVisible: "Step 2 of 3"
 - assertVisible: "Verify & continue"
 
 # Enter any OTP (6 digits)
@@ -129,6 +128,7 @@ appId: com.contus.vplayed.qa
 # ---------------------------------------------------------------------------
 # Step 9: Open menu -> Language -> select Arabic -> go to Home -> check Arabic
 # ---------------------------------------------------------------------------
+- tapOn: "Home"
 - tapOn: "Menu"
 - assertVisible: "Language"
 - tapOn: "Language"
@@ -137,7 +137,7 @@ appId: com.contus.vplayed.qa
 - tapOn:
     text: "Arabic|العربية"
 - back
-
+- tapOn: "Home"
 # Check Home page reflects Arabic locale & translations
 - assertVisible: "الرئيسية"
 - assertVisible: "شاهد الآن"

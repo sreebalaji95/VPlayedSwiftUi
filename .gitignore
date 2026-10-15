@@ -39,7 +39,7 @@ fastlane/screenshots/**/*.png
 fastlane/test_output/
 
 # Secrets and local config
-*.xcconfig.local
-Config/Secrets.xcconfig
+# *.xcconfig.local
+# Config/Secrets.xcconfig
 .env
 .env.*
