@@ -9,7 +9,7 @@ struct AuthStepLabel: View {
     let step: Int
 
     var body: some View {
-        Text("Step \(step) of 3")
+        Text(L10n.shared(.loginStep, L10n.shared.number(step)))
             .textCase(.uppercase)
             .font(Theme.Typography.stepLabel)
             .letterSpacing(1.3)
@@ -20,7 +20,7 @@ struct AuthStepLabel: View {
 
 /// A Login step heading, smaller on phones as in the prototype.
 struct AuthTitle: View {
-    let text: LocalizedStringKey
+    let text: String
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
@@ -62,7 +62,7 @@ struct AuthFieldBackground: ViewModifier {
 /// A full-width form button label (Continue, social sign-in, guest). Logos lead; the arrow on
 /// Continue and Verify trails, as in the prototype. A spinner replaces the icon while loading.
 struct AuthButtonLabel<Icon: View>: View {
-    let title: LocalizedStringKey
+    let title: String
     var font = Theme.Typography.formButton
     var iconTrails = false
     var isLoading = false
@@ -145,7 +145,7 @@ struct CodeField: View {
                 .textContentType(.oneTimeCode)
                 .foregroundStyle(.clear)
                 .tint(.clear)
-                .accessibilityLabel(Text("Verification code"))
+                .accessibilityLabel(Text(L10n.shared(.otpCodeDescription)))
                 .accessibilityIdentifier("otp_code_field")
                 .accessibilityValue(Text(verbatim: code))
         }
@@ -228,7 +228,7 @@ struct PhoneField: View {
                 .modifier(AuthFieldBackground(isInvalid: isInvalid))
                 .fixedSize()
             }
-            .accessibilityLabel(Text("Country code"))
+            .accessibilityLabel(Text(L10n.shared(.loginPhoneCountry)))
             .accessibilityValue(Text(verbatim: "\(countryName(country)) \(country.prefix)"))
 
             TextField(String(), text: $number, prompt: Text(verbatim: "98765 43210").foregroundStyle(Theme.Palette.textTertiary))
@@ -237,7 +237,7 @@ struct PhoneField: View {
                 .textContentType(.telephoneNumber)
                 .monospacedDigit()
                 .modifier(AuthFieldBackground(isInvalid: isInvalid, isFocused: isFocused.wrappedValue))
-                .accessibilityLabel(Text("Mobile number"))
+                .accessibilityLabel(Text(L10n.shared(.loginPhoneLabel)))
                 .accessibilityIdentifier("login_phone_field")
         }
     }

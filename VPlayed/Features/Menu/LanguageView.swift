@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// Picks the app language. Each option shows its own name ("العربية") with the name in the
-/// current language underneath ("Arabic"), and the app switches as soon as one is tapped.
+/// Picks the app language from the backend's list (`LanguageStore.languages`). Each option shows its
+/// own name ("العربية") with the name in the current language underneath ("Arabic"), and the app
+/// switches as soon as one is tapped.
 struct LanguageView: View {
     @Environment(LanguageStore.self) private var languageStore
     @Environment(\.locale) private var locale
@@ -11,7 +12,7 @@ struct LanguageView: View {
             VStack(alignment: .leading, spacing: 12) {
                 GlassGroup {
                     VStack(spacing: 10) {
-                        ForEach(AppLanguage.allCases) { language in
+                        ForEach(languageStore.languages) { language in
                             Button { languageStore.select(language) } label: {
                                 row(for: language)
                             }
@@ -20,7 +21,7 @@ struct LanguageView: View {
                         }
                     }
                 }
-                Text("Titles and descriptions from \(Brand.name) also switch when they're available in that language.")
+                Text(L10n.shared(.languageFooter, Brand.name))
                     .font(Theme.Typography.footnote)
                     .foregroundStyle(Theme.Palette.textTertiary)
                     .padding(.horizontal, 14)
@@ -28,7 +29,7 @@ struct LanguageView: View {
             .padding(Theme.Spacing.gutter)
         }
         .background(Theme.Palette.background.ignoresSafeArea())
-        .navigationTitle(Text("Language"))
+        .navigationTitle(Text(L10n.shared(.navLanguage)))
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -38,7 +39,7 @@ struct LanguageView: View {
                 Text(verbatim: language.nativeName)
                     .font(Theme.Typography.rowTitle)
                     .foregroundStyle(Theme.Palette.textPrimary)
-                if let localizedName = locale.localizedString(forLanguageCode: language.rawValue),
+                if let localizedName = locale.localizedString(forLanguageCode: language.code),
                    localizedName != language.nativeName {
                     Text(verbatim: localizedName)
                         .font(Theme.Typography.bodySmall)

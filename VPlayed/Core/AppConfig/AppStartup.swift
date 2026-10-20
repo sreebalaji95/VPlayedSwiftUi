@@ -15,7 +15,8 @@ import os
 /// Both calls run on the Kotlin shared layer (`SharedStartupService`, decision D18: the refresh is
 /// shared, the app decides when it runs).
 ///
-/// It also starts the automatic guest session (`checkIfUserLoggedIn` in the UIKit app): whenever
+/// It also loads the languages Menu → Language offers (`SharedStartupService.loadLanguages`), and
+/// starts the automatic guest session (`checkIfUserLoggedIn` in the UIKit app): whenever
 /// nobody is signed in and the common settings allow guests, the shared layer starts one.
 ///
 /// Failures are logged and otherwise ignored, as in the UIKit app: the defaults apply and launch
@@ -42,6 +43,7 @@ final class AppStartup {
     @ObservationIgnored private let service: any StartupServicing
     @ObservationIgnored private var commonTask: Task<Void, Never>?
     @ObservationIgnored private var geoTask: Task<Void, Never>?
+    @ObservationIgnored private var languagesTask: Task<Void, Never>?
     private static let log = Logger(subsystem: "com.contus.vplayed", category: "Startup")
 
     init(service: any StartupServicing = StartupServices.live()) {
@@ -54,6 +56,7 @@ final class AppStartup {
         service.startGuestSessions()
         commonTask = Task { await loadCommonSettings() }
         geoTask = Task { await loadGeoToken() }
+        languagesTask = Task { [service] in await service.loadLanguages() }
     }
 
     /// Waits until the geo step has finished, or `limit` has passed, whichever comes first.

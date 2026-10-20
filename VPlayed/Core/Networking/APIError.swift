@@ -1,7 +1,7 @@
 import Foundation
 
 /// Failures the screens explain to the user. The shared layer's `AppError`s arrive here through
-/// `APIError(_:)` (`SharedAuthService.swift`); `userMessage` stays native for localization.
+/// `APIError(_:)` (`SharedAuthService.swift`); `userMessage` reads the shared string catalog.
 nonisolated enum APIError: Error, Sendable, Equatable {
     /// Transport failure (offline, timeout, TLS…).
     case network(code: Int)
@@ -15,17 +15,17 @@ nonisolated enum APIError: Error, Sendable, Equatable {
         switch self {
         case .network(let code) where code == URLError.notConnectedToInternet.rawValue
             || code == URLError.networkConnectionLost.rawValue:
-            String(localized: "You appear to be offline. Check your connection and try again.", bundle: .localized)
+            L10n.string(.errorOffline)
         case .network(let code) where code == URLError.timedOut.rawValue:
-            String(localized: "The server took too long to respond. Please try again.", bundle: .localized)
+            L10n.string(.errorTimeout)
         case .network:
-            String(localized: "We couldn't reach \(Brand.name). Please try again.", bundle: .localized)
+            L10n.string(.errorUnreachable, [Brand.name])
         case .api(_, let message?) where !message.isEmpty:
             message
         case .unauthorized:
-            String(localized: "Your session has expired. Please sign in again.", bundle: .localized)
+            L10n.string(.errorSessionExpired)
         case .api, .decoding:
-            String(localized: "Something went wrong while loading. Please try again.", bundle: .localized)
+            L10n.string(.errorGeneric)
         }
     }
 }

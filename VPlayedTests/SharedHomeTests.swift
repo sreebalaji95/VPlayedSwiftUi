@@ -146,7 +146,7 @@ extension RoutedBackendTests {
             #expect(model.isFollowing(after))
             #expect(model.followerCount(of: after) == 5)
             #expect(!model.isUpdatingFollow(after))
-            #expect(await eventually { model.notice == String(localized: "You have started following this channel", bundle: .localized) })
+            #expect(await eventually { model.notice == L10n.string(.homeFollowedToast) })
             let request = try #require(RouteStubURLProtocol.captured.last)
             #expect(request.httpMethod == "POST")
         }

@@ -137,8 +137,8 @@ final class SharedHomeViewModel {
             notice = APIError(failed.error).userMessage
         case let changed as HomeFeedEffectFollowChanged:
             notice = changed.isFollowed
-                ? String(localized: "You have started following this channel", bundle: .localized)
-                : String(localized: "You have unfollowed this channel", bundle: .localized)
+                ? L10n.string(.homeFollowedToast)
+                : L10n.string(.homeUnfollowedToast)
         case let failed as HomeFeedEffectFollowFailed:
             notice = APIError(failed.error).userMessage
         default:

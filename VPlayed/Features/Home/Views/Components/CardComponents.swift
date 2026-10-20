@@ -122,7 +122,7 @@ struct CornerTag: View {
 
     private var label: String {
         switch tag {
-        case .comingSoon: String(localized: "COMING SOON", bundle: .localized)
+        case .comingSoon: L10n.string(.commonComingSoonCaps)
         case .price(let value): value.uppercased()
         case .crown: ""
         }
@@ -130,9 +130,9 @@ struct CornerTag: View {
 
     private var accessibilityText: String {
         switch tag {
-        case .comingSoon: String(localized: "Coming soon", bundle: .localized)
-        case .price(let value): String(localized: "Price \(value)", bundle: .localized)
-        case .crown: String(localized: "Subscription", bundle: .localized)
+        case .comingSoon: L10n.string(.commonComingSoon)
+        case .price(let value): L10n.string(.homePrice, [value])
+        case .crown: L10n.string(.navSubscription)
         }
     }
 }
@@ -160,7 +160,7 @@ struct RankNumeral: View {
     private var fontSize: CGFloat { height * 1.38 }
 
     var body: some View {
-        let digits = Text("\(rank)").font(Theme.Typography.rankNumeral(size: fontSize))
+        let digits = Text(rank, format: .number).font(Theme.Typography.rankNumeral(size: fontSize))
         ZStack {
             ForEach(Self.offsets.indices, id: \.self) { index in
                 digits

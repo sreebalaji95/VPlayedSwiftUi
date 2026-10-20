@@ -52,7 +52,7 @@ struct HeroCarouselView: View {
             if currentID == nil { currentID = banners.first?.id }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("Featured")
+        .accessibilityLabel(L10n.shared(.homeFeatured))
     }
 }
 
@@ -144,14 +144,14 @@ private struct HeroSlide: View {
             GlassGroup(spacing: 10) {
                 HStack(spacing: 10) {
                     Button { openRoute(openDetail) } label: {
-                        Label("Watch now", systemImage: "play.fill")
+                        Label(L10n.shared(.homeWatchNow), systemImage: "play.fill")
                             .font(Theme.Typography.buttonLarge)
                             .labelStyle(SpacedLabelStyle(spacing: 9))
                             .frame(maxWidth: .infinity, minHeight: Self.actionLabelHeight)
                     }
                     .glassButtonStyle(.primary)
 
-                    Button { openRoute(.signInRequired(prompt: String(localized: "Sign in to add to your watchlist", bundle: .localized))) } label: {
+                    Button { openRoute(.signInRequired(prompt: L10n.shared(.homeSignInWatchlist))) } label: {
                         Image(systemName: "plus")
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundStyle(Theme.Palette.textPrimary)
@@ -159,7 +159,7 @@ private struct HeroSlide: View {
                     }
                     .glassButtonStyle()
                     .buttonBorderShape(.circle)
-                    .accessibilityLabel("Add \(banner.title) to watchlist")
+                    .accessibilityLabel(L10n.shared(.homeAddToWatchlist, banner.title))
                 }
                 .controlSize(.regular)
                 .buttonBorderShape(.capsule)
@@ -278,7 +278,7 @@ private struct HeroPageDots: View {
         }
         .animation(.easeInOut(duration: 0.25), value: current)
         .accessibilityElement()
-        .accessibilityLabel("Slide \(current + 1) of \(count)")
+        .accessibilityLabel(L10n.shared(.homeSlidePosition, L10n.shared.number(current + 1), L10n.shared.number(count)))
     }
 
     /// `maxVisible` consecutive slides around the current one, clamped to the ends.

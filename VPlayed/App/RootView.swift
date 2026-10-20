@@ -82,7 +82,7 @@ struct RootView: View {
         // As the UIKit app: "Session Expired, Please login to continue", then Login.
         .onChange(of: account.expiredSessionCount) {
             withAnimation(.snappy) { showsMenu = false }
-            loginNotice = String(localized: "Session Expired, Please login to continue", bundle: .localized)
+            loginNotice = L10n.shared(.sessionExpired)
             showsLogin = true
         }
         .fullScreenCover(isPresented: $showsLogin, onDismiss: { loginNotice = nil }) {

@@ -60,7 +60,7 @@ struct RankedPortraitCard: View {
                 .padding(.top, 10)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Number \(rank), \(item.title)")
+        .accessibilityLabel(L10n.shared(.homeRankLabel, L10n.shared.number(rank), item.title))
     }
 }
 
@@ -86,7 +86,7 @@ struct RankedLandscapeCard: View {
                 .padding(.top, 10)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Number \(rank), \(item.title)")
+        .accessibilityLabel(L10n.shared(.homeRankLabel, L10n.shared.number(rank), item.title))
     }
 }
 

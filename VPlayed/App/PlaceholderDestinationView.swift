@@ -44,7 +44,7 @@ struct PlaceholderDestinationView: View {
                 }
             }
 
-            Text("This screen isn't built yet.")
+            Text(L10n.shared(.placeholderScreenNotBuilt))
                 .font(Theme.Typography.note)
                 .foregroundStyle(Theme.Palette.textTertiary)
                 .padding(.top, 8)
@@ -58,17 +58,17 @@ struct PlaceholderDestinationView: View {
 
     private static func navigationTitle(for route: AppRoute) -> String {
         switch route {
-        case .content: String(localized: "Details", bundle: .localized)
-        case .channel: String(localized: "Channel", bundle: .localized)
-        case .bulkPlan: String(localized: "Bulk purchase", bundle: .localized)
-        case .viewAll: String(localized: "View all", bundle: .localized)
-        case .search: String(localized: "Search", bundle: .localized)
-        case .voiceSearch: String(localized: "Voice search", bundle: .localized)
-        case .notifications: String(localized: "Notifications", bundle: .localized)
-        case .menu: String(localized: "Menu", bundle: .localized)
-        case .language: String(localized: "Language", bundle: .localized)
-        case .movies: String(localized: "Movies", bundle: .localized)
-        case .signIn, .signInRequired: String(localized: "Sign in", bundle: .localized)
+        case .content: L10n.string(.commonDetails)
+        case .channel: L10n.string(.navChannel)
+        case .bulkPlan: L10n.string(.navBulkPurchase)
+        case .viewAll: L10n.string(.commonViewAll)
+        case .search: L10n.string(.navSearch)
+        case .voiceSearch: L10n.string(.navVoiceSearch)
+        case .notifications: L10n.string(.navNotifications)
+        case .menu: L10n.string(.menuOpen)
+        case .language: L10n.string(.navLanguage)
+        case .movies: L10n.string(.navMovies)
+        case .signIn, .signInRequired: L10n.string(.commonSignIn)
         }
     }
 
@@ -87,13 +87,13 @@ struct PlaceholderDestinationView: View {
         switch route {
         case .content(let slug, _, let kind):
             // Slugs and rail ids are debugging aids, so they stay unlocalized.
-            [String(localized: "\(kind.displayName) detail", bundle: .localized), slug.map { "slug: \($0)" }].compactMap { $0 }
+            [L10n.string(.placeholderDetail, [kind.displayName]), slug.map { "slug: \($0)" }].compactMap { $0 }
         case .channel(let slug, _), .bulkPlan(let slug, _):
             [slug.map { "slug: \($0)" }].compactMap { $0 }
         case .viewAll(let sectionID, _):
             ["rail id: \(sectionID)"]
         case .signInRequired:
-            [String(localized: "This isn't available in this build yet.", bundle: .localized)]
+            [L10n.string(.placeholderNotAvailable)]
         default:
             []
         }

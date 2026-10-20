@@ -3,18 +3,26 @@ import Foundation
 @preconcurrency import Shared
 
 /// The launch-time calls through the Kotlin Multiplatform shared layer, the same code AndroidJP uses:
-/// `mediaview/api/v1/common` (`SharedGraph.commonSettingsRepository`) and the public IP → geo token
+/// `mediaview/api/v1/common` (`SharedGraph.commonSettingsRepository`), the public IP → geo token
 /// lookup (`SharedGraph.geoRepository`, decision D18), which keeps the token in the graph's `GeoStore`
-/// for every request. `AppStartup` decides when they run.
+/// for every request, and the language list (`SharedGraph.languageRepository`). `AppStartup` decides
+/// when they run.
 nonisolated final class SharedStartupService: StartupServicing, @unchecked Sendable {
     private let settingsRepository: CommonSettingsRepository
     private let geoRepository: GeoRepository
     private let guestSessions: GuestSessionKeeper
+    private let languageRepository: LanguageRepository
 
     init(graph: SharedGraph = SharedLayer.graph) {
         settingsRepository = graph.commonSettingsRepository
         geoRepository = graph.geoRepository
         guestSessions = graph.guestSessionKeeper
+        languageRepository = graph.languageRepository
+    }
+
+    /// The result lands in the graph's `SupportedLanguagesStore`; a failure keeps the built-in list.
+    func loadLanguages() async {
+        _ = try? await languageRepository.load()
     }
 
     /// The UIKit app's automatic guest session (`checkIfUserLoggedIn`), on the shared rule: it reads

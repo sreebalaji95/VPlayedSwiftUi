@@ -17,7 +17,7 @@ struct HomeLoadingView: View {
         .ignoresSafeArea(edges: .top)
         .softTopScrollEdge()
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Loading home")
+        .accessibilityLabel(L10n.shared(.homeLoading))
     }
 
     private var hero: some View {
@@ -70,9 +70,9 @@ struct HomeLoadingView: View {
 /// Centered message with an icon tile and one call to action (empty feed / load failure).
 struct HomeMessageView: View {
     let symbol: String
-    let title: LocalizedStringKey
+    let title: String
     let message: String
-    let actionTitle: LocalizedStringKey
+    let actionTitle: String
     let action: () async -> Void
 
     @State private var isWorking = false
@@ -130,7 +130,7 @@ struct LoadMoreFooter: View {
                 Button {
                     Task { await retry() }
                 } label: {
-                    Label("Couldn't load more. Tap to retry.", systemImage: "arrow.clockwise")
+                    Label(L10n.shared(.homeLoadMoreFailed), systemImage: "arrow.clockwise")
                         .font(Theme.Typography.controlLabel)
                         .foregroundStyle(Theme.Palette.textSecondary)
                 }
@@ -141,7 +141,7 @@ struct LoadMoreFooter: View {
                 ProgressView()
                     .tint(Theme.Palette.textSecondary)
                     .frame(maxWidth: .infinity, minHeight: 44)
-                    .accessibilityLabel("Loading more")
+                    .accessibilityLabel(L10n.shared(.homeLoadingMore))
             }
         }
         .padding(.vertical, 16)

@@ -10,6 +10,9 @@ import SwiftUI
 
     init() {
         BrandFonts.registerBundledFonts()
+        #if DEBUG
+        L10n.assertCatalogMatches()
+        #endif
         let startup = AppStartup()
         _startup = State(initialValue: startup)
         startup.start()

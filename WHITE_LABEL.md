@@ -92,13 +92,14 @@ Every text style then uses that family. Each style picks the face nearest to its
 ### Brand name and copy
 
 - `Brand.name` in [`VPlayed/Brand/Brand.swift`](VPlayed/Brand/Brand.swift) is the product name people see. It is the wordmark's VoiceOver label, and it fills the `%@` in the messages below. It is not translated.
-- Copy in [`VPlayed/Localizable.xcstrings`](VPlayed/Localizable.xcstrings) that is about the brand. Every string needs English, Arabic (`ar`), Portuguese (`pt`) and Tamil (`ta`). **To reword the English, give the key an English (`en`) value in the catalog; don't change the key itself**, because that's what the code looks it up by. For example, setting `en` of `Stream the experience` to "Watch it together" changes the tagline with no code edit.
+- Copy that is about the brand lives in the shared string catalog in the `kmp` repository (`shared/src/commonMain/composeResources/values*/strings.xml`), which the Android app reads too. Every string has English (`values/`), Arabic (`values-ar/`), Portuguese (`values-pt/`) and Tamil (`values-ta/`). **To reword it, change the value in each language's file; don't rename the key**, because that's what the code looks it up by. For example, changing `splash_tagline` to "Watch it together" changes the tagline with no code edit. Then run `scripts/build-shared.sh`. `%1$s` is the brand name.
 
 | Key | Where |
 |---|---|
-| `Stream the experience` | Splash tagline (shown in capitals in Latin scripts) |
-| `We couldn't reach %@. Please try again.` | Network error message |
-| `Titles and descriptions from %@ also switch when they're available in that language.` | Footnote on the Language screen |
+| `splash_tagline` | Splash tagline (shown in capitals in Latin scripts) |
+| `error_unreachable` | Network error message |
+| `language_footer` | Footnote on the Language screen |
+| `register_note`, `otp_success_note`, `auth_registration_required`, `menu_sign_out_confirm` | Sign-up, sign-in and sign-out copy that names the brand |
 
 ### Backend: `VPlayed/Core/Networking/APIEnvironment.swift`
 

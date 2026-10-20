@@ -34,7 +34,7 @@ struct RailSectionView: View {
                     title.contentShape(.rect)
                 }
                 .buttonStyle(PressableButtonStyle(scale: 0.98))
-                .accessibilityHint("Shows all titles in \(section.title)")
+                .accessibilityHint(L10n.shared(.homeShowsAllTitlesIn, section.title))
             } else {
                 title.accessibilityAddTraits(.isHeader)
             }
@@ -92,7 +92,7 @@ struct RailSectionView: View {
                 LiveNowCard(
                     item: item,
                     onWatch: { openRoute(.content(slug: item.slug, title: item.title, kind: .live)) },
-                    onRemind: { openRoute(.signInRequired(prompt: String(localized: "Sign in to set a reminder", bundle: .localized))) }
+                    onRemind: { openRoute(.signInRequired(prompt: L10n.shared(.homeSignInReminder))) }
                 )
             }
         case (.bulkPlans, .bulkPlans(let plans)):
@@ -112,7 +112,7 @@ struct RailSectionView: View {
     /// Following needs a real account; guests and signed-out users are sent to sign in, as in UIKit.
     private func follow(_ channel: ChannelItem) {
         guard account.isSignedIn else {
-            openRoute(.signInRequired(prompt: String(localized: "Sign in to follow channels", bundle: .localized)))
+            openRoute(.signInRequired(prompt: L10n.shared(.homeSignInFollow)))
             return
         }
         Task { await model.setFollowing(true, channel: channel) }

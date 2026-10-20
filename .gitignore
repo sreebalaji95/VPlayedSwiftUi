@@ -27,6 +27,7 @@ DerivedData/
 /Packages/
 # Built from ../kmp by scripts/build-shared.sh.
 SharedKit/Shared.xcframework/
+SharedKit/compose-resources/
 
 # Testing and profiling
 *.xcresult

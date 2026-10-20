@@ -12,10 +12,10 @@ enum AppTab: Hashable, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .home: String(localized: "Home", bundle: .localized)
-        case .promos: String(localized: "Promos", bundle: .localized)
-        case .subscription: String(localized: "Subscription", bundle: .localized)
-        case .search: String(localized: "Search", bundle: .localized)
+        case .home: L10n.string(.navHome)
+        case .promos: L10n.string(.navPromos)
+        case .subscription: L10n.string(.navSubscription)
+        case .search: L10n.string(.navSearch)
         }
     }
 

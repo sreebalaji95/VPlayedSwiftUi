@@ -33,7 +33,7 @@ struct SplashView: View {
                 .overlay(alignment: .bottom) {
                     VStack(spacing: 28) {
                         loadingBar
-                        Text("Stream the experience")
+                        Text(L10n.shared(.splashTagline))
                             .font(Theme.Typography.bodySmall)
                             .letterSpacing(3.6)
                             .textCase(.uppercase)
@@ -94,7 +94,7 @@ struct SplashView: View {
             Task { await finish() }
         } label: {
             HStack(spacing: 6) {
-                Text("Skip intro")
+                Text(L10n.shared(.splashSkipIntro))
                 Image(systemName: "arrow.forward").font(.system(size: 12, weight: .semibold))
             }
             .font(Theme.Typography.controlLabel)

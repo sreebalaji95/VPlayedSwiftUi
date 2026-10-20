@@ -355,10 +355,8 @@ final class SharedLoginViewModel {
 
     private func apply(_ state: EmailLoginState) {
         emailText = state.email
-        emailError = state.emailError.map { _ in
-            // The field is capped at 50 characters, so every error is about the address itself.
-            String(localized: "Please enter a valid email address", bundle: .localized)
-        }
+        // The field is capped at 50 characters, so every error is about the address itself.
+        emailError = state.emailError?.signInMessage.map(L10n.message)
         isSubmitting = state.isSubmitting
         isJoiningAsGuest = state.isJoiningAsGuest
         if step == .email { notice = emailNotice }
@@ -368,12 +366,8 @@ final class SharedLoginViewModel {
         phoneText = state.formattedNumber
         country = state.country
         isPhoneSubmitting = state.isSubmitting
-        phoneError = state.numberError.map { _ in
-            // The prototype's message for India's ten-digit numbers; the UIKit app's for the others.
-            state.country.dialCode == CountryDialCodes.shared.INDIA.dialCode
-                ? String(localized: "Enter a valid 10-digit mobile number", bundle: .localized)
-                : String(localized: "Invalid Mobile Number", bundle: .localized)
-        }
+        // The prototype's message for India's ten-digit numbers; the UIKit app's for the others.
+        phoneError = state.numberError?.message(isIndia: Self.isIndia(state.country), isRegistration: false).map(L10n.message)
     }
 
     private func apply(_ state: SocialLoginState) {
@@ -414,22 +408,9 @@ final class SharedLoginViewModel {
         referralText = state.referralCode
         isReferralVisible = state.isReferralVisible
         isRegistering = state.isSubmitting
-        registrationNameError = state.nameError.map { error in
-            error == .empty
-                ? String(localized: "Enter your name.", bundle: .localized)
-                : String(localized: "Name must be at least 2 characters.", bundle: .localized)
-        }
-        registrationEmailError = state.emailError.map { error in
-            error == .empty
-                ? String(localized: "Email Id is Required", bundle: .localized)
-                : String(localized: "Please enter a valid email address", bundle: .localized)
-        }
-        registrationNumberError = state.numberError.map { error in
-            if error == .empty { return String(localized: "Mobile Number is Required", bundle: .localized) }
-            return state.country.dialCode == CountryDialCodes.shared.INDIA.dialCode
-                ? String(localized: "Enter a valid 10-digit mobile number", bundle: .localized)
-                : String(localized: "Invalid Mobile Number", bundle: .localized)
-        }
+        registrationNameError = state.nameError?.message.map(L10n.message)
+        registrationEmailError = state.emailError?.registrationMessage.map(L10n.message)
+        registrationNumberError = state.numberError?.message(isIndia: Self.isIndia(state.country), isRegistration: true).map(L10n.message)
         notice = state.error.map(Self.text)
         if state.step == .success {
             registeredName = state.name.trimmingCharacters(in: .whitespaces)
@@ -630,52 +611,18 @@ final class SharedLoginViewModel {
     static func text(_ message: any AuthMessage) -> String {
         if let server = message as? AuthMessageServer { return server.text }
         guard let key = (message as? AuthMessageLocalized)?.key else {
-            return String(localized: "Something went wrong while loading. Please try again.", bundle: .localized)
+            return L10n.string(.errorGeneric)
         }
         return text(for: key)
     }
 
+    private static func isIndia(_ country: CountryDialCode) -> Bool {
+        country.dialCode == CountryDialCodes.shared.INDIA.dialCode
+    }
+
+    /// The shared catalog's text for `key` (the same mapping AndroidJP uses).
     static func text(for key: AuthMessageKey) -> String {
-        switch key {
-        case .deviceLimit:
-            String(localized: "You're signed in on the maximum number of devices. Sign out on another device, then try again.", bundle: .localized)
-        case .loginFailed, .guestLoginFailed:
-            String(localized: "We couldn't sign you in. Please try again.", bundle: .localized)
-        case .otpInvalid:
-            String(localized: "Incorrect code. Try again.", bundle: .localized)
-        case .registrationFailed:
-            String(localized: "We couldn't complete your sign-up. Please try again.", bundle: .localized)
-        case .registrationCancelled:
-            String(localized: "Your signup was unsuccessful.", bundle: .localized)
-        case .registrationRequired:
-            String(localized: "This email isn't registered yet. Create your account on the \(Brand.name) website, then sign in.", bundle: .localized)
-        case .deviceSignOutFailed:
-            String(localized: "We couldn't sign that device out. Please try again.", bundle: .localized)
-        case .profileSetupPending:
-            String(localized: "Welcome! Setting up your profile is coming soon.", bundle: .localized)
-        case .multiProfilePending:
-            String(localized: "Choosing a profile is coming soon; your default profile is used.", bundle: .localized)
-        case .errorNetwork:
-            String(localized: "We couldn't reach \(Brand.name). Please try again.", bundle: .localized)
-        case .errorTimeout:
-            String(localized: "The server took too long to respond. Please try again.", bundle: .localized)
-        case .errorUnauthorized:
-            String(localized: "Your session has expired. Please sign in again.", bundle: .localized)
-        case .phoneCodeSent:
-            String(localized: "OTP has been sent to registered mobile number", bundle: .localized)
-        case .phoneCodeSendFailed:
-            String(localized: "We couldn't send the code. Please try again.", bundle: .localized)
-        case .phoneLoginUnavailable:
-            String(localized: "Phone sign-in isn't available right now.", bundle: .localized)
-        case .phoneInvalid:
-            String(localized: "Invalid Mobile Number", bundle: .localized)
-        case .socialLoginFailed:
-            String(localized: "Login failed. Please try again.", bundle: .localized)
-        case .appleEmailRequired:
-            String(localized: "Please enable Share Email option to use Apple login.", bundle: .localized)
-        default:
-            String(localized: "Something went wrong while loading. Please try again.", bundle: .localized)
-        }
+        L10n.message(key.resource)
     }
 }
 

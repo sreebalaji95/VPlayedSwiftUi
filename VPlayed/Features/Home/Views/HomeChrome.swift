@@ -8,13 +8,13 @@ struct HomeToolbar: ToolbarContent {
     var body: some ToolbarContent {
         ToolbarItem(placement: Self.leading) {
             Button { openRoute(.menu) } label: {
-                Label("Menu", systemImage: "line.3.horizontal")
+                Label(L10n.shared(.menuOpen), systemImage: "line.3.horizontal")
             }
         }
         logo
         ToolbarItem(placement: Self.trailing) {
             Button { openRoute(.notifications) } label: {
-                Label("Notifications", systemImage: "bell")
+                Label(L10n.shared(.navNotifications), systemImage: "bell")
             }
         }
     }

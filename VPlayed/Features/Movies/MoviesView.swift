@@ -19,7 +19,7 @@ struct MoviesView: View {
             }
             .animation(.easeOut(duration: 0.22), value: model.notice)
             .background(Theme.Palette.background.ignoresSafeArea())
-            .navigationTitle(Text("Movies"))
+            .navigationTitle(Text(L10n.shared(.navMovies)))
             .navigationBarTitleDisplayMode(.large)
             .task { await model.loadIfNeeded() }
             .task(id: model.notice) {
@@ -37,17 +37,17 @@ struct MoviesView: View {
         case .failed(let message):
             HomeMessageView(
                 symbol: "wifi.exclamationmark",
-                title: "Couldn't load movies",
+                title: L10n.shared(.moviesLoadFailed),
                 message: message,
-                actionTitle: "Try again",
+                actionTitle: L10n.shared(.commonTryAgain),
                 action: model.retry
             )
         case .empty:
             HomeMessageView(
                 symbol: "film",
-                title: "No movies yet",
-                message: String(localized: "There's nothing to show yet. Check back soon.", bundle: .localized),
-                actionTitle: "Refresh",
+                title: L10n.shared(.moviesEmpty),
+                message: L10n.shared(.homeEmptyMessage),
+                actionTitle: L10n.shared(.commonRefresh),
                 action: model.retry
             )
         case .loaded:
@@ -88,14 +88,10 @@ struct MoviesView: View {
         .refreshable { await model.refresh() }
     }
 
-    /// "**1,997** films · curated from across the world" with the count bold and bright. Built as
-    /// an `AttributedString` because `Text` doesn't apply Markdown to plural (stringsdict) strings.
+    /// "**1,997** films · curated from across the world" with the count bold and bright: the
+    /// catalog's plural string is Markdown.
     private static func filmCount(_ total: Int) -> AttributedString {
-        var text = AttributedString(
-            localized: "**\(total)** films · curated from across the world",
-            bundle: .localized,
-            locale: AppLanguage.current.locale
-        )
+        var text = L10n.shared.markdownPlural(.moviesCount, count: total, L10n.shared.number(total))
         for run in text.runs where run.inlinePresentationIntent?.contains(.stronglyEmphasized) == true {
             text[run.range].foregroundColor = Theme.Palette.textPrimary
         }
@@ -165,6 +161,6 @@ private struct MoviesLoadingView: View {
         .scrollDisabled(true)
         .scrollIndicators(.hidden)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Loading movies")
+        .accessibilityLabel(L10n.shared(.moviesLoading))
     }
 }

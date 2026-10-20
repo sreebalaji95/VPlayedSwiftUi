@@ -22,13 +22,13 @@ struct MenuView: View {
                             .padding(.bottom, 14)
 
                         Button { openRoute(.movies) } label: {
-                            MenuRow(symbol: "film", title: "Movies") { EmptyView() }
+                            MenuRow(symbol: "film", title: L10n.shared(.navMovies)) { EmptyView() }
                         }
                         .buttonStyle(GlassRowStyle.style)
                         .padding(.bottom, 14)
 
                         Button { openRoute(.language) } label: {
-                            MenuRow(symbol: "globe", title: "Language") {
+                            MenuRow(symbol: "globe", title: L10n.shared(.navLanguage)) {
                                 Text(verbatim: languageStore.language.nativeName)
                             }
                         }
@@ -41,7 +41,7 @@ struct MenuView: View {
             .scrollBounceBehavior(.basedOnSize)
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(Text("Menu"))
+        .accessibilityLabel(Text(L10n.shared(.menuOpen)))
     }
 
     /// Guests see "Sign in" too: a guest session isn't an account (as in the UIKit app).
@@ -63,18 +63,18 @@ struct MenuView: View {
                     }
                     .padding(.horizontal, 14)
                     .accessibilityElement(children: .combine)
-                    .accessibilityLabel(Text("Signed in as \(name)"))
+                    .accessibilityLabel(Text(L10n.shared(.menuSignedInAs, name)))
                 }
                 Button { confirmsSignOut = true } label: {
-                    MenuRow(symbol: "rectangle.portrait.and.arrow.forward", title: "Sign out") {
+                    MenuRow(symbol: "rectangle.portrait.and.arrow.forward", title: L10n.shared(.commonSignOut)) {
                         if isSigningOut { ProgressView().controlSize(.small) }
                     }
                 }
                 .buttonStyle(GlassRowStyle.style)
                 .disabled(isSigningOut)
-                .confirmationDialog(Text("Sign out of \(Brand.name)?"), isPresented: $confirmsSignOut, titleVisibility: .visible) {
-                    Button("Sign out", role: .destructive) { Task { await signOut() } }
-                    Button("Cancel", role: .cancel) {}
+                .confirmationDialog(Text(L10n.shared(.menuSignOutConfirm, Brand.name)), isPresented: $confirmsSignOut, titleVisibility: .visible) {
+                    Button(L10n.shared(.commonSignOut), role: .destructive) { Task { await signOut() } }
+                    Button(L10n.shared(.commonCancel), role: .cancel) {}
                 }
                 if let signOutError {
                     Text(verbatim: signOutError)
@@ -85,7 +85,7 @@ struct MenuView: View {
             }
         } else {
             Button { openRoute(.signIn) } label: {
-                MenuRow(symbol: "person.crop.circle", title: "Sign in") { EmptyView() }
+                MenuRow(symbol: "person.crop.circle", title: L10n.shared(.commonSignIn)) { EmptyView() }
             }
             .buttonStyle(GlassRowStyle.style)
         }
@@ -107,7 +107,7 @@ struct MenuView: View {
             BrandWordmark()
             Spacer(minLength: 8)
             Button(action: onClose) {
-                Label("Close menu", systemImage: "xmark")
+                Label(L10n.shared(.menuClose), systemImage: "xmark")
                     .labelStyle(.iconOnly)
                     .font(.system(size: 15, weight: .semibold))
                     .frame(width: 28, height: 28)
@@ -130,7 +130,7 @@ enum GlassRowStyle {
 /// Icon, title, trailing value and a forward chevron (mirrored in right-to-left languages).
 private struct MenuRow<Value: View>: View {
     let symbol: String
-    let title: LocalizedStringKey
+    let title: String
     @ViewBuilder let value: () -> Value
 
     var body: some View {

@@ -47,7 +47,7 @@ struct LiveNowCard: View {
             if item.isLive {
                 PulsingDot(color: Theme.Palette.onPrimary, size: 7)
             }
-            item.isLive ? Text("LIVE") : Text("UPCOMING")
+            Text(L10n.shared(item.isLive ? .homeBadgeLive : .homeBadgeUpcoming))
         }
         .font(Theme.Typography.badge)
         .letterSpacing(0.6)
@@ -103,12 +103,12 @@ struct LiveNowCard: View {
             Group {
                 if item.isLive {
                     Button(action: onWatch) {
-                        Label("Watch Live", systemImage: "play.fill")
+                        Label(L10n.shared(.homeWatchLive), systemImage: "play.fill")
                     }
                     .glassButtonStyle(.primary)
                 } else {
                     Button(action: onRemind) {
-                        Label("Set reminder", systemImage: "bell")
+                        Label(L10n.shared(.homeSetReminder), systemImage: "bell")
                     }
                     .glassButtonStyle()
                 }
@@ -177,7 +177,7 @@ struct ChannelCard: View {
                         .padding(.top, 16)
                     if let followers {
                         // Plural forms come from the catalog (Arabic has six); the count reads compactly, e.g. 1.2K.
-                        Text("\(followers.formatted(.number.notation(.compactName))) followers \(followers)")
+                        Text(L10n.shared.plural(.homeFollowers, count: followers, followers.formatted(.number.notation(.compactName).locale(Locale(identifier: L10n.shared.languageCode)))))
                             .font(Theme.Typography.captionMedium)
                             .foregroundStyle(.white)
                             .padding(.horizontal, 12)
@@ -197,7 +197,7 @@ struct ChannelCard: View {
             } label: {
                 // Followed channels get a solid white button, as in the prototype.
                 Group {
-                    if isFollowing { Text("Following") } else { Text("Follow") }
+                    Text(L10n.shared(isFollowing ? .homeFollowing : .homeFollow))
                 }
                 .font(Theme.Typography.controlLabel)
                 .foregroundStyle(isFollowing ? Color.black : Color.white)
@@ -208,8 +208,8 @@ struct ChannelCard: View {
             .buttonBorderShape(.roundedRectangle(radius: Theme.Radius.control))
             .tint(.white)
             .disabled(isUpdating)
-            .confirmationDialog("Unfollow \(item.name)?", isPresented: $confirmsUnfollow, titleVisibility: .visible) {
-                Button("Unfollow", role: .destructive, action: onUnfollow)
+            .confirmationDialog(L10n.shared(.homeUnfollowConfirm, item.name), isPresented: $confirmsUnfollow, titleVisibility: .visible) {
+                Button(L10n.shared(.homeUnfollow), role: .destructive, action: onUnfollow)
             }
         }
         .padding(20)
@@ -299,7 +299,7 @@ struct BulkPlanCard: View {
                         .font(Theme.Typography.title)
                         .foregroundStyle(Theme.Palette.textPrimary)
                     if let saving = price.discountedPercentage, saving > 0 {
-                        Text("· Save up to \(Int(saving))%")
+                        Text("· " + L10n.shared(.homeSaveUpTo, L10n.shared.number(Int(saving))))
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Palette.textSecondary)
                     }
@@ -307,7 +307,7 @@ struct BulkPlanCard: View {
             }
 
             Button(action: onExplore) {
-                Text("Explore bundles")
+                Text(L10n.shared(.homeExploreBundles))
                     .font(Theme.Typography.button)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 4)

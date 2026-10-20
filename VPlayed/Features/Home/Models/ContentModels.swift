@@ -16,13 +16,13 @@ nonisolated enum ContentKind: String, Hashable, Sendable {
 
     var displayName: String {
         switch self {
-        case .video: String(localized: "Video", bundle: .localized)
-        case .series: String(localized: "Series", bundle: .localized)
-        case .microSeries: String(localized: "Micro series", bundle: .localized)
-        case .promo: String(localized: "Promo", bundle: .localized)
-        case .audio: String(localized: "Audio", bundle: .localized)
-        case .live: String(localized: "Live", bundle: .localized)
-        case .unknown: String(localized: "Title", bundle: .localized)
+        case .video: L10n.string(.contentKindVideo)
+        case .series: L10n.string(.contentKindSeries)
+        case .microSeries: L10n.string(.contentKindMicroSeries)
+        case .promo: L10n.string(.contentKindPromo)
+        case .audio: L10n.string(.contentKindAudio)
+        case .live: L10n.string(.contentKindLive)
+        case .unknown: L10n.string(.commonTitle)
         }
     }
 }

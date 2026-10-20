@@ -37,17 +37,17 @@ struct HomeView: View {
         case .failed(let message):
             HomeMessageView(
                 symbol: "wifi.exclamationmark",
-                title: "Couldn't load Home",
+                title: L10n.shared(.homeLoadFailed),
                 message: message,
-                actionTitle: "Try again",
+                actionTitle: L10n.shared(.commonTryAgain),
                 action: model.retry
             )
         case .empty:
             HomeMessageView(
                 symbol: "film",
-                title: "Your home feed is empty",
-                message: String(localized: "There's nothing to show yet. Check back soon.", bundle: .localized),
-                actionTitle: "Refresh",
+                title: L10n.shared(.homeEmptyTitle),
+                message: L10n.shared(.homeEmptyMessage),
+                actionTitle: L10n.shared(.commonRefresh),
                 action: model.retry
             )
         case .loaded:

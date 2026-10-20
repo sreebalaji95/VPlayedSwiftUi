@@ -77,7 +77,7 @@ struct LoginView: View {
 
     private var closeButton: some View {
         Button { dismiss() } label: {
-            Label("Close", systemImage: "xmark")
+            Label(L10n.shared(.commonClose), systemImage: "xmark")
                 .labelStyle(.iconOnly)
                 .font(.system(size: 15, weight: .semibold))
                 .frame(width: 30, height: 30)
@@ -116,7 +116,7 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 0) {
             AuthStepLabel(step: 1)
                 .padding(.bottom, 12)
-            AuthTitle(text: "Sign in or create your account")
+            AuthTitle(text: L10n.shared(.loginTitle))
                 .padding(.bottom, 22)
 
             if let notice = model.notice {
@@ -127,13 +127,13 @@ struct LoginView: View {
             GlassGroup(spacing: 10) {
                 VStack(spacing: 10) {
                     if model.isGoogleAvailable {
-                        socialButton("Sign up with Google", provider: .google) {
+                        socialButton(L10n.shared(.loginGoogle), provider: .google) {
                             Image(.googleLogo)
                                 .resizable()
                                 .frame(width: 20, height: 20)
                         }
                     }
-                    socialButton("Sign up with Apple", provider: .apple) {
+                    socialButton(L10n.shared(.loginApple), provider: .apple) {
                         Image(systemName: "apple.logo")
                             .font(.system(size: 18, weight: .medium))
                     }
@@ -151,7 +151,7 @@ struct LoginView: View {
             }
 
             Button { Task { await submit() } } label: {
-                AuthButtonLabel(title: "Continue", font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isSending) {
+                AuthButtonLabel(title: L10n.shared(.commonContinue), font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isSending) {
                     Image(systemName: "arrow.forward")
                         .font(.system(size: 16, weight: .bold))
                 }
@@ -166,7 +166,7 @@ struct LoginView: View {
 
             if startup.settings?.isGuestUser == true {
                 Button { Task { await model.continueAsGuest() } } label: {
-                    AuthButtonLabel(title: "Continue as guest", isLoading: model.isJoiningAsGuest) {
+                    AuthButtonLabel(title: L10n.shared(.loginContinueAsGuest), isLoading: model.isJoiningAsGuest) {
                         Image(systemName: "person")
                             .font(.system(size: 17, weight: .medium))
                     }
@@ -189,11 +189,11 @@ struct LoginView: View {
 
     private var emailField: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Email ID")
+            Text(L10n.shared(.loginEmailLabel))
                 .font(Theme.Typography.fieldLabel)
                 .foregroundStyle(Theme.Palette.textSecondary)
                 .padding(.bottom, 8)
-            TextField(String(), text: $model.email, prompt: Text(verbatim: "name@example.com").foregroundStyle(Theme.Palette.textTertiary))
+            TextField(String(), text: $model.email, prompt: Text(L10n.shared(.loginEmailPlaceholder)).foregroundStyle(Theme.Palette.textTertiary))
                 .focused($emailFocused)
                 .textContentType(.emailAddress)
                 .autocorrectionDisabled()
@@ -202,16 +202,16 @@ struct LoginView: View {
                 .submitLabel(.continue)
                 .onSubmit { Task { await model.continueWithEmail() } }
                 .modifier(AuthFieldBackground(isInvalid: model.emailError != nil, isFocused: emailFocused))
-                .accessibilityLabel(Text("Email ID"))
+                .accessibilityLabel(Text(L10n.shared(.loginEmailLabel)))
                 .accessibilityIdentifier("login_email_field")
-            fieldFootnote(error: model.emailError, help: "We'll send a 6-digit code to verify it's you.")
+            fieldFootnote(error: model.emailError, help: L10n.shared(.loginEmailHelp))
         }
     }
 
     /// The prototype's mobile-number field (`vp-login-method.js`): country chip, then the number.
     private var phoneField: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Mobile number")
+            Text(L10n.shared(.loginPhoneLabel))
                 .font(Theme.Typography.fieldLabel)
                 .foregroundStyle(Theme.Palette.textSecondary)
                 .padding(.bottom, 8)
@@ -227,12 +227,12 @@ struct LoginView: View {
             .onChange(of: emailFocused) { _, focused in
                 if !focused { model.phoneFieldLostFocus() }
             }
-            fieldFootnote(error: model.phoneError, help: "We'll text a 6-digit code to verify it's you.")
+            fieldFootnote(error: model.phoneError, help: L10n.shared(.loginPhoneHelp))
         }
     }
 
     /// The field's error, else its help line.
-    private func fieldFootnote(error: String?, help: LocalizedStringKey) -> some View {
+    private func fieldFootnote(error: String?, help: String) -> some View {
         Group {
             if let error {
                 Text(verbatim: error)
@@ -248,7 +248,7 @@ struct LoginView: View {
     }
 
     /// Google and Apple sign-in (shared `SocialLoginController`); a spinner while its sheet or call runs.
-    private func socialButton(_ title: LocalizedStringKey, provider: SocialProvider, @ViewBuilder icon: @escaping () -> some View) -> some View {
+    private func socialButton(_ title: String, provider: SocialProvider, @ViewBuilder icon: @escaping () -> some View) -> some View {
         Button {
             Task {
                 if provider == .google {
@@ -268,7 +268,7 @@ struct LoginView: View {
     private var orDivider: some View {
         HStack(spacing: 14) {
             Rectangle().fill(Theme.Palette.line).frame(height: 1)
-            Text(model.usesPhone ? "or continue with mobile number" : "or continue with email")
+            Text(L10n.shared(model.usesPhone ? .loginDividerPhone : .loginDividerEmail))
                 .font(Theme.Typography.caption)
                 .letterSpacing(0.6)
                 .foregroundStyle(Theme.Palette.textTertiary)
@@ -278,7 +278,7 @@ struct LoginView: View {
     }
 
     private var termsLine: some View {
-        var text = AttributedString(localized: "I am above 18 years of age and by proceeding I agree to the [Terms of use](terms) and [privacy policy](privacy).", bundle: .localized)
+        var text = L10n.shared.markdown(.loginTerms)
         for run in text.runs where run.link != nil {
             text[run.range].foregroundColor = Theme.Palette.primary
             text[run.range].font = Theme.Typography.fieldLabel
@@ -305,7 +305,7 @@ struct LoginView: View {
     private var codeStep: some View {
         VStack(alignment: .leading, spacing: 0) {
             Button { model.editEmail() } label: {
-                Label("Back", systemImage: "chevron.backward")
+                Label(L10n.shared(.commonBack), systemImage: "chevron.backward")
                     .labelStyle(SpacedLabelStyle(spacing: 6))
                     .font(Theme.Typography.note)
                     .foregroundStyle(Theme.Palette.textSecondary)
@@ -315,7 +315,7 @@ struct LoginView: View {
 
             AuthStepLabel(step: 2)
                 .padding(.bottom, 12)
-            AuthTitle(text: "Verify it's you")
+            AuthTitle(text: L10n.shared(.otpTitle))
                 .padding(.bottom, 10)
 
             codeNote
@@ -341,7 +341,7 @@ struct LoginView: View {
                 .padding(.bottom, 22)
 
             Button { Task { await model.verify() } } label: {
-                AuthButtonLabel(title: "Verify & continue", font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isVerifying) {
+                AuthButtonLabel(title: L10n.shared(.otpVerify), font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isVerifying) {
                     Image(systemName: "arrow.forward")
                         .font(.system(size: 16, weight: .bold))
                 }
@@ -356,12 +356,12 @@ struct LoginView: View {
     private var codeNote: some View {
         // Built from plain strings, not Markdown, so characters in the address are never read as formatting.
         let address = model.sentTo
-        var text = AttributedString(String(localized: "Enter the 6-digit code we sent to \(address)", bundle: .localized))
+        var text = AttributedString(L10n.shared(.otpNote, address))
         if !address.isEmpty, let range = text.range(of: address) {
             text[range].foregroundColor = Theme.Palette.textPrimary
             text[range].font = Theme.Typography.note
         }
-        var change = AttributedString(String(localized: "Change", bundle: .localized))
+        var change = AttributedString(L10n.shared(.commonChange))
         change.link = URL(string: "change")
         change.foregroundColor = Theme.Palette.primary
         change.font = Theme.Typography.note
@@ -379,15 +379,15 @@ struct LoginView: View {
 
     private var resendRow: some View {
         HStack(spacing: 4) {
-            Text("Didn't get the code?")
+            Text(L10n.shared(.otpResendPrompt))
                 .foregroundStyle(Theme.Palette.textSecondary)
             if model.resendSeconds > 0 {
-                Text("Resend in \(Duration.seconds(model.resendSeconds).formatted(.time(pattern: .minuteSecond)))")
+                Text(L10n.shared(.otpResendIn, Duration.seconds(model.resendSeconds).formatted(.time(pattern: .minuteSecond).locale(Locale(identifier: L10n.shared.languageCode)))))
                     .foregroundStyle(Theme.Palette.textTertiary)
                     .monospacedDigit()
             } else {
                 Button { Task { await model.resend() } } label: {
-                    Text("Resend")
+                    Text(L10n.shared(.otpResend))
                         .font(Theme.Typography.note)
                         .foregroundStyle(Theme.Palette.primary)
                 }
@@ -403,7 +403,7 @@ struct LoginView: View {
     private var devicesStep: some View {
         VStack(alignment: .leading, spacing: 0) {
             Button { model.editEmail() } label: {
-                Label("Back", systemImage: "chevron.backward")
+                Label(L10n.shared(.commonBack), systemImage: "chevron.backward")
                     .labelStyle(SpacedLabelStyle(spacing: 6))
                     .font(Theme.Typography.note)
                     .foregroundStyle(Theme.Palette.textSecondary)
@@ -412,9 +412,9 @@ struct LoginView: View {
             .disabled(model.isSigningOut)
             .padding(.bottom, 18)
 
-            AuthTitle(text: "Maximum devices reached")
+            AuthTitle(text: L10n.shared(.otpDevicesTitle))
                 .padding(.bottom, 10)
-            Text("Your account is signed in on as many devices as it allows. Sign out from one of them to continue.")
+            Text(L10n.shared(.otpDevicesNote))
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Palette.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -434,7 +434,7 @@ struct LoginView: View {
 
             if model.hasSignedOutDevice {
                 Button { model.continueAfterSignOut() } label: {
-                    AuthButtonLabel(title: "Continue", font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isSigningOut) {
+                    AuthButtonLabel(title: L10n.shared(.commonContinue), font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isSigningOut) {
                         Image(systemName: "arrow.forward")
                             .font(.system(size: 16, weight: .bold))
                     }
@@ -444,7 +444,7 @@ struct LoginView: View {
                 .disabled(model.isSigningOut)
             } else if !model.devices.isEmpty {
                 Button { model.signOutAllDevices() } label: {
-                    AuthButtonLabel(title: "Sign out from all devices", isLoading: model.isSigningOut) {
+                    AuthButtonLabel(title: L10n.shared(.otpDevicesSignOutAll), isLoading: model.isSigningOut) {
                         Image(systemName: "rectangle.portrait.and.arrow.right")
                             .font(.system(size: 16, weight: .medium))
                     }
@@ -468,7 +468,7 @@ struct LoginView: View {
                     .font(Theme.Typography.note)
                     .foregroundStyle(Theme.Palette.textPrimary)
                 if device.isCurrent {
-                    Text("This device")
+                    Text(L10n.shared(.otpDeviceThisDevice))
                         .font(Theme.Typography.caption)
                         .foregroundStyle(Theme.Palette.primary)
                 } else if let detail = device.detail {
@@ -478,7 +478,7 @@ struct LoginView: View {
                 }
             }
             Spacer(minLength: 8)
-            Button("Sign out") { model.signOut(device) }
+            Button(L10n.shared(.commonSignOut)) { model.signOut(device) }
                 .font(Theme.Typography.note)
                 .foregroundStyle(Theme.Palette.primary)
                 .buttonStyle(.plain)
@@ -506,7 +506,7 @@ struct LoginView: View {
     private var registerStep: some View {
         VStack(alignment: .leading, spacing: 0) {
             Button { model.leaveRegistration() } label: {
-                Label("Back", systemImage: "chevron.backward")
+                Label(L10n.shared(.commonBack), systemImage: "chevron.backward")
                     .labelStyle(SpacedLabelStyle(spacing: 6))
                     .font(Theme.Typography.note)
                     .foregroundStyle(Theme.Palette.textSecondary)
@@ -517,9 +517,9 @@ struct LoginView: View {
 
             AuthStepLabel(step: 3)
                 .padding(.bottom, 12)
-            AuthTitle(text: "Tell us about you")
+            AuthTitle(text: L10n.shared(.registerTitle))
                 .padding(.bottom, 10)
-            Text("Complete your profile to finish creating your \(Brand.name) account.")
+            Text(L10n.shared(.registerNote, Brand.name))
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Palette.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -534,10 +534,10 @@ struct LoginView: View {
                 registrationNameField
                 if model.registrationKind == .emailAccount {
                     registrationPhoneField
-                    readOnlyField(title: "Email ID", value: model.registrationEmail)
+                    readOnlyField(title: L10n.shared(.loginEmailLabel), value: model.registrationEmail)
                 } else {
                     registrationEmailField
-                    readOnlyField(title: "Mobile number", value: "\(model.registrationCountry.prefix) \(model.registrationNumber)")
+                    readOnlyField(title: L10n.shared(.loginPhoneLabel), value: "\(model.registrationCountry.prefix) \(model.registrationNumber)")
                 }
                 if model.registrationKind == .emailAccount {
                     referralSection
@@ -545,7 +545,7 @@ struct LoginView: View {
             }
 
             Button { model.submitRegistration() } label: {
-                AuthButtonLabel(title: "Finish setup", font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isRegistering) {
+                AuthButtonLabel(title: L10n.shared(.registerSubmit), font: Theme.Typography.buttonLarge, iconTrails: true, isLoading: model.isRegistering) {
                     Image(systemName: "checkmark")
                         .font(.system(size: 16, weight: .bold))
                 }
@@ -559,8 +559,8 @@ struct LoginView: View {
 
     private var registrationNameField: some View {
         VStack(alignment: .leading, spacing: 0) {
-            fieldTitle("Full name")
-            TextField(String(), text: $model.registrationName, prompt: Text("Enter your name").foregroundStyle(Theme.Palette.textTertiary))
+            fieldTitle(L10n.shared(.registerNameLabel))
+            TextField(String(), text: $model.registrationName, prompt: Text(L10n.shared(.registerNamePlaceholder)).foregroundStyle(Theme.Palette.textTertiary))
                 .focused($registrationField, equals: .name)
                 .textContentType(.name)
                 .autocorrectionDisabled()
@@ -574,7 +574,7 @@ struct LoginView: View {
                     }
                 }
                 .modifier(AuthFieldBackground(isInvalid: model.registrationNameError != nil, isFocused: registrationField == .name))
-                .accessibilityLabel(Text("Full name"))
+                .accessibilityLabel(Text(L10n.shared(.registerNameLabel)))
                 .accessibilityIdentifier("register_name_field")
             registrationError(model.registrationNameError)
         }
@@ -582,8 +582,8 @@ struct LoginView: View {
 
     private var registrationEmailField: some View {
         VStack(alignment: .leading, spacing: 0) {
-            fieldTitle("Email ID")
-            TextField(String(), text: $model.registrationEmail, prompt: Text(verbatim: "name@example.com").foregroundStyle(Theme.Palette.textTertiary))
+            fieldTitle(L10n.shared(.loginEmailLabel))
+            TextField(String(), text: $model.registrationEmail, prompt: Text(L10n.shared(.loginEmailPlaceholder)).foregroundStyle(Theme.Palette.textTertiary))
                 .focused($registrationField, equals: .email)
                 .textContentType(.emailAddress)
                 .autocorrectionDisabled()
@@ -592,7 +592,7 @@ struct LoginView: View {
                 .submitLabel(.done)
                 .onSubmit { model.submitRegistration() }
                 .modifier(AuthFieldBackground(isInvalid: model.registrationEmailError != nil, isFocused: registrationField == .email))
-                .accessibilityLabel(Text("Email ID"))
+                .accessibilityLabel(Text(L10n.shared(.loginEmailLabel)))
                 .accessibilityIdentifier("register_email_field")
             registrationError(model.registrationEmailError)
         }
@@ -600,7 +600,7 @@ struct LoginView: View {
 
     private var registrationPhoneField: some View {
         VStack(alignment: .leading, spacing: 0) {
-            fieldTitle("Mobile number")
+            fieldTitle(L10n.shared(.loginPhoneLabel))
             PhoneField(
                 number: $model.registrationNumber,
                 country: model.registrationCountry,
@@ -619,13 +619,13 @@ struct LoginView: View {
     @ViewBuilder private var referralSection: some View {
         if model.isReferralVisible {
             VStack(alignment: .leading, spacing: 0) {
-                fieldTitle("Referral code")
-                TextField(String(), text: $model.referralCode, prompt: Text("Enter referral code").foregroundStyle(Theme.Palette.textTertiary))
+                fieldTitle(L10n.shared(.registerReferralLabel))
+                TextField(String(), text: $model.referralCode, prompt: Text(L10n.shared(.registerReferralPlaceholder)).foregroundStyle(Theme.Palette.textTertiary))
                     .focused($registrationField, equals: .referral)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.characters)
                     .modifier(AuthFieldBackground(isFocused: registrationField == .referral))
-                    .accessibilityLabel(Text("Referral code"))
+                    .accessibilityLabel(Text(L10n.shared(.registerReferralLabel)))
                     .accessibilityIdentifier("register_referral_field")
             }
         } else {
@@ -633,7 +633,7 @@ struct LoginView: View {
                 model.showReferral()
                 registrationField = .referral
             } label: {
-                Text("Have a referral code?")
+                Text(L10n.shared(.registerReferralToggle))
                     .font(Theme.Typography.note)
                     .foregroundStyle(Theme.Palette.primary)
             }
@@ -643,7 +643,7 @@ struct LoginView: View {
     }
 
     /// What the account signed in with: shown, not editable (UIKit greys these fields out).
-    private func readOnlyField(title: LocalizedStringKey, value: String) -> some View {
+    private func readOnlyField(title: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             fieldTitle(title)
             Text(verbatim: value)
@@ -657,7 +657,7 @@ struct LoginView: View {
         }
     }
 
-    private func fieldTitle(_ title: LocalizedStringKey) -> some View {
+    private func fieldTitle(_ title: String) -> some View {
         Text(title)
             .font(Theme.Typography.fieldLabel)
             .foregroundStyle(Theme.Palette.textSecondary)
@@ -688,14 +688,14 @@ struct LoginView: View {
                 .padding(.bottom, 12)
             Group {
                 if let name = model.registeredName, !name.isEmpty {
-                    AuthTitle(text: "You're all set, \(name)")
+                    AuthTitle(text: L10n.shared(.registerSuccessTitle, name))
                 } else {
-                    AuthTitle(text: "You're all set")
+                    AuthTitle(text: L10n.shared(.otpSuccessTitle))
                 }
             }
             .multilineTextAlignment(.center)
             .padding(.bottom, 10)
-            Text("Your \(Brand.name) account is ready.")
+            Text(L10n.shared(.otpSuccessNote, Brand.name))
                 .font(Theme.Typography.body)
                 .foregroundStyle(Theme.Palette.textSecondary)
                 .multilineTextAlignment(.center)
@@ -729,7 +729,7 @@ private struct AutoAdvanceBar: View {
                         .frame(width: 160 * progress, height: 3)
                 }
                 .flipsForRightToLeftLayoutDirection(true)
-            Text("Taking you in…")
+            Text(L10n.shared(.otpSuccessProgress))
                 .font(Theme.Typography.caption)
                 .foregroundStyle(Theme.Palette.textTertiary)
         }

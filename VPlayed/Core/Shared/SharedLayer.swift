@@ -97,7 +97,7 @@ nonisolated final class IOSSharedDeviceInfo: NSObject, DeviceInfo, @unchecked Se
     init(
         deviceId: String? = DeviceID.current,
         deviceName: String = DeviceModel.identifier,
-        languageCode: @escaping @Sendable () -> String = { AppLanguage.current.rawValue }
+        languageCode: @escaping @Sendable () -> String = { AppLanguage.current.code }
     ) {
         self.deviceId = deviceId
         self.deviceName = deviceName
