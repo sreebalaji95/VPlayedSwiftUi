@@ -5,6 +5,13 @@ nonisolated protocol StartupServicing: Sendable {
     func commonSettings() async throws -> CommonSettings
     /// Looks up the public IP address, then its geo token. Nil when the server returns no token.
     func geoLookup() async throws -> GeoLookup?
+    /// Keeps a guest session whenever nobody is signed in and the common settings allow guests.
+    func startGuestSessions()
+}
+
+extension StartupServicing {
+    /// Mocks start no guest sessions.
+    func startGuestSessions() {}
 }
 
 /// The services the app uses: the Kotlin shared layer (`SharedStartupService`). Tests pass mocks.

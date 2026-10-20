@@ -32,6 +32,19 @@ final class AccountStore {
 
     private(set) var state: State
 
+    /// Who the session belongs to; unlike `state`, it stays the same when the access token is refreshed.
+    var accountID: String? {
+        switch state {
+        case .signedOut: nil
+        case let .guest(credentials): "guest:\(credentials.uniqueUserID.map(String.init) ?? credentials.userID ?? "")"
+        case let .signedIn(credentials): "user:\(credentials.userID ?? credentials.email ?? credentials.phone ?? "")"
+        }
+    }
+
+    /// Bumped each time the server ends a signed-in account's session (refused token and refresh);
+    /// `RootView` then says so and offers Login. Guests get a new guest session silently.
+    private(set) var expiredSessionCount = 0
+
     /// True for a real account; guests still see "Sign in", as in the UIKit app.
     var isSignedIn: Bool {
         if case .signedIn = state { true } else { false }
@@ -73,6 +86,9 @@ final class AccountStore {
     private func apply(_ status: any SessionStatus) {
         // Still reading the stored session: keep what is shown.
         guard !(status is SessionStatusLoading) else { return }
+        if (status as? SessionStatusSignedOut)?.reason == .expired, case .signedIn = state {
+            expiredSessionCount += 1
+        }
         state = State(status)
     }
 }

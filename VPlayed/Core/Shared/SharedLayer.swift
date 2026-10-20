@@ -56,7 +56,7 @@ nonisolated enum SharedLayer {
             platform: .ios,
             transportKey: transportKey,
             requestTimeoutMillis: SharedConfig.companion.DEFAULT_REQUEST_TIMEOUT_MILLIS,
-            connectTimeoutMillis: SharedConfig.companion.DEFAULT_CONNECT_TIMEOUT_MILLIS
+            connectTimeoutMillis: SharedConfig.companion.DEFAULT_CONNECT_TIMEOUT_MILLIS, redactSensitive: true
         )
     }
 

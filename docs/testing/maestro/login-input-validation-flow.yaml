@@ -43,6 +43,10 @@ appId: com.contus.vplayed.dev
 - tapOn:
     id: "login_email_field"
 - inputText: "user@"
+
+- scroll
+- waitForAnimationToEnd
+
 - tapOn: "Continue"
 - assertVisible: "Please enter a valid email address"
 
@@ -54,6 +58,11 @@ appId: com.contus.vplayed.dev
     id: "login_email_field"
 - eraseText: 100
 - inputText: "user@example"
+
+- scroll
+- waitForAnimationToEnd
+
+
 - tapOn: "Continue"
 - assertVisible: "Please enter a valid email address"
 
@@ -65,6 +74,10 @@ appId: com.contus.vplayed.dev
     id: "login_email_field"
 - eraseText: 100
 - inputText: "user@example.c"
+
+- scroll
+- waitForAnimationToEnd
+
 - tapOn: "Continue"
 - assertVisible: "Please enter a valid email address"
 

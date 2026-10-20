@@ -9,10 +9,18 @@ import Foundation
 nonisolated final class SharedStartupService: StartupServicing, @unchecked Sendable {
     private let settingsRepository: CommonSettingsRepository
     private let geoRepository: GeoRepository
+    private let guestSessions: GuestSessionKeeper
 
     init(graph: SharedGraph = SharedLayer.graph) {
         settingsRepository = graph.commonSettingsRepository
         geoRepository = graph.geoRepository
+        guestSessions = graph.guestSessionKeeper
+    }
+
+    /// The UIKit app's automatic guest session (`checkIfUserLoggedIn`), on the shared rule: it reads
+    /// the settings `commonSettings()` loads into the graph's `CommonSettingsStore`.
+    func startGuestSessions() {
+        guestSessions.start()
     }
 
     func commonSettings() async throws -> CommonSettings {

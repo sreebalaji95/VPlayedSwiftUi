@@ -15,6 +15,9 @@ import os
 /// Both calls run on the Kotlin shared layer (`SharedStartupService`, decision D18: the refresh is
 /// shared, the app decides when it runs).
 ///
+/// It also starts the automatic guest session (`checkIfUserLoggedIn` in the UIKit app): whenever
+/// nobody is signed in and the common settings allow guests, the shared layer starts one.
+///
 /// Failures are logged and otherwise ignored, as in the UIKit app: the defaults apply and launch
 /// carries on.
 @Observable
@@ -48,6 +51,7 @@ final class AppStartup {
     /// Starts both calls. Later calls do nothing.
     func start() {
         guard commonTask == nil else { return }
+        service.startGuestSessions()
         commonTask = Task { await loadCommonSettings() }
         geoTask = Task { await loadGeoToken() }
     }

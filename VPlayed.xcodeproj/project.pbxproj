@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		000000000000000131000000 /* SharedKit in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000132000000 /* SharedKit */; };
+		000000000000000134000000 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000135000000 /* FirebaseAuth */; };
+		000000000000000136000000 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000137000000 /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				000000000000000131000000 /* SharedKit in Frameworks */,
+				000000000000000134000000 /* FirebaseAuth in Frameworks */,
+				000000000000000136000000 /* GoogleSignIn in Frameworks */,
 			);
 		};
 		000000000000000230000000 /* Frameworks */ = {
@@ -113,6 +117,8 @@
 			name = VPlayed;
 			packageProductDependencies = (
 				000000000000000132000000 /* SharedKit */,
+				000000000000000135000000 /* FirebaseAuth */,
+				000000000000000137000000 /* GoogleSignIn */,
 			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* VPlayed.app */;
@@ -171,6 +177,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				000000000000000133000000 /* XCLocalSwiftPackageReference "SharedKit" */,
+				000000000000000138000000 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				000000000000000139000000 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -779,6 +787,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -786,7 +795,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -823,6 +832,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -830,7 +840,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -867,6 +877,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -874,7 +885,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -911,6 +922,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -918,7 +930,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -955,6 +967,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -962,7 +975,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -999,6 +1012,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -1006,7 +1020,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -1043,6 +1057,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -1050,7 +1065,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -1087,6 +1102,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CODE_SIGN_ENTITLEMENTS = Config/VPlayed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -1094,7 +1110,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VPlayed/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_ENV_NAME_PREFIX)$(BRAND_DISPLAY_NAME)";
+				INFOPLIST_KEY_CFBundleDisplayName = DevVPlayed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -1364,11 +1380,40 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		000000000000000138000000 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.13.0;
+			};
+		};
+		000000000000000139000000 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		000000000000000132000000 /* SharedKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 000000000000000133000000 /* XCLocalSwiftPackageReference "SharedKit" */;
 			productName = SharedKit;
+		};
+		000000000000000135000000 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 000000000000000138000000 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		000000000000000137000000 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 000000000000000139000000 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

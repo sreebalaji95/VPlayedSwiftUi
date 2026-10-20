@@ -2,7 +2,7 @@
 
 This guide is for teams that fork VPlayed to ship it under another brand. A rebrand changes the **identity, colours, wordmark, app icon and brand copy** listed below. It does not touch networking, decoding, navigation or view models. If a branding change seems to need an edit outside the files named here, treat that as a gap: raise it with the core team rather than patching around it.
 
-The app is SwiftUI only: no storyboards, no XIBs, no third-party dependencies. It is one iOS/iPadOS 17+ target (Apple-silicon Macs and Apple Vision Pro run it as the iPad app), with four schemes (`Dev`, `Qa`, `Stage`, `Demo`). Networking, decoding and business rules come from the shared Kotlin layer in the `kmp` repository (see `CLAUDE.md`).
+The app is SwiftUI only: no storyboards, no XIBs, and no third-party dependencies besides the sign-in SDKs (FirebaseAuth, GoogleSignIn). It is one iOS/iPadOS 17+ target (Apple-silicon Macs and Apple Vision Pro run it as the iPad app), with four schemes (`Dev`, `Qa`, `Stage`, `Demo`). Networking, decoding and business rules come from the shared Kotlin layer in the `kmp` repository (see `CLAUDE.md`).
 
 ## Quick start
 
@@ -29,7 +29,7 @@ Every scheme and both targets read this file. Don't set these keys in the projec
 | `DEVELOPMENT_TEAM` | `G44VFA67ZG` | Signing team for all configurations |
 | `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` | `1.0.0` / `1` | Version and build number |
 
-`Brand.xcconfig` ends by including `Config/Secrets.xcconfig` when it exists. That file is git-ignored and holds `VPLAYED_TRANSPORT_KEY`, the backend's request-encryption passphrase. Create it from `Config/Secrets.example.xcconfig` with the value for your brand's backend. Without it the app builds, but email sign-in reports an error.
+`Brand.xcconfig` ends by including `Config/Secrets.xcconfig` when it exists. That file is git-ignored and holds `VPLAYED_TRANSPORT_KEY`, the backend's request-encryption passphrase. Create it from `Config/Secrets.example.xcconfig` with the value for your brand's backend. Without it the app builds, but email sign-in reports an error. The same file holds the sign-in providers, registered for the brand's bundle IDs: `VPLAYED_GOOGLE_CLIENT_ID` / `VPLAYED_GOOGLE_URL_SCHEME` (Google sign-in) and `VPLAYED_FIREBASE_*` (phone sign-in). Leave them empty to hide Google sign-in and keep email sign-in. Sign in with Apple needs the capability on the brand's App ID (`Config/VPlayed.entitlements`).
 
 ### Colours: `VPlayed/Brand/Assets.xcassets`
 

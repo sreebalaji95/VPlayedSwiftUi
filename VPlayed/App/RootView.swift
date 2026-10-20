@@ -26,6 +26,8 @@ struct RootView: View {
     @State private var showsMenu = false
     @State private var showsSplash = true
     @State private var showsLogin = false
+    /// Shown on Login when it opens because the session expired.
+    @State private var loginNotice: String?
 
     init(startup: AppStartup, account: AccountStore) {
         self.startup = startup
@@ -73,12 +75,18 @@ struct RootView: View {
         .onChange(of: startup.isRTLAllowed, initial: true) { _, allowed in
             languageStore.isRTLAllowed = allowed
         }
-        // Rails, prices and access tags depend on who is signed in.
-        .onChange(of: account.state) {
+        // Rails, prices and access tags depend on who is signed in (not on a refreshed token).
+        .onChange(of: account.accountID) {
             Task { await homeModel.refresh() }
         }
-        .fullScreenCover(isPresented: $showsLogin) {
-            LoginView(account: account)
+        // As the UIKit app: "Session Expired, Please login to continue", then Login.
+        .onChange(of: account.expiredSessionCount) {
+            withAnimation(.snappy) { showsMenu = false }
+            loginNotice = String(localized: "Session Expired, Please login to continue", bundle: .localized)
+            showsLogin = true
+        }
+        .fullScreenCover(isPresented: $showsLogin, onDismiss: { loginNotice = nil }) {
+            LoginView(account: account, verificationMethod: startup.settings?.verificationMethod, notice: loginNotice)
                 .font(Theme.Typography.standard)
                 .environment(startup)
                 .environment(\.locale, languageStore.language.locale)

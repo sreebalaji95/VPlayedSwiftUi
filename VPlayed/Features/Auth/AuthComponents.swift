@@ -1,6 +1,8 @@
 import SwiftUI
 import Combine
 import UIKit
+// Kotlin classes are not Sendable; they are only used on the main thread here.
+@preconcurrency import Shared
 
 /// "STEP 1 OF 3" above a Login step heading.
 struct AuthStepLabel: View {
@@ -190,5 +192,53 @@ struct CodeField: View {
                     .font(Theme.Typography.codeDigit)
                     .foregroundStyle(Theme.Palette.textPrimary)
             }
+    }
+}
+
+/// The prototype's mobile-number field (`vp-login-method.js`): a country-code chip that opens the
+/// country list, then the national number (digits, grouped `98765 43210`), in the email field's style.
+struct PhoneField: View {
+    @Binding var number: String
+    let country: CountryDialCode
+    let countries: [CountryDialCode]
+    var isInvalid = false
+    var isFocused: FocusState<Bool>.Binding
+    /// The country's name in the app's language.
+    let countryName: (CountryDialCode) -> String
+    let onSelectCountry: (CountryDialCode) -> Void
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Menu {
+                ForEach(countries, id: \.regionCode) { option in
+                    Button {
+                        onSelectCountry(option)
+                    } label: {
+                        Text(verbatim: "\(countryName(option)) (\(option.prefix))")
+                    }
+                }
+            } label: {
+                HStack(spacing: 4) {
+                    Text(verbatim: country.prefix)
+                        .monospacedDigit()
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Theme.Palette.textTertiary)
+                }
+                .modifier(AuthFieldBackground(isInvalid: isInvalid))
+                .fixedSize()
+            }
+            .accessibilityLabel(Text("Country code"))
+            .accessibilityValue(Text(verbatim: "\(countryName(country)) \(country.prefix)"))
+
+            TextField(String(), text: $number, prompt: Text(verbatim: "98765 43210").foregroundStyle(Theme.Palette.textTertiary))
+                .focused(isFocused)
+                .keyboardType(.phonePad)
+                .textContentType(.telephoneNumber)
+                .monospacedDigit()
+                .modifier(AuthFieldBackground(isInvalid: isInvalid, isFocused: isFocused.wrappedValue))
+                .accessibilityLabel(Text("Mobile number"))
+                .accessibilityIdentifier("login_phone_field")
+        }
     }
 }

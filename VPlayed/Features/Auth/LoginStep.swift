@@ -6,6 +6,8 @@ enum LoginStep: Equatable {
     case code
     /// The account is signed in on its maximum number of devices: sign one out to continue.
     case devices
+    /// A new account adds its name and its mobile number or email before it is signed in.
+    case register
     /// Signed in; the screen shows "You're all set" and closes itself.
     case done
 }
